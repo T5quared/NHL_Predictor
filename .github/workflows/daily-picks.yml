@@ -15,8 +15,6 @@ on:
         description: 'Send again even if today was already sent'
         type: boolean
         default: false
-  push:
-    branches: [main]
 
 permissions:
   contents: write
@@ -39,7 +37,7 @@ jobs:
       - name: Run predictor
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          DRY_RUN: ${{ (github.event_name == 'push' || inputs.dry_run) && '1' || '' }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           FORCE: ${{ inputs.force && '1' || '' }}
         run: node src/run.js
       - name: Save picks and results to the repo
