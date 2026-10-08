@@ -1,0 +1,53 @@
+name: Daily NHL picks
+
+on:
+  schedule:
+    # 15:07 UTC = 11:07 AM Eastern in daylight time, 10:07 AM in winter.
+    # GitHub can start scheduled runs 5-30 minutes late.
+    - cron: '7 15 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (do not post to Discord or save picks)'
+        type: boolean
+        default: false
+      force:
+        description: 'Send again even if today was already sent'
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-picks
+  cancel-in-progress: false
+
+jobs:
+  picks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check model matches the dashboard
+        run: node --test
+      - name: Run predictor
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DRY_RUN: ${{ (github.event_name == 'push' || inputs.dry_run) && '1' || '' }}
+          FORCE: ${{ inputs.force && '1' || '' }}
+        run: node src/run.js
+      - name: Save picks and results to the repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet || git commit -m "Picks and results $(TZ=America/New_York date +%F)"
+          git pull --rebase --quiet
+          git push

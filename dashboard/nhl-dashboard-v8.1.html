@@ -1,0 +1,2947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NHL Prediction Engine v8.1</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090f;
+    --bg2: #0d1220;
+    --bg3: #131929;
+    --surface: #161d2e;
+    --surface2: #1c2538;
+    --border: #1e2d47;
+    --ice: #4fc3f7;
+    --ice2: #29b6f6;
+    --ice-dim: rgba(79,195,247,0.12);
+    --ice-glow: rgba(79,195,247,0.25);
+    --red: #ef5350;
+    --green: #66bb6a;
+    --gold: #ffd54f;
+    --text: #e8eaf6;
+    --text2: #8fa3c4;
+    --text3: #4a6180;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'Barlow Condensed', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND RINK TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 50% 0%, rgba(79,195,247,0.06) 0%, transparent 70%),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(79,195,247,0.02) 80px),
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(79,195,247,0.02) 80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── LAYOUT ── */
+  #app { position: relative; z-index: 1; max-width: 1440px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 0 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .header-brand { display: flex; align-items: center; gap: 14px; }
+
+  .header-logo {
+    width: 48px; height: 48px;
+    background: var(--ice);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    animation: pulse-logo 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-logo {
+    0%, 100% { box-shadow: 0 0 0 0 var(--ice-glow); }
+    50% { box-shadow: 0 0 20px 6px var(--ice-glow); }
+  }
+
+  .header-title { font-family: var(--font-display); font-size: 38px; letter-spacing: 2px; color: var(--text); }
+  .header-sub { font-family: var(--font-mono); font-size: 11px; color: var(--ice); letter-spacing: 3px; text-transform: uppercase; margin-top: 2px; }
+
+  .header-right { display: flex; align-items: center; gap: 16px; }
+
+  /* ── LIVE / STATUS BADGES ── */
+  .live-badge {
+    display: flex; align-items: center; gap: 7px;
+    background: rgba(239,83,80,0.12);
+    border: 1px solid rgba(239,83,80,0.35);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px; color: var(--red);
+  }
+
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--red);
+    animation: blink 1.2s ease-in-out infinite;
+  }
+
+  @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+
+  #date-display { font-family: var(--font-mono); font-size: 12px; color: var(--text2); letter-spacing: 1px; }
+
+  /* ── NAV TABS ── */
+  .nav-tabs {
+    display: flex; gap: 2px;
+    background: var(--bg2); border-radius: 8px; padding: 4px;
+    margin-bottom: 32px; overflow-x: auto;
+  }
+
+  .nav-tab {
+    flex-shrink: 0;
+    padding: 10px 22px;
+    border-radius: 6px; border: none; cursor: pointer;
+    font-family: var(--font-body); font-size: 13px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text2); background: transparent;
+    transition: all 0.2s;
+  }
+
+  .nav-tab:hover { color: var(--text); background: var(--surface); }
+  .nav-tab.active { color: var(--ice); background: var(--surface2); border: 1px solid var(--ice-dim); }
+
+  /* ── SECTIONS ── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── LOADING / ERROR STATES ── */
+  .spinner-wrap {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 80px 20px; gap: 20px;
+  }
+
+  .spinner {
+    width: 48px; height: 48px;
+    border: 3px solid var(--border);
+    border-top-color: var(--ice);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .spinner-label { font-family: var(--font-mono); font-size: 12px; color: var(--text2); letter-spacing: 2px; }
+
+  .error-card {
+    background: rgba(239,83,80,0.08); border: 1px solid rgba(239,83,80,0.3);
+    border-radius: 10px; padding: 28px 32px; text-align: center;
+    max-width: 500px; margin: 60px auto;
+  }
+
+  .error-card h3 { color: var(--red); font-family: var(--font-display); font-size: 28px; margin-bottom: 10px; }
+  .error-card p { color: var(--text2); font-size: 14px; line-height: 1.6; }
+  .error-card code { font-family: var(--font-mono); font-size: 12px; color: var(--text3); }
+
+  .warn-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(255,213,79,0.1); border: 1px solid rgba(255,213,79,0.3);
+    border-radius: 4px; padding: 2px 8px;
+    font-family: var(--font-mono); font-size: 10px; color: var(--gold);
+  }
+
+  /* ── GAME CARDS ── */
+  #games-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .game-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+
+  .game-card:hover { transform: translateY(-3px); border-color: var(--ice); box-shadow: 0 8px 32px rgba(79,195,247,0.12); }
+  .game-card.expanded { border-color: var(--ice); box-shadow: 0 8px 32px rgba(79,195,247,0.18); }
+
+  .card-header {
+    display: flex; align-items: center;
+    padding: 12px 16px 10px;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .game-status {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px;
+    color: var(--text3); text-transform: uppercase;
+    margin-left: auto; white-space: nowrap;
+  }
+
+  .card-body { padding: 12px 16px; }
+
+  /* Team Row */
+  .teams-row {
+    display: flex; align-items: center;
+  }
+
+  .team-side {
+    flex: 1;
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .team-side.away { flex-direction: row; }
+  .team-side.home { flex-direction: row-reverse; justify-content: flex-start; }
+
+  .team-logo-wrap {
+    width: 44px; height: 44px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg2); border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .team-logo-wrap img { width: 36px; height: 36px; object-fit: contain; }
+
+  .team-abbrev {
+    font-family: var(--font-display); font-size: 32px;
+    letter-spacing: 2px; line-height: 1;
+  }
+
+  /* ── PREDICTED WINNER HIGHLIGHT ── */
+  .team-abbrev.predicted-winner {
+    color: #07090f;
+    background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 60%, #81d4fa 100%);
+    border-radius: 6px;
+    padding: 2px 10px 4px;
+    box-shadow:
+      0 0 12px rgba(79,195,247,0.6),
+      0 0 24px rgba(79,195,247,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.3);
+    position: relative;
+  }
+
+  .team-abbrev.predicted-winner::after {
+    content: '▲ PICK';
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    color: var(--ice);
+    white-space: nowrap;
+    opacity: 0.85;
+  }
+  .team-name { font-size: 11px; color: var(--text2); font-weight: 300; letter-spacing: 1px; margin-top: 18px; }
+  .team-tag {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px;
+    background: var(--ice-dim); color: var(--ice); border-radius: 3px; padding: 2px 6px;
+    margin-top: 4px; display: inline-block;
+  }
+
+  .vs-block {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 8px; gap: 4px; flex-shrink: 0;
+  }
+
+  .vs-score {
+    font-family: var(--font-display); font-size: 28px; letter-spacing: 2px;
+    color: var(--ice); line-height: 1;
+  }
+
+  .vs-label { font-family: var(--font-mono); font-size: 9px; color: var(--text3); letter-spacing: 2px; }
+
+  /* Win Probability Bar */
+  .prob-section { margin-top: 10px; }
+
+  .prob-bar-wrap {
+    height: 8px; background: var(--bg2); border-radius: 4px; overflow: hidden;
+    display: flex;
+  }
+
+  .prob-away {
+    height: 100%; background: linear-gradient(90deg, #4fc3f7, #29b6f6);
+    border-radius: 4px 0 0 4px;
+    transition: width 1s cubic-bezier(0.4,0,0.2,1);
+    width: 0;
+  }
+
+  .prob-home {
+    height: 100%; background: linear-gradient(90deg, #29b6f6, #4fc3f7);
+    border-radius: 0 4px 4px 0;
+    flex: 1;
+    opacity: 0.4;
+  }
+
+  .prob-labels {
+    display: flex; justify-content: space-between;
+    margin-top: 6px;
+  }
+
+  .prob-num { font-family: var(--font-mono); font-size: 12px; color: var(--ice); }
+  .prob-num.dim { color: var(--text2); opacity: 0.6; }
+
+  .conf-badge {
+    text-align: center; margin-top: 8px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px;
+  }
+
+  .conf-high { color: var(--green); }
+  .conf-med { color: var(--gold); }
+  .conf-low { color: var(--red); }
+
+  /* Injury toggles */
+  .injury-row {
+    display: flex; gap: 12px; margin-top: 12px;
+    padding-top: 12px; border-top: 1px solid var(--border);
+  }
+
+  .injury-toggle {
+    flex: 1; display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 12px; cursor: pointer;
+    font-size: 11px; color: var(--text2);
+    transition: border-color 0.2s;
+    user-select: none;
+  }
+
+  .injury-toggle:hover { border-color: var(--text3); }
+  .injury-toggle.active { border-color: var(--red); color: var(--red); background: rgba(239,83,80,0.07); }
+  .injury-toggle .toggle-label { font-weight: 600; font-size: 12px; }
+  .injury-switch { width: 28px; height: 16px; background: var(--border); border-radius: 8px; position: relative; transition: background 0.2s; }
+  .injury-switch::after { content:''; position:absolute; top:2px; left:2px; width:12px; height:12px; background:#fff; border-radius:50%; transition: transform 0.2s; }
+  .injury-toggle.active .injury-switch { background: var(--red); }
+  .injury-toggle.active .injury-switch::after { transform: translateX(12px); }
+
+  /* Back-to-back badge */
+  .b2b-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(255,213,79,0.1); border: 1px solid rgba(255,213,79,0.25);
+    color: var(--gold); border-radius: 4px; padding: 2px 7px;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* Goalie row */
+  .goalie-row {
+    display: flex; justify-content: space-between;
+    padding: 10px 0 0; gap: 10px;
+  }
+
+  .goalie-chip {
+    flex: 1; background: var(--bg2); border-radius: 6px; padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .goalie-name { color: var(--text); font-weight: 600; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .goalie-sv { font-family: var(--font-mono); color: var(--ice); font-size: 11px; margin-top: 2px; }
+
+  /* ── DETAIL PANEL ── */
+  .detail-panel {
+    display: none; overflow: hidden;
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .detail-panel.open { display: block; }
+  .detail-inner { padding: 22px; }
+  .detail-inner h4 { font-family: var(--font-display); font-size: 20px; color: var(--ice); letter-spacing: 2px; margin-bottom: 14px; }
+
+  /* Lambda Table */
+  .lambda-tables { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
+
+  .lambda-table { background: var(--bg3); border-radius: 8px; overflow: hidden; }
+  .lambda-table-head {
+    background: var(--ice-dim); padding: 8px 14px;
+    font-family: var(--font-display); font-size: 16px; letter-spacing: 2px; color: var(--ice);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .lambda-total { font-family: var(--font-mono); font-size: 13px; }
+
+  .lambda-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 14px; font-size: 12px; border-bottom: 1px solid var(--border);
+  }
+
+  .lambda-row:last-child { border-bottom: none; }
+  .lambda-factor { color: var(--text2); }
+  .lambda-val { font-family: var(--font-mono); font-size: 12px; }
+  .lambda-val.pos { color: var(--green); }
+  .lambda-val.neg { color: var(--red); }
+  .lambda-val.neu { color: var(--text2); }
+
+  /* Heatmap */
+  .heatmap-section { margin-bottom: 22px; }
+  .heatmap-label { font-family: var(--font-mono); font-size: 11px; color: var(--text2); letter-spacing: 1px; margin-bottom: 10px; }
+
+  .heatmap-grid { display: inline-grid; gap: 2px; }
+  .heatmap-cell {
+    width: 38px; height: 38px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.7);
+    transition: transform 0.15s;
+    cursor: default;
+  }
+  .heatmap-cell:hover { transform: scale(1.15); z-index: 2; }
+  .heatmap-header-cell {
+    width: 38px; height: 28px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 10px; color: var(--text3);
+  }
+
+  /* ── TEAM STATS TABLE ── */
+  .stats-controls {
+    display: flex; gap: 12px; margin-bottom: 18px; align-items: center; flex-wrap: wrap;
+  }
+
+  .search-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 9px 14px;
+    color: var(--text); font-family: var(--font-body); font-size: 14px;
+    outline: none; width: 220px;
+    transition: border-color 0.2s;
+  }
+  .search-box:focus { border-color: var(--ice); }
+  .search-box::placeholder { color: var(--text3); }
+
+  .stats-table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+
+  .stats-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .stats-table thead { background: var(--surface2); }
+  .stats-table th {
+    padding: 12px 16px; text-align: left;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px;
+    color: var(--text3); white-space: nowrap; cursor: pointer;
+    user-select: none; border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+  }
+  .stats-table th:hover { color: var(--ice); }
+  .stats-table th.sorted { color: var(--ice); }
+  .stats-table th .sort-arrow { margin-left: 4px; font-size: 9px; }
+
+  .stats-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .stats-table tbody tr:last-child { border-bottom: none; }
+  .stats-table tbody tr:hover { background: var(--surface); }
+
+  .stats-table td { padding: 10px 16px; font-family: var(--font-mono); font-size: 12px; color: var(--text2); }
+  .stats-table td:first-child { color: var(--text); font-weight: 500; }
+
+  .td-logo { display: flex; align-items: center; gap: 10px; }
+  .td-logo img { width: 26px; height: 26px; object-fit: contain; }
+  .td-abbrev { font-family: var(--font-display); font-size: 16px; letter-spacing: 1px; color: var(--text); }
+
+  .stat-good { color: var(--green); }
+  .stat-bad { color: var(--red); }
+
+  /* ── MODEL WEIGHTS PANEL ── */
+  .weights-table-wrap { border-radius: 10px; border: 1px solid var(--border); overflow: hidden; }
+  .weights-table { width: 100%; border-collapse: collapse; }
+  .weights-table thead { background: var(--surface2); }
+  .weights-table th {
+    padding: 12px 18px; text-align: left;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px;
+    color: var(--text3); border-bottom: 1px solid var(--border);
+  }
+  .weights-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .weights-table tbody tr:last-child { border-bottom: none; }
+  .weights-table tbody tr:hover { background: var(--surface); }
+  .weights-table td { padding: 11px 18px; font-size: 13px; }
+  .wt-param { font-family: var(--font-mono); font-size: 12px; color: var(--ice); }
+  .wt-val { font-family: var(--font-mono); font-size: 14px; color: var(--gold); }
+  .wt-desc { color: var(--text2); font-size: 12px; line-height: 1.5; }
+
+  .weights-note {
+    background: var(--ice-dim); border: 1px solid var(--ice);
+    border-radius: 8px; padding: 14px 18px; margin-top: 18px;
+    font-family: var(--font-mono); font-size: 12px; color: var(--ice);
+    letter-spacing: 0.5px; line-height: 1.6;
+  }
+
+  /* ── MODEL SETTINGS / SLIDERS ── */
+  .sliders-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+
+  .slider-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px;
+  }
+
+  .slider-card label { display: block; font-family: var(--font-mono); font-size: 11px; color: var(--text2); letter-spacing: 1.5px; margin-bottom: 10px; }
+  .slider-row { display: flex; align-items: center; gap: 12px; }
+
+  .weight-input {
+    flex: 1; background: var(--bg2); border: 1px solid var(--border);
+    color: var(--ice); border-radius: 6px; padding: 10px 14px;
+    font-family: var(--font-mono); font-size: 16px; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -moz-appearance: textfield; width: 100%;
+  }
+  .weight-input::-webkit-inner-spin-button,
+  .weight-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .weight-input:focus { border-color: var(--ice); box-shadow: 0 0 0 2px var(--ice-dim); }
+
+  .weight-default {
+    font-family: var(--font-mono); font-size: 10px; color: var(--text3);
+    letter-spacing: 1px; margin-top: 6px;
+  }
+
+  .reset-btn {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text2); border-radius: 6px; padding: 9px 20px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
+    cursor: pointer; transition: all 0.2s; margin-top: 24px;
+  }
+  .reset-btn:hover { border-color: var(--ice); color: var(--ice); }
+
+  /* ── PREDICTION TRACKER ── */
+  .tracker-stats {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 28px;
+  }
+
+  .tracker-stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; text-align: center;
+  }
+
+  .tracker-stat-val { font-family: var(--font-display); font-size: 44px; color: var(--ice); }
+  .tracker-stat-label { font-family: var(--font-mono); font-size: 10px; color: var(--text3); letter-spacing: 2px; margin-top: 4px; }
+
+  .log-form {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px; margin-bottom: 24px;
+  }
+
+  .log-form h4 { font-family: var(--font-display); font-size: 20px; color: var(--ice); letter-spacing: 2px; margin-bottom: 16px; }
+
+  .form-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field label { font-family: var(--font-mono); font-size: 10px; color: var(--text3); letter-spacing: 1px; }
+
+  .form-input {
+    background: var(--bg2); border: 1px solid var(--border); color: var(--text);
+    border-radius: 6px; padding: 8px 12px;
+    font-family: var(--font-mono); font-size: 13px; outline: none;
+    transition: border-color 0.2s; width: 120px;
+  }
+  .form-input:focus { border-color: var(--ice); }
+
+  .log-btn {
+    background: var(--ice-dim); border: 1px solid var(--ice);
+    color: var(--ice); border-radius: 6px; padding: 9px 20px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .log-btn:hover { background: rgba(79,195,247,0.2); }
+
+  .history-table-wrap { border-radius: 10px; border: 1px solid var(--border); overflow: hidden; }
+  .history-table { width: 100%; border-collapse: collapse; }
+  .history-table thead { background: var(--surface2); }
+  .history-table th {
+    padding: 10px 14px; font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 1.5px; color: var(--text3); text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .history-table td {
+    padding: 9px 14px; font-family: var(--font-mono); font-size: 12px;
+    color: var(--text2); border-bottom: 1px solid var(--border);
+  }
+  .history-table tr:last-child td { border-bottom: none; }
+  .result-hit { color: var(--green); }
+  .result-miss { color: var(--red); }
+
+  .no-history {
+    text-align: center; padding: 60px 20px;
+    font-family: var(--font-mono); font-size: 13px; color: var(--text3);
+  }
+
+  /* ── SECTION TITLES ── */
+  .section-title {
+    font-family: var(--font-display); font-size: 32px;
+    letter-spacing: 3px; color: var(--text);
+    margin-bottom: 22px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--ice), transparent);
+    opacity: 0.3;
+  }
+
+  /* ── EMPTY / NO GAMES ── */
+  .no-games {
+    text-align: center; padding: 80px 20px;
+  }
+  .no-games-icon { font-size: 64px; margin-bottom: 16px; opacity: 0.3; }
+  .no-games h3 { font-family: var(--font-display); font-size: 32px; color: var(--text2); letter-spacing: 3px; }
+  .no-games p { font-family: var(--font-mono); font-size: 12px; color: var(--text3); margin-top: 8px; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    #games-grid { grid-template-columns: repeat(2, 1fr); }
+    .lambda-tables { grid-template-columns: 1fr; }
+    .tracker-stats { grid-template-columns: 1fr; }
+    header { flex-direction: column; gap: 14px; text-align: center; }
+    .heatmap-cell { width: 28px; height: 28px; font-size: 8px; }
+    .heatmap-header-cell { width: 28px; }
+    .vs-score { font-size: 22px; }
+    .team-abbrev { font-size: 18px; }
+  }
+  @media (max-width: 640px) {
+    #games-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── PDF EXPORT PRINT STYLES ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { background: #fff !important; color: #111 !important; font-size: 11px; }
+    body::before { display: none; }
+    #app { max-width: 100%; padding: 0; }
+    header, nav.nav-tabs, #pdf-export-btn, #discord-send-btn,
+    .injury-row, .detail-panel, #live-status-bar { display: none !important; }
+    .section { display: none !important; }
+    .section.active { display: block !important; }
+    #sec-games { display: block !important; }
+    #games-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 8px !important;
+    }
+    .game-card {
+      background: #fff !important;
+      border: 1.5px solid #ccd6e0 !important;
+      border-radius: 8px !important;
+      box-shadow: none !important;
+      transform: none !important;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .card-header {
+      background: #f0f4f8 !important;
+      border-bottom: 1px solid #ccd6e0 !important;
+      padding: 5px 10px !important;
+    }
+    .card-header span { color: #555 !important; font-size: 9px !important; }
+    .game-status { color: #333 !important; font-size: 10px !important; }
+    .card-body { padding: 7px 10px !important; }
+    .team-abbrev { color: #111 !important; font-size: 19px !important; }
+    .team-abbrev.predicted-winner {
+      color: #fff !important;
+      background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+      box-shadow: 0 2px 6px rgba(2,132,199,0.35) !important;
+    }
+    .team-abbrev.predicted-winner::after { color: #0369a1 !important; font-size: 8px !important; }
+    .team-name { color: #555 !important; margin-top: 10px !important; font-size: 9px !important; }
+    .team-tag { background: #e0f2fe !important; color: #0369a1 !important; font-size: 8px !important; padding: 1px 5px !important; }
+    .b2b-badge { background: #fef9c3 !important; border-color: #ca8a04 !important; color: #92400e !important; font-size: 8px !important; }
+    .vs-label { color: #888 !important; font-size: 8px !important; }
+    .vs-score { color: #0369a1 !important; font-size: 16px !important; }
+    .prob-section { margin-top: 5px !important; }
+    .prob-labels { gap: 4px !important; }
+    .prob-num { color: #0369a1 !important; font-size: 11px !important; }
+    .prob-num.dim { color: #999 !important; }
+    .conf-badge { font-size: 9px !important; }
+    .conf-high { color: #15803d !important; }
+    .conf-med  { color: #b45309 !important; }
+    .conf-low  { color: #b91c1c !important; }
+    .goalie-row { padding-top: 5px !important; gap: 4px !important; }
+    .goalie-chip { background: #f8fafc !important; border-radius: 5px !important; padding: 4px 6px !important; }
+    .goalie-name { color: #333 !important; font-size: 9px !important; }
+    .goalie-sv { color: #0369a1 !important; font-size: 8px !important; }
+    .warn-badge { display: none !important; }
+    .section-title { color: #111 !important; font-size: 18px !important; }
+    .section-title::after { background: linear-gradient(90deg, #0369a1, transparent) !important; }
+    #pdf-header { display: block !important; }
+    #pdf-footer { display: block !important; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- PDF-only header — hidden in browser, shown in print -->
+  <div id="pdf-header" style="display:none;">
+    <div style="display:flex;align-items:center;justify-content:space-between;
+      padding:0 0 14px;border-bottom:2px solid #0369a1;margin-bottom:20px;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;
+          letter-spacing:2px;color:#0f172a;">NHL PREDICTION ENGINE</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;
+          color:#0369a1;letter-spacing:2px;margin-top:2px;">
+          POISSON REGRESSION · EXACT WIN PROBABILITY
+        </div>
+      </div>
+      <div style="text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:#555;">
+        <div id="pdf-date-line" style="font-weight:600;color:#0f172a;font-size:13px;"></div>
+        <div id="pdf-generated-line" style="margin-top:3px;"></div>
+      </div>
+    </div>
+  </div>
+  <header>
+    <div class="header-brand">
+      <div class="header-logo">🏒</div>
+      <div>
+        <div class="header-title">NHL PREDICTION ENGINE V8.1</div>
+        <div class="header-sub">Poisson Regression · Exact Win Probability</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="live-badge"><div class="live-dot"></div>LIVE DATA</div>
+      <div id="date-display"></div>
+    </div>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="nav-tab active" data-section="games">Today's Games</button>
+    <button class="nav-tab" data-section="tracker">Prediction Tracker</button>
+    <button class="nav-tab" data-section="standings">Team Stats</button>
+    <button class="nav-tab" data-section="weights">Model Weights</button>
+    <button class="nav-tab" data-section="settings">Model Settings</button>
+    <button class="nav-tab" id="diag-tab" data-section="diag">🔍 Diagnostics</button>
+  </nav>
+
+  <!-- TODAY'S GAMES -->
+  <section id="sec-games" class="section active">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
+      <div class="section-title" style="margin-bottom:0;">TONIGHT'S MATCHUPS</div>
+      <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onclick="sendPicksToDiscord()" id="discord-send-btn"
+        style="display:flex;align-items:center;gap:8px;
+          background:rgba(88,101,242,0.12);border:1px solid #5865F2;color:#8b96f8;
+          border-radius:6px;padding:10px 20px;font-family:var(--font-mono);
+          font-size:11px;letter-spacing:2px;cursor:pointer;transition:background 0.2s;
+          flex-shrink:0;"
+        onmouseover="this.style.background='rgba(88,101,242,0.25)'"
+        onmouseout="this.style.background='rgba(88,101,242,0.12)'">
+        💬 SEND TO DISCORD
+      </button>
+      <button onclick="exportPDF()" id="pdf-export-btn"
+        style="display:flex;align-items:center;gap:8px;
+          background:var(--ice-dim);border:1px solid var(--ice);color:var(--ice);
+          border-radius:6px;padding:10px 20px;font-family:var(--font-mono);
+          font-size:11px;letter-spacing:2px;cursor:pointer;transition:background 0.2s;
+          flex-shrink:0;"
+        onmouseover="this.style.background='rgba(79,195,247,0.2)'"
+        onmouseout="this.style.background='var(--ice-dim)'">
+        📄 EXPORT PDF
+      </button>
+      </div>
+    </div>
+    <div id="games-container"></div>
+  </section>
+
+  <!-- PREDICTION TRACKER -->
+  <section id="sec-tracker" class="section">
+    <div class="section-title">PREDICTION TRACKER</div>
+    <div id="tracker-container"></div>
+  </section>
+
+  <!-- TEAM STATS -->
+  <section id="sec-standings" class="section">
+    <div class="section-title">TEAM STATISTICS</div>
+    <div id="standings-container"></div>
+  </section>
+
+  <!-- MODEL WEIGHTS -->
+  <section id="sec-weights" class="section">
+    <div class="section-title">MODEL WEIGHTS & ASSUMPTIONS</div>
+    <div id="weights-container"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="sec-settings" class="section">
+    <div class="section-title">MODEL SETTINGS</div>
+    <div id="settings-container"></div>
+  </section>
+
+  <!-- DIAGNOSTICS -->
+  <section id="sec-diag" class="section">
+    <div class="section-title">DIAGNOSTICS</div>
+    <div id="diag-container"><div style="font-family:var(--font-mono);font-size:13px;color:var(--text3);padding:40px 0;">Refresh the dashboard to populate diagnostics.</div></div>
+  </section>
+  <!-- PDF-only footer — hidden in browser, shown in print -->
+  <div id="pdf-footer" style="display:none;">
+    <div style="margin-top:28px;border-top:1.5px solid #ccd6e0;padding-top:16px;
+      font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#444;line-height:1.7;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;
+        letter-spacing:2px;color:#0f172a;margin-bottom:8px;">HOW TO READ THESE PREDICTIONS</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 32px;">
+        <div><strong style="color:#0369a1;">PREDICTED SCORE</strong> — The model's expected final score based on each team's
+          offensive output, goalie performance, power play/penalty kill efficiency,
+          home ice advantage, and recent form (last 10 games).</div>
+        <div><strong style="color:#0369a1;">WIN PROBABILITY %</strong> — Calculated exactly (no random simulation) from a Poisson
+          distribution. The highlighted team abbreviation is the predicted winner.
+          Percentages closer to 50/50 indicate an evenly matched game.</div>
+        <div><strong style="color:#15803d;">HIGH CONFIDENCE</strong> — Win probability spread &gt;35%. The model strongly
+          favours one team. <strong style="color:#b45309;">MEDIUM</strong> = 20–35% spread.
+          <strong style="color:#b91c1c;">LOW</strong> = under 20% — treat as a toss-up.</div>
+        <div><strong style="color:#0369a1;">GOALIE SV%</strong> — A higher save percentage means the goalie is expected to
+          stop more shots. This is one of the model's most impactful factors —
+          a hot goalie can significantly shift win probability.</div>
+        <div><strong style="color:#92400e;">⚡ B2B</strong> — Back-to-back game. This team played yesterday.
+          The model applies a fatigue penalty to their expected goal output,
+          which is reflected in the predicted score and win probability.</div>
+        <div><strong style="color:#0369a1;">INJURY ADJUSTED</strong> — If shown, the predictions have been manually
+          adjusted to account for a key player injury. The model applies a
+          goal-output penalty to that team's λ (lambda) scoring rate.</div>
+      </div>
+      <div style="margin-top:12px;font-size:10px;color:#888;font-family:'DM Mono',monospace;">
+        Model predictions are for entertainment purposes only. Past accuracy does not guarantee future results.
+        Generated by NHL Prediction Engine · Poisson Regression · Exact Win Probability
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// ════════════════════════════════════════════════════════════════════
+//  MODEL_WEIGHTS — SINGLE SOURCE OF TRUTH
+//  All downstream calculations reference this object.
+//  To tune the model, edit ONLY this object.
+// ════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════
+//  CHANGELOG
+//  v3 (2026-03-07) — Weight update based on 15-game tracker analysis
+//    BASE_GOALS:         3.15 -> 3.28  (actual avg 3.43/team; conservative bump)
+//    SEASON_AVG_WEIGHT:  0.65 -> 0.55  (shift weight toward recent form)
+//    RECENT_FORM_WEIGHT: 0.35 -> 0.45  (L10 form more predictive late-season)
+//    HOME_ICE_BONUS:     0.18 -> 0.12  (away teams under-predicted by +0.34/game)
+//  v5 (2026-03-09) — Confidence recalibration + away scoring fix (19-game analysis)
+//    BASE_GOALS:          3.28 -> 3.35  (away gap persisted at +0.53/game in v3 sample)
+//    HOME_ICE_BONUS:      0.12 -> 0.08  (away still suppressed; further reduction)
+//    CONF_HIGH_THRESHOLD: 0.25 -> 0.35  (HIGH was triggering on ~60/40 splits; needs real edge)
+//    CONF_MED_THRESHOLD:  0.12 -> 0.20  (MED band widened to absorb former false-HIGH games)
+//    HOME_ICE_BONUS:      0.08 -> 0.10  (away-favored picks hit 48% vs 59% home-favored over 74 games; bonus reduced too far; conservative nudge back)
+//
+//  v6 (2026-03-09) — Persistence fix: dual-write localStorage + proxy
+//    Tracker data now survives proxy restarts and version upgrades.
+//    One-time migration merges history from all prior nhl_tracker_* keys.
+//    Merge rule: saved > pending; actual scores > missing; lower MAE wins.
+//
+//  v8 (2026-10-02) — 2026-27 rollover + changes from the 1,312-game 2025-26 walk-forward backtest
+//    Backtest (win/loss): v7 53.9% overall, HIGH 48.8% (41/84) -> v8 54.5% overall, HIGH 64.8% (59/91).
+//    Tuned and scored on the same season; goalie SV%, PP/PK and injuries not testable from scores.
+//    LEAGUE_AVG_GOALS:     new, 3.12  (anchor for shrinkage and the defense term)
+//    SHRINK_GAMES:         new, 20    (season GF/GP and GA/GP pulled toward league average:
+//                                      (goals + 20*3.12) / (GP + 20); early HIGH picks were 37.5%)
+//    DEFENSE_WEIGHT:       new, 1.0   (lambda scaled by opponent's shrunk GA/GP vs league average)
+//    BACK_TO_BACK_PENALTY: 0.10 -> 0.20  (home won 61% when only the away team was on a B2B)
+//    Win probability:      10,000 random sims -> exact Poisson calculation (goals 0-25); no wobble
+//    SEASON:               '20252026' -> auto-detected from today's date (20262027)
+//    PRIOR_GOALIE_FADE_STARTS: new, 15 (starter SV% blended with last season early on; not from
+//                                      the backtest — set to 0 to turn off)
+//    Tracker:              fresh v8 keys; prior-season results archived, not merged (new baseline)
+//    Stored slider settings from before this build are ignored once so the new defaults apply.
+//    HELD: HOME_ICE_BONUS 0.10, SEASON/RECENT 0.55/0.45, CONF thresholds 0.35/0.20,
+//          GOALIE_SENSITIVITY 3.0 (REVIEW at 100-game checkpoint: overlaps with DEFENSE_WEIGHT)
+//
+//  v8.1 (2026-10-07) — Bug fix: recent form was unshrunk early in the season (no parameter changes)
+//    Found at 22 saved results: predicted goals ranged 1.7-5.4 with teams at 2-5 GP, and 7 of 22
+//    picks were HIGH. v8 shrank season GF/GA but used "L10" raw at 45% weight, so a 1-4 game
+//    sample drove nearly half of each prediction (e.g. DAL: 1 goal in 2 GP -> 1.7 at home, won 5-0).
+//    Recent form:  raw L10 GF/GP -> (n/10) * raw + (1 - n/10) * shrunk season GF/GP,
+//                  where n = games in the team's L10 sample (0-10).
+//                  Identical to v8 once a team has 10+ games; only the first ~10 GP are dampened.
+//    Season-average fallback for recent form now reports its real game count instead of assuming 10.
+//    Tracker:      same v8 keys (results kept); new picks are tagged modelVer 'v8.1'.
+//                  The first 22 results are tagged 'v8' — keep the two sets separate at the 50-game look.
+//    HELD: every MODEL_WEIGHTS value. RECENT_FORM_FULL_GAMES is the L10 window size, not a tuning knob.
+// ════════════════════════════════════════════════════════════════════
+const MODEL_WEIGHTS = {
+
+  // League average goals per team per game
+  // v5: bumped further after away gap persisted at +0.53/game in 19-game v3 sample
+  BASE_GOALS: 3.35,
+
+  // v8: true league scoring rate (goals per team per game). Anchor for the
+  // shrinkage below and for the opponent-defense term. Separate from BASE_GOALS.
+  LEAGUE_AVG_GOALS: 3.12,
+
+  // v8: season GF/GP and GA/GP are pulled toward LEAGUE_AVG_GOALS as if every
+  // team had this many extra league-average games: (goals + N*avg) / (GP + N)
+  SHRINK_GAMES: 20,
+
+  // v8: opponent defense. lambda *= (1-w) + w * (opponent shrunk GA/GP / LEAGUE_AVG_GOALS)
+  // REVIEW at 100 games: overlaps with opponent goalie SV% (GOALIE_SENSITIVITY held at 3.0)
+  DEFENSE_WEIGHT: 1.0,
+
+  // Season GF/game weight
+  // v3: shifted 0.10 weight to RECENT_FORM based on 15-game tracker analysis
+  SEASON_AVG_WEIGHT: 0.55,
+
+  // Rolling last-10 games GF/game weight
+  // v3: raised from 0.35 to 0.45 to better capture current team form late-season
+  RECENT_FORM_WEIGHT: 0.45,
+
+  // Home ice bonus
+  // v5: reduced further from 0.12 -> 0.08; away teams still under-predicted by +0.53/game
+  HOME_ICE_BONUS: 0.10,
+
+  // Confidence tier thresholds (win probability spread = |winPct - 0.5| * 2)
+  // v5: recalibrated — HIGH was 40% accurate vs LOW at 67% in 19-game sample
+  // A ~1.0 goal lambda edge was generating >25% spreads but is NOT a genuine edge
+  CONF_HIGH_THRESHOLD: 0.35,  // was 0.25; requires ~65/35 win prob split minimum
+  CONF_MED_THRESHOLD:  0.20,  // was 0.12; MED now catches former false-HIGH games
+
+  // Goalie adjustment — updated save% baseline to 2025-26 actual (~0.901)
+  LEAGUE_AVG_SAVE_PCT: 0.901,
+  GOALIE_SENSITIVITY: 3.0,
+
+  // Power play / penalty kill adjustment
+  LEAGUE_AVG_PP_PCT: 0.197,
+  LEAGUE_AVG_PK_PCT: 0.798,
+  LEAGUE_AVG_PIM: 8.5,
+  PP_SENSITIVITY: 3.5,   // optimizer best: 3.5
+  PK_SENSITIVITY: 1.5,
+  PIM_SENSITIVITY: 0.02,
+
+  // Back-to-back fatigue penalty
+  // v8: 0.10 -> 0.20 (backtest: home won 61% when only the away team was on a B2B, vs 50% baseline)
+  BACK_TO_BACK_PENALTY: 0.20,
+
+  // Injury penalty (manual toggle)
+  INJURY_PENALTY: 0.30,
+
+  // v8: early-season goalie prior (not from the backtest). Starter SV% is blended with his
+  // last-season SV%; last season's share = 1 - starts/PRIOR_GOALIE_FADE_STARTS (0 = off).
+  PRIOR_GOALIE_FADE_STARTS: 15,
+};
+
+// ════════════════════════════════════════════════════════════════════
+//  DIAGNOSTIC LOG
+// ════════════════════════════════════════════════════════════════════
+const DIAG = {
+  calls: [], gameWarnings: [], startTime: null,
+  record(entry) { this.calls.push(entry); this._updateTab(); },
+  recordGameWarning(gameId, away, home, reasons) {
+    if (reasons.length) this.gameWarnings.push({ gameId, away, home, reasons });
+    this._updateTab();
+  },
+  clear() { this.calls = []; this.gameWarnings = []; },
+  _updateTab() {
+    const n = this.calls.filter(c => !c.fromCache && c.status !== 200).length;
+    const tab = document.getElementById('diag-tab');
+    if (tab) tab.textContent = n > 0 ? ("\uD83D\uDD34 Diagnostics (" + n + " errors)") : "\u2705 Diagnostics";
+    const sec = document.getElementById('sec-diag');
+    if (sec && sec.classList.contains('active')) renderDiag();
+  }
+};
+
+// ════════════════════════════════════════════════════════════════════
+//  RUNTIME OVERRIDES — sliders write here; resets restore MODEL_WEIGHTS
+// ════════════════════════════════════════════════════════════════════
+let W = { ...MODEL_WEIGHTS };
+
+// ════════════════════════════════════════════════════════════════════
+//  CONSTANTS
+// ════════════════════════════════════════════════════════════════════
+const API_WEB = 'https://api-web.nhle.com/v1';
+const API_STATS = 'https://api.nhle.com/stats/rest/en';
+const LOGO_BASE = 'https://assets.nhle.com/logos/nhl/svg';
+// v8: season is derived from today's date (Sept–Dec -> this year, Jan–Aug -> last year),
+// so no yearly edit is needed. NHL game IDs start with SEASON_START_YEAR.
+const SEASON_START_YEAR = (() => { const d = new Date(); return d.getMonth() >= 8 ? d.getFullYear() : d.getFullYear() - 1; })();
+const SEASON = `${SEASON_START_YEAR}${SEASON_START_YEAR + 1}`;
+const PRIOR_SEASON = `${SEASON_START_YEAR - 1}${SEASON_START_YEAR}`;
+const CACHE_KEY_PREFIX = 'nhl_cache_';
+
+// ════════════════════════════════════════════════════════════════════
+//  CACHE HELPERS (daily TTL — resets at midnight)
+// ════════════════════════════════════════════════════════════════════
+function cacheGet(key) {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY_PREFIX + key);
+    if (!raw) return null;
+    const { data, date } = JSON.parse(raw);
+    const today = new Date().toDateString();
+    return date === today ? data : null;
+  } catch { return null; }
+}
+
+function cacheSet(key, data) {
+  try {
+    localStorage.setItem(CACHE_KEY_PREFIX + key, JSON.stringify({ data, date: new Date().toDateString() }));
+  } catch {}
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  FETCH WRAPPER
+//  All NHL API calls go through this function. It:
+//    1. Checks localStorage for a same-day cached result first
+//    2. Deduplicates concurrent identical requests (inFlight map)
+//    3. Routes the request through proxy.js to bypass CORS
+//    4. Logs every call to the DIAG object for the Diagnostics tab
+//    5. Returns { data, warning } — warning:true means the call failed
+//  If proxy.js is not running, all calls return { data:null, warning:true }
+//  and the dashboard falls back to mock data.
+// ════════════════════════════════════════════════════════════════════
+const LOCAL_PROXY = 'http://localhost:3001/proxy';
+const DATA_ENDPOINT = 'http://localhost:3001/data';
+const DISCORD_ENDPOINT = 'http://localhost:3001/discord';
+const inFlight = new Map(); // deduplicates concurrent identical requests
+
+function proxied(targetUrl) {
+  return `${LOCAL_PROXY}?url=${encodeURIComponent(targetUrl)}`;
+}
+
+async function apiFetch(url, cacheKey) {
+  // 1. Check localStorage cache first
+  if (cacheKey) {
+    const cached = cacheGet(cacheKey);
+    if (cached) {
+      DIAG.record({ url, cacheKey, status: 200, ms: 0, fromCache: true, error: null });
+      return { data: cached, warning: false };
+    }
+  }
+
+  // 2. Deduplicate: if same URL is already in-flight, wait for it
+  const dedupKey = cacheKey || url;
+  if (inFlight.has(dedupKey)) {
+    return inFlight.get(dedupKey);
+  }
+
+  // 3. Make the request and register it
+  const promise = (async () => {
+    const t0 = Date.now();
+    try {
+      const res = await fetch(proxied(url), { signal: AbortSignal.timeout(10000) });
+      const ms = Date.now() - t0;
+      if (!res.ok) {
+        DIAG.record({ url, cacheKey: cacheKey||null, status: res.status, ms, fromCache: false, error: 'HTTP ' + res.status });
+        throw new Error('HTTP ' + res.status);
+      }
+      const data = await res.json();
+      if (cacheKey) cacheSet(cacheKey, data);
+      DIAG.record({ url, cacheKey: cacheKey||null, status: 200, ms, fromCache: false, error: null });
+      return { data, warning: false };
+    } catch (e) {
+      const ms = Date.now() - t0;
+      if (!DIAG.calls.find(c => c.url === url && c.error)) {
+        DIAG.record({ url, cacheKey: cacheKey||null, status: 0, ms, fromCache: false, error: e.message });
+      }
+      console.warn('Proxy fetch failed (is proxy.js running?):', e.message);
+      return { data: null, warning: true };
+    } finally {
+      inFlight.delete(dedupKey);
+    }
+  })();
+
+  inFlight.set(dedupKey, promise);
+  return promise;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  PROBABILITY MODEL — Poisson (exact)
+//
+//  Hockey goals per game follow a Poisson distribution: given a team's
+//  expected goal rate λ (lambda), the probability of scoring exactly k
+//  goals is: P(k) = (λ^k * e^-λ) / k!
+//
+//  We compute λ for each team via calcLambda(), then:
+//    - poissonPMF()    : exact probability of a specific scoreline
+//    - runMonteCarlo() : exact win probabilities (name kept from the old 10,000-sim version)
+//    - scoreMatrix()   : build an 8x8 grid of joint scoreline probabilities
+//                        (used for the heatmap in the detail panel)
+// ════════════════════════════════════════════════════════════════════
+function poissonPMF(k, lambda) {
+  if (lambda <= 0) return k === 0 ? 1 : 0;
+  let logP = k * Math.log(lambda) - lambda;
+  for (let i = 1; i <= k; i++) logP -= Math.log(i);
+  return Math.exp(logP);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  WIN PROBABILITY — exact calculation (v8; replaces 10,000 random sims)
+//  Sums the Poisson score distribution directly over 0-25 goals a side.
+//  A tie after regulation is split 50/50 (OT/SO coin flip), as before.
+//  Same inputs always give the same output — no reload-to-reload wobble.
+// ════════════════════════════════════════════════════════════════════
+function runMonteCarlo(lambdaA, lambdaB) {
+  const MAX_GOALS = 25;
+  const la = Math.max(0.1, lambdaA);   // away
+  const lb = Math.max(0.1, lambdaB);   // home
+  let homeWin = 0, tie = 0, awayBelow = 0;   // awayBelow = P(away scores fewer than h)
+  for (let h = 0; h <= MAX_GOALS; h++) {
+    const pAway = poissonPMF(h, la);
+    const pHome = poissonPMF(h, lb);
+    homeWin += pHome * awayBelow;
+    tie += pAway * pHome;
+    awayBelow += pAway;
+  }
+  const winPctHome = homeWin + 0.5 * tie;
+  return {
+    winPctAway: 1 - winPctHome,
+    winPctHome,
+    predGoalsAway: Math.round(la * 10) / 10,
+    predGoalsHome: Math.round(lb * 10) / 10,
+  };
+}
+
+// Score probability matrix (for heatmap)
+function scoreMatrix(lambdaA, lambdaB, maxGoals = 7) {
+  const mat = [];
+  for (let a = 0; a <= maxGoals; a++) {
+    const row = [];
+    for (let b = 0; b <= maxGoals; b++) {
+      row.push(poissonPMF(a, lambdaA) * poissonPMF(b, lambdaB));
+    }
+    mat.push(row);
+  }
+  return mat;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  LAMBDA CALCULATION
+//  Computes λ (expected goals) for one team in one game.
+//
+//  Inputs:
+//    team         — { seasonGF, recentGF, recentN, ppPct, pkPct, pim }
+//    isHome       — boolean, adds HOME_ICE_BONUS if true
+//    opponentGoalie — { savePct } of the opposing goalie
+//    opts         — { injuryActive, isB2B, opponentGA } situational flags + opponent's shrunk GA/GP
+//
+//  Pipeline: base → season/recent blend → opp. defense → goalie adj → PP/PK adj
+//            → home ice → B2B penalty → injury penalty
+//  Also returns a `factors` array for the λ breakdown table in the UI.
+// ════════════════════════════════════════════════════════════════════
+// v8.1: games needed before recent form is taken at face value (the L10 window size)
+const RECENT_FORM_FULL_GAMES = 10;
+
+function calcLambda(team, isHome, opponentGoalie, opts = {}) {
+  const { injuryActive = false, isB2B = false, opponentGA = null } = opts;
+  const factors = [];
+
+  // Base
+  const base = W.BASE_GOALS;
+
+  // Season avg component
+  const seasonGF = team.seasonGF || W.BASE_GOALS;
+  const seasonComponent = (seasonGF / W.BASE_GOALS);
+  
+  // Recent form component
+  // v8.1: trust recent form in proportion to its sample. With n of 10 games available,
+  // n/10 of the raw L10 rate is used and the rest is filled with the shrunk season rate.
+  const recentRaw = team.recentGF || seasonGF;
+  const recentN = Math.max(0, Math.min(RECENT_FORM_FULL_GAMES, team.recentN ?? RECENT_FORM_FULL_GAMES));
+  const recentTrust = recentN / RECENT_FORM_FULL_GAMES;
+  const recentGF = recentTrust * recentRaw + (1 - recentTrust) * seasonGF;
+  const recentComponent = (recentGF / W.BASE_GOALS);
+
+  // Blend: season + recent
+  let lambdaBlend = W.SEASON_AVG_WEIGHT * seasonComponent + W.RECENT_FORM_WEIGHT * recentComponent;
+
+  let lambda = base * lambdaBlend;
+
+  factors.push({ label: 'Season GF/GP', raw: seasonGF.toFixed(2), contrib: (base * W.SEASON_AVG_WEIGHT * seasonComponent - base * W.SEASON_AVG_WEIGHT).toFixed(3), sign: seasonComponent > 1 ? 'pos' : seasonComponent < 1 ? 'neg' : 'neu' });
+  factors.push({ label: recentN < RECENT_FORM_FULL_GAMES ? `Recent Form (L10, ${recentN} GP)` : 'Recent Form (L10)', raw: recentGF.toFixed(2), contrib: (base * W.RECENT_FORM_WEIGHT * recentComponent - base * W.RECENT_FORM_WEIGHT).toFixed(3), sign: recentComponent > 1 ? 'pos' : recentComponent < 1 ? 'neg' : 'neu' });
+
+  // v8: opponent defense — scale by how the opponent's (shrunk) GA/GP compares to league average
+  if (opponentGA != null && isFinite(opponentGA) && W.LEAGUE_AVG_GOALS > 0) {
+    const defMod = (1 - W.DEFENSE_WEIGHT) + W.DEFENSE_WEIGHT * (opponentGA / W.LEAGUE_AVG_GOALS);
+    factors.push({ label: 'Opp. Defense (GA/GP)', raw: opponentGA.toFixed(2), contrib: ((defMod - 1) * lambda).toFixed(3), sign: defMod > 1 ? 'pos' : defMod < 1 ? 'neg' : 'neu' });
+    lambda *= defMod;
+  }
+
+  // Goalie adjustment (reduces opponent's λ)
+  let goalieAdj = 1.0;
+  if (opponentGoalie && opponentGoalie.savePct != null) {
+    const svDiff = opponentGoalie.savePct - W.LEAGUE_AVG_SAVE_PCT;
+    goalieAdj = 1 - svDiff * W.GOALIE_SENSITIVITY;
+    factors.push({ label: 'Opp. Goalie SV%', raw: opponentGoalie.savePct.toFixed(3), contrib: ((goalieAdj - 1) * lambda).toFixed(3), sign: goalieAdj < 1 ? 'neg' : goalieAdj > 1 ? 'pos' : 'neu' });
+  }
+  lambda *= goalieAdj;
+
+  // PP/PK adjustment
+  const ppPct = team.ppPct || W.LEAGUE_AVG_PP_PCT;
+  const pkPct = team.pkPct || W.LEAGUE_AVG_PK_PCT;
+  const pim = team.pim || W.LEAGUE_AVG_PIM;
+  const ppMod = 1 + (ppPct - W.LEAGUE_AVG_PP_PCT) * W.PP_SENSITIVITY;
+  const pkMod = 1 + (pkPct - W.LEAGUE_AVG_PK_PCT) * W.PK_SENSITIVITY;
+  const pimMod = 1 - (pim - W.LEAGUE_AVG_PIM) * W.PIM_SENSITIVITY;
+  const ppPkMod = ppMod * pkMod * pimMod;
+  factors.push({ label: 'PP/PK Efficiency', raw: `PP:${(ppPct*100).toFixed(1)}% PK:${(pkPct*100).toFixed(1)}%`, contrib: ((ppPkMod - 1) * lambda).toFixed(3), sign: ppPkMod > 1 ? 'pos' : ppPkMod < 1 ? 'neg' : 'neu' });
+  lambda *= ppPkMod;
+
+  // Home ice
+  let homeBonus = 0;
+  if (isHome) {
+    homeBonus = W.HOME_ICE_BONUS;
+    lambda += homeBonus;
+    factors.push({ label: 'Home Ice Bonus', raw: `+${W.HOME_ICE_BONUS}`, contrib: `+${W.HOME_ICE_BONUS.toFixed(3)}`, sign: 'pos' });
+  }
+
+  // Back-to-back
+  if (isB2B) {
+    lambda -= W.BACK_TO_BACK_PENALTY;
+    factors.push({ label: 'Back-to-Back Fatigue', raw: `-${W.BACK_TO_BACK_PENALTY}`, contrib: `-${W.BACK_TO_BACK_PENALTY.toFixed(3)}`, sign: 'neg' });
+  }
+
+  // Injury
+  if (injuryActive) {
+    lambda -= W.INJURY_PENALTY;
+    factors.push({ label: 'Injury Penalty', raw: `-${W.INJURY_PENALTY}`, contrib: `-${W.INJURY_PENALTY.toFixed(3)}`, sign: 'neg' });
+  }
+
+  return { lambda: Math.max(0.3, lambda), factors };
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  CONFIDENCE LABEL
+// ════════════════════════════════════════════════════════════════════
+function confidenceLabel(winPct) {
+  const spread = Math.abs(winPct - 0.5) * 2;
+  if (spread > W.CONF_HIGH_THRESHOLD) return { label: 'HIGH CONFIDENCE', cls: 'conf-high' };
+  if (spread > W.CONF_MED_THRESHOLD)  return { label: 'MEDIUM CONFIDENCE', cls: 'conf-med' };
+  return { label: 'LOW CONFIDENCE', cls: 'conf-low' };
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  INJURY STATE (localStorage)
+// ════════════════════════════════════════════════════════════════════
+function getInjuryState(gameId, abbrev) {
+  try {
+    const raw = localStorage.getItem(`nhl_injury_${gameId}_${abbrev}`);
+    return raw === 'true';
+  } catch { return false; }
+}
+
+function setInjuryState(gameId, abbrev, val) {
+  try { localStorage.setItem(`nhl_injury_${gameId}_${abbrev}`, String(val)); } catch {}
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  GLOBAL STATE
+//  These are the live runtime variables that hold fetched data and
+//  UI state. All are populated during init() and mutated by user actions.
+// ════════════════════════════════════════════════════════════════════
+let gamesData = [];       // enriched game objects
+let standingsData = [];
+let goalieLookup = {};    // abbrev -> goalie
+let teamStatLookup = {};  // abbrev -> stats
+let expandedGameId = null;
+let predictionCache = {}; // gameId+injuryKey → prediction, cleared when weights/injuries change
+
+// ════════════════════════════════════════════════════════════════════
+//  FETCH: TODAY'S SCHEDULE
+// ════════════════════════════════════════════════════════════════════
+async function fetchSchedule() {
+  const { data, warning } = await apiFetch(`${API_WEB}/schedule/now`, 'schedule_now');
+  if (!data) return { games: [], warning: true };
+
+  const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD
+  const gameWeek = data.gameWeek || [];
+
+  // Log every entry so we can see what the API actually returned
+  console.log('[schedule] Raw gameWeek entries:', gameWeek.map(e => ({
+    date: e.date,
+    games: (e.games||[]).map(g => ({ id: g.id, gameType: g.gameType, state: g.gameState, away: g.awayTeam?.abbrev, home: g.homeTeam?.abbrev }))
+  })));
+
+  // Match today's date — no fallback, wrong-date games are worse than no games
+  const todayEntry = gameWeek.find(e => e.date === todayStr);
+  if (!todayEntry) {
+    console.warn(`[schedule] Today (${todayStr}) not found in gameWeek. Dates available: ${gameWeek.map(e => e.date).join(', ')}`);
+    return { games: [], warning: false };
+  }
+
+  const allGames = todayEntry.games || [];
+
+  // Accept gameType 2 (regular season) AND 3 (playoffs) — filter out only pre-season (1) and all-star (other)
+  const games = allGames.filter(g => g.gameType === 2 || g.gameType === 3);
+
+  // Store raw data for the diagnostic panel
+  window._schedDiag = {
+    todayStr,
+    matchedDate: todayEntry.date,
+    allGameWeekDates: gameWeek.map(e => e.date),
+    allGames: allGames.map(g => ({ id: g.id, gameType: g.gameType, state: g.gameState, away: g.awayTeam?.abbrev, home: g.homeTeam?.abbrev })),
+    filteredCount: games.length,
+  };
+
+  console.log(`[schedule] Matched date: ${todayEntry.date} | all games: ${allGames.length} | type-2/3 games: ${games.length}`);
+  return { games, warning, scheduleDate: todayEntry.date };
+}
+
+
+// ════════════════════════════════════════════════════════════════════
+//  FETCH: STANDINGS (team GF/GA/PP/PK)
+// ════════════════════════════════════════════════════════════════════
+async function fetchStandings() {
+  const { data, warning } = await apiFetch(`${API_WEB}/standings/now`, 'standings_now');
+  if (!data) return { teams: [], warning: true };
+  const teams = (data.standings || []).map(t => ({
+    abbrev: t.teamAbbrev?.default || '',
+    name: t.teamName?.default || '',
+    gp: t.gamesPlayed || 0,
+    // v8: games played in the CURRENT season (0 if the API is still serving last season's table)
+    curGP: (t.seasonId != null && String(t.seasonId) !== SEASON) ? 0 : (t.gamesPlayed || 0),
+    wins: t.wins || 0,
+    losses: t.losses || 0,
+    otl: t.otLosses || 0,
+    points: t.points || 0,
+    gf: t.goalFor || 0,
+    ga: t.goalAgainst || 0,
+    gfPG: t.goalFor / (t.gamesPlayed || 1),
+    gaPG: t.goalAgainst / (t.gamesPlayed || 1),
+    ppPct: (t.powerPlayPct || 0) / 100,
+    pkPct: (t.penaltyKillPct || 0) / 100,
+    l10: `${t.l10Wins || 0}-${t.l10Losses || 0}-${t.l10OtLosses || 0}`,
+    streak: t.streakCode || '',
+  }));
+  return { teams, warning };
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  v8: SHRUNK SEASON RATINGS
+//  Season GF/GP and GA/GP are pulled toward league average so that a
+//  1-5 game sample is not taken at face value:
+//    (goals + SHRINK_GAMES * LEAGUE_AVG_GOALS) / (GP + SHRINK_GAMES)
+//  Computed at prediction time so the sliders take effect immediately.
+//  The standings tab still shows the raw numbers.
+// ════════════════════════════════════════════════════════════════════
+function shrunkRatings(stats) {
+  if (!stats) return { gf: null, ga: null };
+  // Mock/demo data has per-game averages only — use them as-is
+  if (stats.gf == null || stats.gp == null) return { gf: stats.gfPG ?? null, ga: stats.gaPG ?? null };
+  const n = Math.max(0, W.SHRINK_GAMES), avg = W.LEAGUE_AVG_GOALS;
+  const denom = stats.gp + n;
+  if (!(denom > 0)) return { gf: null, ga: null };
+  return {
+    gf: (stats.gf + n * avg) / denom,
+    ga: (stats.ga + n * avg) / denom,
+  };
+}
+
+// Early-season share given to last season's number (used for goalie SV% only)
+function priorShare(played, fadeOver) {
+  if (!(fadeOver > 0)) return 0;
+  return Math.max(0, Math.min(1, 1 - (played || 0) / fadeOver));
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  FETCH: GOALIE SUMMARY
+// ════════════════════════════════════════════════════════════════════
+async function fetchGoalies() {
+  const { data, warning } = await apiFetch(
+    `${API_STATS}/goalie/summary?cayenneExp=seasonId=${SEASON}&sort=gamesStarted&dir=DESC&limit=100`,
+    'goalies_summary'
+  );
+  // v8: last season's goalie numbers, used as the early-season prior
+  const { data: priorData } = await apiFetch(
+    `${API_STATS}/goalie/summary?cayenneExp=seasonId=${PRIOR_SEASON}%20and%20gameTypeId=2&sort=gamesStarted&dir=DESC&limit=100`,
+    `goalies_summary_${PRIOR_SEASON}`
+  );
+  if (!data && !priorData) return { lookup: {}, warning: true };
+  const lookup = {};
+  // NHL API returns names as either plain strings or {default:'...'} objects
+  const nameStr = val => (val && typeof val === 'object') ? (val.default || '') : (val || '');
+  const teamOf = g => {
+    // teamAbbrevs can also be a comma-separated string for multi-team stints — take last team
+    const abbrevRaw = nameStr(g.teamAbbrevs) || g.teamAbbrevs || '';
+    return abbrevRaw.includes(',') ? abbrevRaw.split(',').pop().trim() : abbrevRaw.trim();
+  };
+  const fullName = g => {
+    const firstName = nameStr(g.firstName) || nameStr(g.goalieFullName || g.skaterFullName || '').split(' ')[0] || '';
+    const lastName  = nameStr(g.lastName)  || nameStr(g.goalieFullName || g.skaterFullName || '').split(' ').slice(1).join(' ') || '';
+    return `${firstName} ${lastName}`.trim() || 'Unknown Goalie';
+  };
+
+  // Prior-season lookups: by player (follows a goalie to a new team) and top starter by team
+  const MIN_PRIOR_STARTS = 10;  // fewer starts than this last season -> use league average as the prior
+  const priorById = {}, priorStarter = {};
+  (priorData?.data || []).forEach(g => {
+    const gs = g.gamesStarted || 0;
+    if (g.playerId != null) priorById[g.playerId] = { savePct: g.savePct, gs };
+    const abbrev = teamOf(g);
+    if (abbrev && (!priorStarter[abbrev] || gs > priorStarter[abbrev].gs)) priorStarter[abbrev] = { g, gs };
+  });
+  const priorSv = g => {
+    const p = priorById[g.playerId];
+    return (p && p.gs >= MIN_PRIOR_STARTS && p.savePct) ? p.savePct : W.LEAGUE_AVG_SAVE_PCT;
+  };
+
+  (data?.data || []).forEach(g => {
+    const abbrev = teamOf(g);
+    if (!abbrev) return;
+    if (!lookup[abbrev] || (g.gamesStarted || 0) > (lookup[abbrev]?.gs || 0)) {
+      const gs = g.gamesStarted || 0;
+      const rawSv = g.savePct || W.LEAGUE_AVG_SAVE_PCT;
+      const w = priorShare(gs, W.PRIOR_GOALIE_FADE_STARTS);
+      lookup[abbrev] = {
+        name: fullName(g),
+        savePct: w * priorSv(g) + (1 - w) * rawSv,
+        rawSavePct: rawSv,
+        priorWt: w,
+        gs,
+      };
+    }
+  });
+
+  // Teams with no goalie on the board yet this season: assume last season's top starter
+  if (W.PRIOR_GOALIE_FADE_STARTS > 0) {
+    Object.entries(priorStarter).forEach(([abbrev, { g }]) => {
+      if (lookup[abbrev]) return;
+      lookup[abbrev] = { name: fullName(g), savePct: priorSv(g), rawSavePct: null, priorWt: 1, gs: 0 };
+    });
+  }
+  return { lookup, warning: warning || !data };
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  FETCH: RECENT FORM
+//  Fetches last-10-game goal averages for all 32 teams in ONE API call,
+//  avoiding the 10+ per-game boxscore requests that were originally used.
+//
+//  Two-step pattern:
+//    loadRecentFormBulk() — called once at startup, fills recentFormCache
+//    fetchRecentForm(abbrev) — synchronous lookup from the cache
+//
+//  Fallback: if the last-10-games filter returns no data, the full-season
+//  GF average is used instead (still a useful signal).
+//
+//  Note: the NHL stats API returns teamId rather than abbreviation, so
+//  NHL_TEAM_ID_TO_ABBREV is used to map IDs to the 3-letter codes used
+//  everywhere else in the dashboard.
+// ════════════════════════════════════════════════════════════════════
+
+// NHL team IDs are stable — maps teamId (from stats API) → abbrev
+const NHL_TEAM_ID_TO_ABBREV = {
+  1:'NJD', 2:'NYI', 3:'NYR', 4:'PHI', 5:'PIT', 6:'BOS', 7:'BUF', 8:'MTL',
+  9:'OTT', 10:'TOR', 12:'CAR', 13:'FLA', 14:'TBL', 15:'WSH', 16:'CHI',
+  17:'DET', 18:'NSH', 19:'STL', 20:'CGY', 21:'COL', 22:'EDM', 23:'VAN',
+  24:'ANA', 25:'DAL', 26:'LAK', 28:'SJS', 29:'CBJ', 30:'MIN', 52:'WPG',
+  53:'ARI', 54:'VGK', 55:'SEA', 59:'UTA',
+};
+let recentFormCache = null;
+
+async function loadRecentFormBulk() {
+  if (recentFormCache) return { warning: false };
+
+  // The NHL stats API ignores lastXGames/last10Games filters and always returns
+  // full season totals. Instead, walk back through the league schedule for the
+  // last 21 days and compute each team's actual last-10-game GF/GP from scores.
+  console.log('[recentForm] Fetching L10 form from real game scores...');
+
+  const allGames = [];
+  const today = new Date();
+  for (let d = 1; d <= 45; d++) {
+    const dt = new Date(today);
+    dt.setDate(today.getDate() - d);
+    const dateStr = dt.toISOString().slice(0, 10);
+    const { data } = await apiFetch(`${API_WEB}/schedule/${dateStr}`, `sched_${dateStr}`);
+    if (!data) continue;
+    const gameWeek = data.gameWeek || [];
+    const dayEntry = gameWeek.find(e => e.date === dateStr) || gameWeek[0];
+    const dayGames = (dayEntry?.games || []).filter(g =>
+      (g.gameType === 2 || g.gameType === 3) &&
+      g.gameState === 'OFF' &&
+      g.homeTeam?.score != null &&
+      g.awayTeam?.score != null
+    );
+    allGames.push(...dayGames);
+  }
+
+  if (!allGames.length) {
+    // Hard fallback: use season averages
+    console.warn('[recentForm] No games found — falling back to season avg');
+    const { data: d2, warning: w2 } = await apiFetch(
+      `${API_STATS}/team/summary?cayenneExp=seasonId=${SEASON}%20and%20gameTypeId=2&sort=goalsForPerGame&dir=DESC&limit=40`,
+      `team_season_summary_${SEASON}`
+    );
+    if (!d2?.data?.length) return { warning: true };
+    recentFormCache = {};
+    d2.data.forEach(t => {
+      const abbrev = NHL_TEAM_ID_TO_ABBREV[t.teamId] || (t.teamAbbrevs || t.teamAbbrev || '').toString().trim().toUpperCase();
+      if (!abbrev) return;
+      recentFormCache[abbrev] = { gfPG: t.goalsForPerGame ?? (t.goalsFor / (t.gamesPlayed || 1)), n: Math.min(10, t.gamesPlayed ?? 10) };
+    });
+    return { warning: w2 };
+  }
+
+  // Sort newest first, take each team's last 10 completed games
+  allGames.sort((a, b) => (b.gameDate || '').localeCompare(a.gameDate || ''));
+  const teamGoals = {};
+  for (const g of allGames) {
+    const away = g.awayTeam?.abbrev;
+    const home = g.homeTeam?.abbrev;
+    if (away) {
+      if (!teamGoals[away]) teamGoals[away] = [];
+      if (teamGoals[away].length < 10) teamGoals[away].push(g.awayTeam.score);
+    }
+    if (home) {
+      if (!teamGoals[home]) teamGoals[home] = [];
+      if (teamGoals[home].length < 10) teamGoals[home].push(g.homeTeam.score);
+    }
+  }
+
+  recentFormCache = {};
+  for (const [abbrev, goals] of Object.entries(teamGoals)) {
+    if (goals.length > 0) {
+      recentFormCache[abbrev] = { gfPG: goals.reduce((s, g) => s + g, 0) / goals.length, n: goals.length };
+    }
+  }
+
+  console.log(`[recentForm] Computed L10 for ${Object.keys(recentFormCache).length} teams from ${allGames.length} games`);
+  return { warning: false };
+}
+
+function fetchRecentForm(abbrev) {
+  if (!recentFormCache || !recentFormCache[abbrev]) return { gfPG: null, n: 0, warning: false };
+  return { gfPG: recentFormCache[abbrev].gfPG, n: recentFormCache[abbrev].n ?? 10, warning: false };
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  FETCH: BACK-TO-BACK DETECTION
+// ════════════════════════════════════════════════════════════════════
+async function detectB2B(abbrev) {
+  const { data } = await apiFetch(`${API_WEB}/club-schedule/${abbrev}/week/now`, `week_${abbrev}`);
+  if (!data) return false;
+  const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+  const yStr = yesterday.toISOString().slice(0, 10);
+  const games = data.games || [];
+  return games.some(g => g.gameDate === yStr && g.gameState === 'OFF');
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  BUILD GAME PREDICTION
+// ════════════════════════════════════════════════════════════════════
+function buildPrediction(game) {
+  const away = game.awayTeam?.abbrev;
+  const home = game.homeTeam?.abbrev;
+
+  const awayStats = teamStatLookup[away] || {};
+  const homeStats = teamStatLookup[home] || {};
+  const awayGoalie = goalieLookup[away] || null;
+  const homeGoalie = goalieLookup[home] || null;
+
+  const awayInjury = getInjuryState(game.id, away);
+  const homeInjury = getInjuryState(game.id, home);
+
+  // v8: shrunk season ratings; missing L10 falls back to the shrunk season GF
+  const awayR = shrunkRatings(awayStats);
+  const homeR = shrunkRatings(homeStats);
+
+  const { lambda: lambdaAway, factors: factorsAway } = calcLambda(
+    { seasonGF: awayR.gf, recentGF: awayStats.recentGF ?? awayR.gf, recentN: awayStats.recentN, ppPct: awayStats.ppPct, pkPct: awayStats.pkPct, pim: awayStats.pim },
+    false,
+    homeGoalie,
+    { injuryActive: awayInjury, isB2B: game.awayB2B, opponentGA: homeR.ga }
+  );
+
+  const { lambda: lambdaHome, factors: factorsHome } = calcLambda(
+    { seasonGF: homeR.gf, recentGF: homeStats.recentGF ?? homeR.gf, recentN: homeStats.recentN, ppPct: homeStats.ppPct, pkPct: homeStats.pkPct, pim: homeStats.pim },
+    true,
+    awayGoalie,
+    { injuryActive: homeInjury, isB2B: game.homeB2B, opponentGA: awayR.ga }
+  );
+
+  const mc = runMonteCarlo(lambdaAway, lambdaHome);
+
+  return { lambdaAway, lambdaHome, factorsAway, factorsHome, ...mc, awayGoalie, homeGoalie };
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  RENDER: GAME CARD
+// ════════════════════════════════════════════════════════════════════
+function renderGameCard(game) {
+  const away = game.awayTeam?.abbrev || '';
+  const home = game.homeTeam?.abbrev || '';
+  const injKey = (getInjuryState(game.id, away) ? 1 : 0) + '' + (getInjuryState(game.id, home) ? 1 : 0);
+  // Cache key includes injury state so toggling re-predicts only that game.
+  // Cache is cleared globally when model weights change (renderSettings),
+  // and per-game when an injury toggle fires (toggleInjury).
+  const cacheKey = game.id + '_' + injKey;
+  if (!predictionCache[cacheKey]) predictionCache[cacheKey] = buildPrediction(game);
+  const pred = predictionCache[cacheKey];
+  const awayName = game.awayTeam?.name?.default || away;
+  const homeName = game.homeTeam?.name?.default || home;
+  const conf = confidenceLabel(pred.winPctAway);
+  const awayWinPct = Math.round(pred.winPctAway * 100);
+  const homeWinPct = Math.round(pred.winPctHome * 100);
+
+  const awayInjury = getInjuryState(game.id, away);
+  const homeInjury = getInjuryState(game.id, home);
+
+  const awayIsWinner = awayWinPct > homeWinPct;
+  const homeIsWinner = homeWinPct > awayWinPct;
+
+  const gameTime = game.startTimeUTC
+    ? new Date(game.startTimeUTC).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    : 'TBD';
+
+  const warnHtml = (game.warning && game.warnReasons?.length)
+    ? `<span class="warn-badge" style="cursor:pointer" 
+        title="Missing: ${(game.warnReasons||[]).join(', ')}"
+        onclick="event.stopPropagation();showWarnDetail(${JSON.stringify(game.warnReasons||[])})">
+        ⚠️ LIMITED DATA — tap for details
+       </span>`
+    : '';
+
+  return `
+  <div class="game-card ${expandedGameId === game.id ? 'expanded' : ''}" id="card-${game.id}" data-game-id="${game.id}" onclick="toggleCard(${game.id})">
+    <div class="card-header">
+      <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:2px;">GAME #${game.id}</span>
+      ${warnHtml}
+      <span class="game-status">🕐 ${gameTime} ET</span>
+    </div>
+    <div class="card-body">
+      <div class="teams-row">
+        <div class="team-side away">
+          <div class="team-logo-wrap">
+            <img src="${LOGO_BASE}/${away}_dark.svg" onerror="this.style.display='none'" alt="${away}">
+          </div>
+          <div class="team-info">
+            <div class="team-abbrev ${awayIsWinner ? 'predicted-winner' : ''}">${away}</div>
+            <div class="team-name">${awayName}</div>
+            <div class="team-tag">AWAY</div>
+            ${game.awayB2B ? `<div class="b2b-badge">⚡ B2B</div>` : ''}
+          </div>
+        </div>
+        <div class="vs-block">
+          <div class="vs-label">PREDICTED</div>
+          <div class="vs-score">${pred.predGoalsAway} – ${pred.predGoalsHome}</div>
+          <div class="vs-label">FINAL SCORE</div>
+        </div>
+        <div class="team-side home">
+          <div class="team-logo-wrap">
+            <img src="${LOGO_BASE}/${home}_dark.svg" onerror="this.style.display='none'" alt="${home}">
+          </div>
+          <div class="team-info" style="text-align:right;">
+            <div class="team-abbrev ${homeIsWinner ? 'predicted-winner' : ''}">${home}</div>
+            <div class="team-name">${homeName}</div>
+            <div class="team-tag">HOME</div>
+            ${game.homeB2B ? `<div class="b2b-badge">⚡ B2B</div>` : ''}
+          </div>
+        </div>
+      </div>
+
+      <div class="prob-section">
+        <div class="prob-labels">
+          <span class="prob-num ${awayIsWinner ? '' : 'dim'}">${awayWinPct}%</span>
+          <div class="conf-badge"><span class="${conf.cls}">${conf.label}</span></div>
+          <span class="prob-num ${homeIsWinner ? '' : 'dim'}">${homeWinPct}%</span>
+        </div>
+      </div>
+
+      <div class="goalie-row">
+        <div class="goalie-chip">
+          <div class="goalie-name">🥅 ${pred.awayGoalie?.name || 'N/A'}</div>
+          <div class="goalie-sv">SV% ${pred.awayGoalie ? (pred.awayGoalie.savePct * 100).toFixed(1) : 'N/A'}</div>
+        </div>
+        <div class="goalie-chip" style="text-align:right;">
+          <div class="goalie-name">🥅 ${pred.homeGoalie?.name || 'N/A'}</div>
+          <div class="goalie-sv">SV% ${pred.homeGoalie ? (pred.homeGoalie.savePct * 100).toFixed(1) : 'N/A'}</div>
+        </div>
+      </div>
+
+      <div class="injury-row" onclick="event.stopPropagation()">
+        <div class="injury-toggle ${awayInjury ? 'active' : ''}" id="inj-${game.id}-${away}" onclick="toggleInjury(${game.id},'${away}')">
+          <span class="toggle-label">🏥 ${away} Injury</span>
+          <div class="injury-switch"></div>
+        </div>
+        <div class="injury-toggle ${homeInjury ? 'active' : ''}" id="inj-${game.id}-${home}" onclick="toggleInjury(${game.id},'${home}')">
+          <span class="toggle-label">🏥 ${home} Injury</span>
+          <div class="injury-switch"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-panel ${expandedGameId === game.id ? 'open' : ''}" id="detail-${game.id}" onclick="event.stopPropagation()">
+      <div class="detail-inner">
+        ${renderDetailPanel(game, pred)}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  RENDER: DETAIL PANEL
+// ════════════════════════════════════════════════════════════════════
+function renderDetailPanel(game, pred) {
+  const away = game.awayTeam?.abbrev || '';
+  const home = game.homeTeam?.abbrev || '';
+
+  const renderLambdaTable = (abbrev, lambda, factors) => `
+    <div class="lambda-table">
+      <div class="lambda-table-head">
+        <span>${abbrev}</span>
+        <span class="lambda-total">λ = ${lambda.toFixed(3)}</span>
+      </div>
+      ${factors.map(f => `
+        <div class="lambda-row">
+          <span class="lambda-factor">${f.label}</span>
+          <span class="lambda-val ${f.sign}">${f.sign === 'pos' ? '+' : ''}${f.contrib}</span>
+        </div>
+      `).join('')}
+    </div>`;
+
+  // Score heatmap
+  const mat = scoreMatrix(pred.lambdaAway, pred.lambdaHome, 7);
+  const maxP = Math.max(...mat.flat());
+
+  const heatmapRows = () => {
+    let html = `<div class="heatmap-grid" style="grid-template-columns: 28px repeat(8, 1fr)">`;
+    // Header row
+    html += `<div class="heatmap-header-cell"></div>`;
+    for (let b = 0; b <= 7; b++) html += `<div class="heatmap-header-cell">${b}</div>`;
+    // Data rows
+    for (let a = 0; a <= 7; a++) {
+      html += `<div class="heatmap-header-cell">${a}</div>`;
+      for (let b = 0; b <= 7; b++) {
+        const p = mat[a][b];
+        const pct = (p * 100).toFixed(1);
+        html += `<div class="heatmap-cell" title="${away} ${a} – ${home} ${b}: ${pct}%"
+          style="background:rgba(79,195,247,${(p/maxP).toFixed(3)})">
+          ${pct}%
+        </div>`;
+      }
+    }
+    html += `</div>`;
+    return html;
+  };
+
+  return `
+    <h4>LAMBDA (λ) BREAKDOWN</h4>
+    <div class="lambda-tables">
+      ${renderLambdaTable(away, pred.lambdaAway, pred.factorsAway)}
+      ${renderLambdaTable(home, pred.lambdaHome, pred.factorsHome)}
+    </div>
+
+    <h4>SCORE PROBABILITY HEATMAP</h4>
+    <div class="heatmap-section">
+      <div class="heatmap-label">↕ ${away} Goals (rows) vs ${home} Goals (cols) — cell = joint probability %</div>
+      <div style="overflow-x:auto">${heatmapRows()}</div>
+    </div>
+  `; // end of detail panel content
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  TOGGLE CARD EXPAND
+// ════════════════════════════════════════════════════════════════════
+function toggleCard(gameId) {
+  if (expandedGameId && expandedGameId !== gameId) {
+    const pc = document.getElementById('card-' + expandedGameId);
+    const pd = document.getElementById('detail-' + expandedGameId);
+    if (pc) pc.classList.remove('expanded');
+    if (pd) pd.classList.remove('open');
+  }
+  const card = document.getElementById('card-' + gameId);
+  const detail = document.getElementById('detail-' + gameId);
+  if (expandedGameId === gameId) {
+    if (card) card.classList.remove('expanded');
+    if (detail) detail.classList.remove('open');
+    expandedGameId = null;
+  } else {
+    if (card) card.classList.add('expanded');
+    if (detail) detail.classList.add('open');
+    expandedGameId = gameId;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  TOGGLE INJURY
+// ════════════════════════════════════════════════════════════════════
+function toggleInjury(gameId, abbrev) {
+  const current = getInjuryState(gameId, abbrev);
+  setInjuryState(gameId, abbrev, !current);
+  // Clear only this game's cached prediction
+  Object.keys(predictionCache).forEach(k => { if (k.startsWith(gameId + '_')) delete predictionCache[k]; });
+  // Re-render only this card
+  const game = gamesData.find(g => g.id === gameId);
+  if (!game) return;
+  const wrapper = document.getElementById('card-' + gameId);
+  if (wrapper) {
+    const wasExpanded = expandedGameId === gameId;
+    if (wasExpanded) expandedGameId = null;
+    const tmp = document.createElement('div');
+    tmp.innerHTML = renderGameCard(game);
+    wrapper.replaceWith(tmp.firstElementChild);
+    if (wasExpanded) toggleCard(gameId);
+  } else {
+    renderGames(); // fallback
+  }
+  // Sync tracker entry with updated injury-adjusted prediction
+  const history = getHistory();
+  const entry = history.find(h => h.gameId === gameId);
+  if (entry && !entry.saved) {
+    const awayInjury = getInjuryState(gameId, game.awayTeam?.abbrev);
+    const homeInjury = getInjuryState(gameId, game.homeTeam?.abbrev);
+    const injKey = (awayInjury ? '1' : '0') + (homeInjury ? '1' : '0');
+    const cacheKey = gameId + '_' + injKey;
+    if (!predictionCache[cacheKey]) predictionCache[cacheKey] = buildPrediction(game);
+    const pred = predictionCache[cacheKey];
+    const away = game.awayTeam?.abbrev || '';
+    const home = game.homeTeam?.abbrev || '';
+    const conf = confidenceLabel(pred.winPctAway);
+    entry.predWinner    = pred.winPctAway > pred.winPctHome ? away : home;
+    entry.predGoalsAway = pred.predGoalsAway;
+    entry.predGoalsHome = pred.predGoalsHome;
+    entry.winPctAway    = Math.round(pred.winPctAway * 100);
+    entry.winPctHome    = Math.round(pred.winPctHome * 100);
+    entry.confidence    = conf.label;
+    entry.confidenceCls = conf.cls;
+    entry.injAway       = !!awayInjury;
+    entry.injHome       = !!homeInjury;
+    saveHistory(history);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  RENDER: ALL GAMES
+// ════════════════════════════════════════════════════════════════════
+function renderGames() {
+  const container = document.getElementById('games-container');
+  if (!gamesData.length) {
+    container.innerHTML = `
+      <div class="no-games">
+        <div class="no-games-icon">🏒</div>
+        <h3>NO GAMES TODAY</h3>
+        <p>Check back on a game day.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = `<div id="games-grid">${gamesData.map(renderGameCard).join('')}</div>`;
+
+  // Animate probability bars
+  requestAnimationFrame(() => {
+    gamesData.forEach(g => {
+      const bar = document.getElementById(`pbar-${g.id}`);
+      if (bar) bar.style.width = bar.style.width; // trigger CSS transition
+    });
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  RENDER: STANDINGS TABLE
+// ════════════════════════════════════════════════════════════════════
+let standingsSort = { col: 'points', dir: 'desc' };
+let standingsFilter = '';
+
+function renderStandings() {
+  const container = document.getElementById('standings-container');
+  if (!standingsData.length) {
+    container.innerHTML = spinner('LOADING STANDINGS...');
+    return;
+  }
+
+  const cols = [
+    { key: 'abbrev', label: 'TEAM' },
+    { key: 'gp', label: 'GP' },
+    { key: 'wins', label: 'W' },
+    { key: 'losses', label: 'L' },
+    { key: 'otl', label: 'OTL' },
+    { key: 'points', label: 'PTS' },
+    { key: 'gfPG', label: 'GF/GP' },
+    { key: 'gaPG', label: 'GA/GP' },
+    { key: 'ppPct', label: 'PP%' },
+    { key: 'pkPct', label: 'PK%' },
+    { key: 'l10', label: 'L10' },
+    { key: 'streak', label: 'STRK' },
+  ];
+
+  let data = [...standingsData].filter(t =>
+    !standingsFilter || t.abbrev.toLowerCase().includes(standingsFilter) || t.name.toLowerCase().includes(standingsFilter)
+  );
+
+  data.sort((a, b) => {
+    const va = a[standingsSort.col] ?? '', vb = b[standingsSort.col] ?? '';
+    if (typeof va === 'number') return standingsSort.dir === 'desc' ? vb - va : va - vb;
+    return standingsSort.dir === 'desc' ? String(vb).localeCompare(String(va)) : String(va).localeCompare(String(vb));
+  });
+
+  const avgGF = data.reduce((s, t) => s + t.gfPG, 0) / (data.length || 1);
+  const avgGA = data.reduce((s, t) => s + t.gaPG, 0) / (data.length || 1);
+
+  container.innerHTML = `
+    <div class="stats-controls">
+      <input class="search-box" type="text" placeholder="🔍 Search team..." value="${standingsFilter}"
+        oninput="standingsFilter=this.value.toLowerCase();renderStandings()">
+    </div>
+    <div class="stats-table-wrap">
+      <table class="stats-table">
+        <thead>
+          <tr>
+            ${cols.map(c => `
+              <th class="${standingsSort.col === c.key ? 'sorted' : ''}"
+                onclick="standingsSort={col:'${c.key}',dir:standingsSort.col==='${c.key}'&&standingsSort.dir==='desc'?'asc':'desc'};renderStandings()">
+                ${c.label}
+                <span class="sort-arrow">${standingsSort.col === c.key ? (standingsSort.dir === 'desc' ? '▼' : '▲') : ''}</span>
+              </th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${data.map(t => `
+            <tr>
+              <td>
+                <div class="td-logo">
+                  <img src="${LOGO_BASE}/${t.abbrev}_dark.svg" onerror="this.style.display='none'" alt="${t.abbrev}">
+                  <span class="td-abbrev">${t.abbrev}</span>
+                </div>
+              </td>
+              <td>${t.gp}</td>
+              <td>${t.wins}</td>
+              <td>${t.losses}</td>
+              <td>${t.otl}</td>
+              <td style="color:var(--ice);font-weight:600">${t.points}</td>
+              <td class="${t.gfPG > avgGF ? 'stat-good' : 'stat-bad'}">${t.gfPG.toFixed(2)}</td>
+              <td class="${t.gaPG < avgGA ? 'stat-good' : 'stat-bad'}">${t.gaPG.toFixed(2)}</td>
+              <td class="${t.ppPct > W.LEAGUE_AVG_PP_PCT ? 'stat-good' : ''}">${(t.ppPct * 100).toFixed(1)}%</td>
+              <td class="${t.pkPct > W.LEAGUE_AVG_PK_PCT ? 'stat-good' : ''}">${(t.pkPct * 100).toFixed(1)}%</td>
+              <td>${t.l10}</td>
+              <td style="color:var(--text3)">${t.streak}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  RENDER: MODEL WEIGHTS TABLE
+// ════════════════════════════════════════════════════════════════════
+const WEIGHT_DESCRIPTIONS = {
+  BASE_GOALS: 'League-average goals per team per game. Starting point for all λ calculations.',
+  LEAGUE_AVG_GOALS: 'Actual league scoring rate per team per game. Season ratings shrink toward this, and opponent defense is measured against it.',
+  SHRINK_GAMES: 'Season GF/GP and GA/GP are pulled toward league average as if each team had this many extra average games. Higher = more caution early. 0 = raw stats.',
+  DEFENSE_WEIGHT: 'How strongly the opponent\'s goals-against rate scales λ. 1.0 = full effect, 0 = ignore opponent defense. Review vs goalie SV% at 100 games.',
+  SEASON_AVG_WEIGHT: 'How much a team\'s season GF/game influences λ. Higher = season form matters more.',
+  RECENT_FORM_WEIGHT: 'Weight on last-10 games GF/game. Should sum to 1.0 with SEASON_AVG_WEIGHT. Early in the season the L10 number is blended with the season rate until a team has 10 games.',
+  HOME_ICE_BONUS: 'Goals added to home team λ. Reflects home-ice advantage (~54.5% home win rate).',
+  LEAGUE_AVG_SAVE_PCT: 'League average goalie save%. Used as baseline for goalie adjustments.',
+  GOALIE_SENSITIVITY: 'How strongly a goalie\'s save% difference from average scales into λ change.',
+  LEAGUE_AVG_PP_PCT: 'League average power play success rate (NHL 2023-24).',
+  LEAGUE_AVG_PK_PCT: 'League average penalty kill success rate.',
+  LEAGUE_AVG_PIM: 'League average penalty minutes per game.',
+  PP_SENSITIVITY: 'How strongly PP% above/below average scales into λ multiplier.',
+  PK_SENSITIVITY: 'How strongly PK% above/below average scales into λ multiplier.',
+  PIM_SENSITIVITY: 'How strongly raw penalty minutes deviate from average scales into λ.',
+  BACK_TO_BACK_PENALTY: 'Goals subtracted from λ when a team played yesterday. v8: 0.10 → 0.20.',
+  INJURY_PENALTY: 'Goals subtracted from λ when injury toggle is active (manual entry).',
+  PRIOR_GOALIE_FADE_STARTS: 'Early-season blend for goalie SV%: last season\'s number fades to zero by this many starts. 0 = off.',
+};
+
+function renderWeights() {
+  const container = document.getElementById('weights-container');
+  const rows = Object.entries(MODEL_WEIGHTS).map(([k, v]) => `
+    <tr>
+      <td class="wt-param">${k}</td>
+      <td class="wt-val">${typeof v === 'number' ? v : v}</td>
+      <td class="wt-desc">${WEIGHT_DESCRIPTIONS[k] || '—'}</td>
+    </tr>`).join('');
+
+  container.innerHTML = `
+    <div class="weights-table-wrap">
+      <table class="weights-table">
+        <thead>
+          <tr>
+            <th>PARAMETER</th>
+            <th>CURRENT VALUE</th>
+            <th>WHAT IT MEANS</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <div class="weights-note">
+      💡 To adjust any weight, ask Claude to update the <strong>MODEL_WEIGHTS</strong> constant at the top of the script. All downstream calculations automatically use the updated values.
+    </div>`;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  RENDER: MODEL SETTINGS (sliders)
+// ════════════════════════════════════════════════════════════════════
+const SLIDER_CONFIGS = [
+  { key: 'SEASON_AVG_WEIGHT', label: 'SEASON AVG WEIGHT', min: 0, max: 1, step: 0.05 },
+  { key: 'RECENT_FORM_WEIGHT', label: 'RECENT FORM WEIGHT', min: 0, max: 1, step: 0.05 },
+  { key: 'HOME_ICE_BONUS', label: 'HOME ICE BONUS', min: 0, max: 0.5, step: 0.01 },
+  { key: 'GOALIE_SENSITIVITY', label: 'GOALIE SENSITIVITY', min: 0, max: 8, step: 0.1 },
+  { key: 'BACK_TO_BACK_PENALTY', label: 'B2B FATIGUE PENALTY', min: 0, max: 0.5, step: 0.01 },
+  { key: 'INJURY_PENALTY', label: 'INJURY PENALTY', min: 0, max: 1, step: 0.05 },
+  { key: 'PP_SENSITIVITY', label: 'PP SENSITIVITY', min: 0, max: 5, step: 0.1 },
+  { key: 'LEAGUE_AVG_GOALS', label: 'LEAGUE AVG GOALS', min: 2.5, max: 3.6, step: 0.01 },
+  { key: 'SHRINK_GAMES', label: 'SHRINK GAMES', min: 0, max: 60, step: 1 },
+  { key: 'DEFENSE_WEIGHT', label: 'DEFENSE WEIGHT', min: 0, max: 1.5, step: 0.05 },
+];
+
+function renderSettings() {
+  const container = document.getElementById('settings-container');
+  container.innerHTML = `
+    <div class="sliders-grid">
+      ${SLIDER_CONFIGS.map(cfg => `
+        <div class="slider-card">
+          <label>${cfg.label}</label>
+          <input type="number" class="weight-input"
+            min="${cfg.min}" max="${cfg.max}" step="${cfg.step}"
+            value="${W[cfg.key]}"
+            oninput="const v=parseFloat(this.value);if(!isNaN(v)){W['${cfg.key}']=v;predictionCache={};renderGames();persistData()}"
+            placeholder="${MODEL_WEIGHTS[cfg.key]}">
+          <div class="weight-default">DEFAULT: ${MODEL_WEIGHTS[cfg.key]}</div>
+        </div>
+      `).join('')}
+    </div>
+    <button class="reset-btn" onclick="resetWeights()">↺ RESET TO DEFAULTS</button>`;
+}
+
+function resetWeights() {
+  W = { ...MODEL_WEIGHTS };
+  predictionCache = {};
+  renderSettings();
+  renderGames();
+  persistData();
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  PREDICTION TRACKER + PERSISTENCE
+//
+//  Dual-write strategy: every save writes to BOTH the proxy server
+//  (dashboard-data.json) AND localStorage. On load, both sources are
+//  read and intelligently merged so data survives proxy restarts,
+//  version upgrades, and filename changes.
+//
+//  localStorage keys used:
+//    nhl_tracker_v8          — current version tracker data (JSON array)
+//    nhl_settings_v8         — current version model settings (JSON object)
+//  v8: no migration from older keys — each season starts a clean tracker.
+//
+//  Migration: on first load, all localStorage keys matching
+//    nhl_tracker_* or nhl_settings_* are scanned and merged in.
+//    Merge rule: saved entry beats pending; if both saved, keep the
+//    one with actualGoalsAway filled in; ties broken by lowest MAE.
+//    Once migrated, a flag nhl_migrated_v6 is set so it never reruns.
+//
+//  Persistence priority on load:
+//    1. Proxy file (dashboard-data.json) — most authoritative if proxy running
+//    2. localStorage v6 key — fallback if proxy down
+//    3. Migration scan — one-time import from all prior version keys
+// ════════════════════════════════════════════════════════════════════
+const LS_TRACKER_KEY  = 'nhl_tracker_v8';
+const LS_SETTINGS_KEY = 'nhl_settings_v8';
+const LS_MIGRATED_KEY = 'nhl_migrated_v8';
+// v8: the tracker holds the current season only. Anything from an earlier season
+// that shows up (proxy file, old keys) is parked here instead of being merged in.
+// Bumped whenever MODEL_WEIGHTS defaults change. Stored settings saved under an older
+// stamp are ignored once, so a stale slider value can't silently override a new default.
+const SETTINGS_STAMP = 'v8-backtest-2026-10';
+const MODEL_VERSION  = 'v8.1';
+const LS_ARCHIVE_KEY  = 'nhl_archive_pre_' + SEASON_START_YEAR;
+const isCurrentSeasonEntry = e => String(e?.gameId ?? '').startsWith(String(SEASON_START_YEAR));
+
+let _trackerData = [];   // authoritative in-memory tracker
+let _saveTimer = null;   // debounce timer
+
+function getHistory() { return _trackerData; }
+
+function saveHistory(h) {
+  _trackerData = h;
+  // Debounce: wait 400ms after last change before writing
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(() => persistData(), 400);
+}
+
+// ── localStorage helpers ──────────────────────────────────────────
+function lsSetTracker(data) {
+  try { localStorage.setItem(LS_TRACKER_KEY, JSON.stringify(data)); } catch {}
+}
+function lsGetTracker() {
+  try {
+    const raw = localStorage.getItem(LS_TRACKER_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+function lsSetSettings(data) {
+  try { localStorage.setItem(LS_SETTINGS_KEY, JSON.stringify(data)); } catch {}
+}
+function lsGetSettings() {
+  try {
+    const raw = localStorage.getItem(LS_SETTINGS_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+// ── Entry comparison: returns the "better" of two tracker entries ─
+// saved > pending; actual score filled > not filled; lower MAE wins
+function betterEntry(a, b) {
+  if (!a) return b;
+  if (!b) return a;
+  // Prefer the saved (completed) entry
+  if (a.saved && !b.saved) return a;
+  if (!a.saved && b.saved) return b;
+  // Both saved — prefer the one with actual scores filled in
+  if (a.actualGoalsAway != null && b.actualGoalsAway == null) return a;
+  if (a.actualGoalsAway == null && b.actualGoalsAway != null) return b;
+  // Both have actuals — prefer lower MAE
+  if (a.mae != null && b.mae != null) return a.mae <= b.mae ? a : b;
+  return a; // identical quality — keep first
+}
+
+// ── Merge two tracker arrays by gameId, always keeping best entry ─
+function mergeTrackers(primary, secondary) {
+  const map = new Map();
+  for (const e of [...(secondary || []), ...(primary || [])]) {
+    const existing = map.get(e.gameId);
+    map.set(e.gameId, betterEntry(existing, e));
+  }
+  return Array.from(map.values());
+}
+
+// ── One-time migration: scan all nhl_tracker_* localStorage keys ──
+function runMigrationIfNeeded() {
+  try {
+    if (localStorage.getItem(LS_MIGRATED_KEY)) return null; // already done
+    const allKeys = Object.keys(localStorage);
+    const trackerKeys = allKeys.filter(k =>
+      k.startsWith('nhl_tracker_') && k !== LS_TRACKER_KEY
+    );
+    if (!trackerKeys.length) {
+      localStorage.setItem(LS_MIGRATED_KEY, '1');
+      return null;
+    }
+    let merged = [];
+    for (const key of trackerKeys) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) continue;
+        const data = JSON.parse(raw);
+        if (Array.isArray(data)) {
+          merged = mergeTrackers(merged, data);
+          console.log(`[migrate] Merged ${data.length} entries from ${key}`);
+        }
+      } catch {}
+    }
+    localStorage.setItem(LS_MIGRATED_KEY, '1');
+    console.log(`[migrate] Migration complete — ${merged.length} total entries`);
+    return merged.length ? merged : null;
+  } catch { return null; }
+}
+
+// ── persistData: write to proxy AND localStorage ──────────────────
+async function persistData() {
+  // Always write to localStorage first (instant, never fails)
+  lsSetTracker(_trackerData);
+  lsSetSettings({ ...W, _stamp: SETTINGS_STAMP });
+
+  // Then attempt proxy write (best-effort)
+  try {
+    await fetch(DATA_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        modelSettings: { ...W, _stamp: SETTINGS_STAMP },
+        predictionTracker: _trackerData,
+      }),
+    });
+  } catch {
+    // Proxy not running — localStorage write above is sufficient
+  }
+}
+
+// ── loadPersistedData: proxy → localStorage → migration ───────────
+async function loadPersistedData() {
+  let proxyData = null;
+
+  // 1. Try proxy first
+  try {
+    const res = await fetch(DATA_ENDPOINT, { signal: AbortSignal.timeout(2000) });
+    if (res.ok) {
+      proxyData = await res.json();
+      console.log('[persist] Proxy data loaded');
+    }
+  } catch {
+    console.log('[persist] Proxy not available — falling back to localStorage');
+  }
+
+  // 2. Load localStorage v8 data
+  const lsTracker  = lsGetTracker();
+  const lsSettings = lsGetSettings();
+
+  // 3. v8: migration from prior version keys is disabled (new season = clean tracker)
+  const migratedTracker = null;
+
+  // 4. Restore model settings (proxy beats localStorage)
+  const current = src => (src && src._stamp === SETTINGS_STAMP) ? src : null;
+  const settingsSource = current(proxyData?.modelSettings) || current(lsSettings);
+  if (!settingsSource && (proxyData?.modelSettings?.HOME_ICE_BONUS !== undefined || lsSettings))
+    console.log('[persist] Stored settings are from an older build — using new defaults');
+  if (settingsSource && Object.keys(settingsSource).length) {
+    Object.keys(MODEL_WEIGHTS).forEach(k => {
+      if (settingsSource[k] !== undefined) W[k] = settingsSource[k];
+    });
+    console.log('[persist] Model settings restored');
+  }
+
+  // 5. Merge all tracker sources: proxy is primary, ls is secondary, migration fills gaps
+  let tracker = proxyData?.predictionTracker || [];
+  tracker = mergeTrackers(tracker, lsTracker);
+  if (migratedTracker) tracker = mergeTrackers(tracker, migratedTracker);
+
+  // v8: keep current-season games only; park anything older in the archive key
+  const oldEntries = tracker.filter(e => !isCurrentSeasonEntry(e));
+  if (oldEntries.length) {
+    try {
+      const prev = JSON.parse(localStorage.getItem(LS_ARCHIVE_KEY) || '[]');
+      localStorage.setItem(LS_ARCHIVE_KEY, JSON.stringify(mergeTrackers(oldEntries, Array.isArray(prev) ? prev : [])));
+    } catch {}
+    console.log(`[persist] Archived ${oldEntries.length} prior-season entries to ${LS_ARCHIVE_KEY}`);
+    tracker = tracker.filter(isCurrentSeasonEntry);
+  }
+
+  if (tracker.length) {
+    _trackerData = tracker;
+    // Write merged result back to localStorage immediately
+    lsSetTracker(_trackerData);
+    console.log(`[persist] Tracker restored: ${_trackerData.length} entries`);
+  }
+}
+
+// ── Auto-populate tracker from today's games ─────────────────
+// Called after gamesData loads. Adds any new games not yet in
+// the tracker (matched by gameId). Existing entries untouched.
+function autoPopulateTracker() {
+  if (!gamesData || !gamesData.length) return;
+  const history = getHistory();
+  let changed = false;
+  for (const game of gamesData) {
+    if (history.find(h => h.gameId === game.id)) continue;
+    const cacheKey = game.id + '_00';
+    if (!predictionCache[cacheKey]) predictionCache[cacheKey] = buildPrediction(game);
+    const pred = predictionCache[cacheKey];
+    const away = game.awayTeam?.abbrev || '';
+    const home = game.homeTeam?.abbrev || '';
+    const predWinner = pred.winPctAway > pred.winPctHome ? away : home;
+    const conf = confidenceLabel(pred.winPctAway);
+    history.push({
+      gameId: game.id,
+      date: new Date().toLocaleDateString('en-CA'),
+      away, home,
+      predWinner,
+      predGoalsAway: pred.predGoalsAway,
+      predGoalsHome: pred.predGoalsHome,
+      winPctAway: Math.round(pred.winPctAway * 100),
+      winPctHome: Math.round(pred.winPctHome * 100),
+      confidence: conf.label,
+      confidenceCls: conf.cls,
+      modelVer: MODEL_VERSION,
+      gpAway: teamStatLookup[away]?.gp ?? null,   // v8: games played at prediction time
+      gpHome: teamStatLookup[home]?.gp ?? null,
+      injAway: false,                             // v8: injury toggle state used for the pick
+      injHome: false,
+      actualGoalsAway: null,
+      actualGoalsHome: null,
+      actualWinner: null,
+      hit: null,
+      mae: null,
+      saved: false,
+    });
+    changed = true;
+  }
+  if (changed) saveHistory(history);
+}
+
+// Save actual score for one tracker entry
+function saveTrackerResult(gameId) {
+  const ag = parseInt(document.getElementById('actual-away-' + gameId)?.value);
+  const hg = parseInt(document.getElementById('actual-home-' + gameId)?.value);
+  if (isNaN(ag) || isNaN(hg) || ag < 0 || hg < 0) return;
+  const history = getHistory();
+  const entry = history.find(h => h.gameId === gameId);
+  if (!entry) return;
+  entry.actualGoalsAway = ag;
+  entry.actualGoalsHome = hg;
+  entry.actualWinner = ag > hg ? entry.away : entry.home;
+  entry.hit = entry.predWinner === entry.actualWinner;
+  entry.mae = (Math.abs(entry.predGoalsAway - ag) + Math.abs(entry.predGoalsHome - hg)) / 2;
+  entry.saved = true;
+  saveHistory(history);
+  renderTracker();
+}
+
+function deleteHistoryEntry(gameId) {
+  const h = getHistory();
+  const idx = h.findIndex(e => e.gameId === gameId);
+  if (idx === -1) return;
+  h.splice(idx, 1);
+  saveHistory(h);
+  renderTracker();
+}
+
+function renderTracker() {
+  const container = document.getElementById('tracker-container');
+  const history = getHistory();
+  const saved = history.filter(h => h.saved);
+  const pending = history.filter(h => !h.saved);
+  const hits = saved.filter(h => h.hit).length;
+  const maes = saved.filter(h => h.mae != null).map(h => h.mae);
+  const avgMae = maes.length ? (maes.reduce((a,b) => a+b,0)/maes.length).toFixed(2) : 'N/A';
+  const accuracy = saved.length ? Math.round(hits/saved.length*100) : 0;
+
+  // Per-confidence accuracy breakdown
+  const confStats = ['HIGH CONFIDENCE', 'MEDIUM CONFIDENCE', 'LOW CONFIDENCE'].map(label => {
+    const group = saved.filter(h => h.confidence === label);
+    const groupHits = group.filter(h => h.hit).length;
+    const pct = group.length ? Math.round(groupHits / group.length * 100) : null;
+    const cls = label.startsWith('HIGH') ? 'conf-high' : label.startsWith('MED') ? 'conf-med' : 'conf-low';
+    const short = label.startsWith('HIGH') ? 'HIGH' : label.startsWith('MED') ? 'MED' : 'LOW';
+    return { label, short, cls, pct, count: group.length };
+  });
+
+  const pendingRows = pending.sort((a,b) => b.date.localeCompare(a.date)).map(h => `
+    <tr>
+      <td style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">${h.date}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <img src="${LOGO_BASE}/${h.away}_dark.svg" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'">
+          <strong>${h.away}</strong>
+          <span style="color:var(--text3);font-size:11px">@</span>
+          <img src="${LOGO_BASE}/${h.home}_dark.svg" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'">
+          <strong>${h.home}</strong>
+        </div>
+      </td>
+      <td>
+        <div style="font-family:var(--font-mono);font-size:12px;color:var(--ice)">${h.predGoalsAway} – ${h.predGoalsHome}</div>
+        <div style="font-size:10px;color:var(--text3)">${h.predWinner} favoured · ${Math.max(h.winPctAway,h.winPctHome)}%</div>
+      </td>
+      <td><span class="${h.confidenceCls}" style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px">${h.confidence}</span></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <input id="actual-away-${h.gameId}" type="number" min="0" max="20"
+            placeholder="${h.away}" title="${h.away} goals"
+            style="width:54px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;
+            padding:5px 7px;color:var(--text);font-family:var(--font-mono);font-size:13px;text-align:center;outline:none"
+            onfocus="this.style.borderColor='var(--ice)'" onblur="this.style.borderColor='var(--border)'">
+          <span style="color:var(--text3);font-weight:bold">–</span>
+          <input id="actual-home-${h.gameId}" type="number" min="0" max="20"
+            placeholder="${h.home}" title="${h.home} goals"
+            style="width:54px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;
+            padding:5px 7px;color:var(--text);font-family:var(--font-mono);font-size:13px;text-align:center;outline:none"
+            onfocus="this.style.borderColor='var(--ice)'" onblur="this.style.borderColor='var(--border)'">
+        </div>
+      </td>
+      <td style="display:flex;align-items:center;gap:8px;">
+        <button onclick="saveTrackerResult(${h.gameId})"
+          style="background:var(--ice-dim);border:1px solid var(--ice);color:var(--ice);
+          border-radius:6px;padding:6px 16px;font-family:var(--font-mono);font-size:11px;
+          letter-spacing:1px;cursor:pointer;white-space:nowrap;transition:background 0.2s"
+          onmouseover="this.style.background='rgba(79,195,247,0.25)'"
+          onmouseout="this.style.background='var(--ice-dim)'">
+          SAVE ✓
+        </button>
+        <span onclick="deleteHistoryEntry(${h.gameId})" title="Delete this prediction"
+          style="cursor:pointer;color:var(--red);font-size:14px;padding:4px 8px;opacity:0.7;transition:opacity 0.2s"
+          onmouseover="this.style.opacity='1'"
+          onmouseout="this.style.opacity='0.7'">✕</span>
+      </td>
+    </tr>`).join('');
+
+  const savedRows = saved.sort((a,b) => b.date.localeCompare(a.date)).map(h => `
+    <tr style="opacity:0.75">
+      <td style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">${h.date}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <img src="${LOGO_BASE}/${h.away}_dark.svg" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'">
+          <strong>${h.away}</strong>
+          <span style="color:var(--text3);font-size:11px">@</span>
+          <img src="${LOGO_BASE}/${h.home}_dark.svg" style="width:20px;height:20px;object-fit:contain" onerror="this.style.display='none'">
+          <strong>${h.home}</strong>
+        </div>
+      </td>
+      <td style="font-family:var(--font-mono);font-size:12px;color:var(--ice)">${h.predGoalsAway} – ${h.predGoalsHome}</td>
+      <td><span class="${h.confidenceCls}" style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px">${h.confidence || '—'}</span></td>
+      <td style="font-family:var(--font-mono);font-size:13px;color:var(--text)">${h.actualGoalsAway} – ${h.actualGoalsHome}</td>
+      <td><span class="${h.hit ? 'result-hit' : 'result-miss'}" style="font-family:var(--font-mono);font-size:13px;font-weight:bold">${h.hit ? '✓ HIT' : '✗ MISS'}</span></td>
+      <td style="font-family:var(--font-mono);font-size:12px;color:var(--text2)">${h.mae != null ? h.mae.toFixed(2) : '—'}</td>
+      <td><span style="cursor:pointer;color:var(--red);font-size:14px;padding:4px 8px" onclick="deleteHistoryEntry(${h.gameId})">✕</span></td>
+    </tr>`).join('');
+
+  container.innerHTML = `
+    <div class="tracker-stats" style="grid-template-columns:repeat(4,1fr)">
+      <div class="tracker-stat"><div class="tracker-stat-val">${accuracy}%</div><div class="tracker-stat-label">WIN ACCURACY</div></div>
+      <div class="tracker-stat"><div class="tracker-stat-val">${saved.length}</div><div class="tracker-stat-label">RESULTS SAVED</div></div>
+      <div class="tracker-stat"><div class="tracker-stat-val">${avgMae}</div><div class="tracker-stat-label">AVG SCORE ERROR</div></div>
+      <div class="tracker-stat"><div class="tracker-stat-val" style="color:var(--gold)">${pending.length}</div><div class="tracker-stat-label">AWAITING RESULTS</div></div>
+    </div>
+    <div class="tracker-stats" style="grid-template-columns:repeat(3,1fr);margin-top:-12px">
+      ${confStats.map(c => `
+      <div class="tracker-stat" style="padding:16px 20px">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:2px;margin-bottom:8px" class="${c.cls}">${c.short} CONFIDENCE</div>
+        <div class="tracker-stat-val" style="font-size:36px;color:${c.pct === null ? 'var(--text3)' : c.pct >= 60 ? 'var(--green)' : c.pct >= 45 ? 'var(--gold)' : 'var(--red)'}">${c.pct !== null ? c.pct + '%' : '—'}</div>
+        <div class="tracker-stat-label" style="margin-top:6px">${c.count} GAME${c.count !== 1 ? 'S' : ''}</div>
+      </div>`).join('')}
+    </div>
+
+    ${pending.length > 0 ? `
+      <div style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:var(--ice);margin:8px 0 14px;">📋 ENTER FINAL SCORES</div>
+      <div class="history-table-wrap" style="margin-bottom:28px">
+        <table class="history-table">
+          <thead><tr>
+            <th>DATE</th><th>MATCHUP</th><th>PREDICTED SCORE</th><th>CONFIDENCE</th><th>ACTUAL SCORE</th><th></th>
+          </tr></thead>
+          <tbody>${pendingRows}</tbody>
+        </table>
+      </div>` : ''}
+
+    ${saved.length > 0 ? `
+      <div style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:var(--text2);margin-bottom:14px;">📊 SAVED RESULTS</div>
+      <div class="history-table-wrap">
+        <table class="history-table">
+          <thead><tr>
+            <th>DATE</th><th>MATCHUP</th><th>PRED SCORE</th><th>CONFIDENCE</th><th>ACTUAL SCORE</th><th>RESULT</th><th>SCORE ERROR</th><th></th>
+          </tr></thead>
+          <tbody>${savedRows}</tbody>
+        </table>
+      </div>` : `<div class="no-history">📋 No results saved yet. Today's games appear above once the dashboard loads.</div>`}`;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  SPINNER / ERROR HELPERS
+// ════════════════════════════════════════════════════════════════════
+function spinner(msg = 'LOADING...') {
+  return `<div class="spinner-wrap"><div class="spinner"></div><div class="spinner-label">${msg}</div></div>`;
+}
+
+function errorCard(msg, detail = '') {
+  return `<div class="error-card">
+    <h3>⚠️ API ERROR</h3>
+    <p>${msg}</p>
+    ${detail ? `<code>${detail}</code>` : ''}
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  TAB NAVIGATION
+// ════════════════════════════════════════════════════════════════════
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    const sec = btn.dataset.section;
+    document.getElementById(`sec-${sec}`).classList.add('active');
+    if (sec === 'standings') renderStandings();
+    if (sec === 'weights') renderWeights();
+    if (sec === 'settings') renderSettings();
+    if (sec === 'tracker') renderTracker();
+    if (sec === 'diag') renderDiag();
+  });
+});
+
+// ════════════════════════════════════════════════════════════════════
+//  DATE DISPLAY
+// ════════════════════════════════════════════════════════════════════
+document.getElementById('date-display').textContent = new Date().toLocaleDateString('en-US', {
+  weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
+});
+
+// ════════════════════════════════════════════════════════════════════
+//  MOCK DATA — fallback when all API calls fail
+//  Used when proxy.js is not running or the NHL API is unreachable.
+//  Shows realistic mid-season 2024-25 data so the model can still be
+//  demonstrated. A yellow DEMO MODE banner is shown when active.
+//  loadMockData() seeds both teamStatLookup and goalieLookup so all
+//  downstream prediction code works identically to live mode.
+// ════════════════════════════════════════════════════════════════════
+const MOCK_GAMES = [
+  { id: 2024030001, gameType: 2, startTimeUTC: new Date().toISOString(),
+    awayTeam: { abbrev:'TOR', name:{ default:'Toronto Maple Leafs' } },
+    homeTeam: { abbrev:'BOS', name:{ default:'Boston Bruins' } } },
+  { id: 2024030002, gameType: 2, startTimeUTC: new Date().toISOString(),
+    awayTeam: { abbrev:'NYR', name:{ default:'New York Rangers' } },
+    homeTeam: { abbrev:'FLA', name:{ default:'Florida Panthers' } } },
+  { id: 2024030003, gameType: 2, startTimeUTC: new Date().toISOString(),
+    awayTeam: { abbrev:'EDM', name:{ default:'Edmonton Oilers' } },
+    homeTeam: { abbrev:'VGK', name:{ default:'Vegas Golden Knights' } } },
+  { id: 2024030004, gameType: 2, startTimeUTC: new Date().toISOString(),
+    awayTeam: { abbrev:'COL', name:{ default:'Colorado Avalanche' } },
+    homeTeam: { abbrev:'DAL', name:{ default:'Dallas Stars' } } },
+  { id: 2024030005, gameType: 2, startTimeUTC: new Date().toISOString(),
+    awayTeam: { abbrev:'CAR', name:{ default:'Carolina Hurricanes' } },
+    homeTeam: { abbrev:'WSH', name:{ default:'Washington Capitals' } } },
+  { id: 2024030006, gameType: 2, startTimeUTC: new Date().toISOString(),
+    awayTeam: { abbrev:'WPG', name:{ default:'Winnipeg Jets' } },
+    homeTeam: { abbrev:'MIN', name:{ default:'Minnesota Wild' } } },
+];
+
+const MOCK_TEAM_STATS = {
+  TOR:{ gfPG:3.42, gaPG:2.98, ppPct:0.228, pkPct:0.812, pim:8.2 },
+  BOS:{ gfPG:3.18, gaPG:2.61, ppPct:0.221, pkPct:0.831, pim:7.9 },
+  NYR:{ gfPG:3.05, gaPG:2.72, ppPct:0.214, pkPct:0.809, pim:8.8 },
+  FLA:{ gfPG:3.31, gaPG:2.88, ppPct:0.235, pkPct:0.818, pim:8.4 },
+  EDM:{ gfPG:3.68, gaPG:3.12, ppPct:0.267, pkPct:0.791, pim:9.1 },
+  VGK:{ gfPG:3.22, gaPG:2.79, ppPct:0.209, pkPct:0.824, pim:8.3 },
+  COL:{ gfPG:3.55, gaPG:3.01, ppPct:0.241, pkPct:0.802, pim:8.7 },
+  DAL:{ gfPG:3.14, gaPG:2.65, ppPct:0.218, pkPct:0.836, pim:7.6 },
+  CAR:{ gfPG:3.09, gaPG:2.58, ppPct:0.203, pkPct:0.843, pim:7.4 },
+  WSH:{ gfPG:3.28, gaPG:2.91, ppPct:0.226, pkPct:0.815, pim:8.5 },
+  WPG:{ gfPG:3.44, gaPG:2.74, ppPct:0.231, pkPct:0.828, pim:8.0 },
+  MIN:{ gfPG:2.98, gaPG:2.82, ppPct:0.198, pkPct:0.811, pim:8.6 },
+};
+
+const MOCK_GOALIES = {
+  TOR:{ name:'Anthony Stolarz', savePct:0.919, gs:38 },
+  BOS:{ name:'Jeremy Swayman', savePct:0.921, gs:42 },
+  NYR:{ name:'Igor Shesterkin', savePct:0.924, gs:44 },
+  FLA:{ name:'Sergei Bobrovsky', savePct:0.908, gs:46 },
+  EDM:{ name:'Stuart Skinner', savePct:0.902, gs:41 },
+  VGK:{ name:'Adin Hill', savePct:0.912, gs:39 },
+  COL:{ name:'Alexandar Georgiev', savePct:0.899, gs:43 },
+  DAL:{ name:'Jake Oettinger', savePct:0.916, gs:45 },
+  CAR:{ name:'Frederik Andersen', savePct:0.918, gs:37 },
+  WSH:{ name:'Charlie Lindgren', savePct:0.907, gs:40 },
+  WPG:{ name:'Connor Hellebuyck', savePct:0.928, gs:48 },
+  MIN:{ name:'Marc-Andre Fleury', savePct:0.904, gs:36 },
+};
+
+const MOCK_STANDINGS = [
+  { abbrev:'WPG', name:'Winnipeg Jets', gp:65, wins:42, losses:17, otl:6, points:90, gf:224, ga:178, gfPG:3.44, gaPG:2.74, ppPct:0.231, pkPct:0.828, l10:'8-2-0', streak:'W3' },
+  { abbrev:'BOS', name:'Boston Bruins', gp:64, wins:41, losses:16, otl:7, points:89, gf:204, ga:167, gfPG:3.18, gaPG:2.61, ppPct:0.221, pkPct:0.831, l10:'7-3-0', streak:'W1' },
+  { abbrev:'CAR', name:'Carolina Hurricanes', gp:65, wins:40, losses:18, otl:7, points:87, gf:201, ga:168, gfPG:3.09, gaPG:2.58, ppPct:0.203, pkPct:0.843, l10:'6-3-1', streak:'L1' },
+  { abbrev:'FLA', name:'Florida Panthers', gp:64, wins:39, losses:18, otl:7, points:85, gf:212, ga:185, gfPG:3.31, gaPG:2.88, ppPct:0.235, pkPct:0.818, l10:'7-2-1', streak:'W2' },
+  { abbrev:'NYR', name:'New York Rangers', gp:65, wins:38, losses:20, otl:7, points:83, gf:198, ga:177, gfPG:3.05, gaPG:2.72, ppPct:0.214, pkPct:0.809, l10:'5-4-1', streak:'W1' },
+  { abbrev:'TOR', name:'Toronto Maple Leafs', gp:64, wins:37, losses:20, otl:7, points:81, gf:219, ga:191, gfPG:3.42, gaPG:2.98, ppPct:0.228, pkPct:0.812, l10:'6-3-1', streak:'L2' },
+  { abbrev:'EDM', name:'Edmonton Oilers', gp:64, wins:37, losses:21, otl:6, points:80, gf:236, ga:200, gfPG:3.68, gaPG:3.12, ppPct:0.267, pkPct:0.791, l10:'6-4-0', streak:'W1' },
+  { abbrev:'VGK', name:'Vegas Golden Knights', gp:64, wins:37, losses:21, otl:6, points:80, gf:206, ga:179, gfPG:3.22, gaPG:2.79, ppPct:0.209, pkPct:0.824, l10:'5-4-1', streak:'W2' },
+  { abbrev:'DAL', name:'Dallas Stars', gp:65, wins:38, losses:19, otl:8, points:84, gf:204, ga:172, gfPG:3.14, gaPG:2.65, ppPct:0.218, pkPct:0.836, l10:'7-2-1', streak:'W3' },
+  { abbrev:'COL', name:'Colorado Avalanche', gp:64, wins:36, losses:21, otl:7, points:79, gf:227, ga:193, gfPG:3.55, gaPG:3.01, ppPct:0.241, pkPct:0.802, l10:'6-3-1', streak:'L1' },
+  { abbrev:'WSH', name:'Washington Capitals', gp:64, wins:36, losses:21, otl:7, points:79, gf:210, ga:186, gfPG:3.28, gaPG:2.91, ppPct:0.226, pkPct:0.815, l10:'5-5-0', streak:'W1' },
+  { abbrev:'MIN', name:'Minnesota Wild', gp:65, wins:34, losses:23, otl:8, points:76, gf:194, ga:184, gfPG:2.98, gaPG:2.82, ppPct:0.198, pkPct:0.811, l10:'4-5-1', streak:'L2' },
+];
+
+function loadMockData() {
+  standingsData = MOCK_STANDINGS;
+  // Seed teamStatLookup from standings first
+  MOCK_STANDINGS.forEach(t => {
+    teamStatLookup[t.abbrev] = {
+      gfPG: t.gfPG, gaPG: t.gaPG,
+      ppPct: t.ppPct, pkPct: t.pkPct,
+      pim: W.LEAGUE_AVG_PIM,
+      recentGF: t.gfPG,
+    };
+  });
+  // Override with richer per-team stats where available
+  Object.entries(MOCK_TEAM_STATS).forEach(([abbrev, stats]) => {
+    if (!teamStatLookup[abbrev]) teamStatLookup[abbrev] = {};
+    Object.assign(teamStatLookup[abbrev], stats, { recentGF: stats.gfPG });
+  });
+  goalieLookup = { ...MOCK_GOALIES };
+  return MOCK_GAMES.map(g => ({ ...g, awayB2B: false, homeB2B: false, warning: true, isMock: true }));
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  SEND PICKS TO DISCORD
+//  Builds one line per game from the predictions currently on screen
+//  (injury toggles included) and posts it through the proxy, which holds
+//  the webhook URL in discord-webhook.txt. The URL never lives in this file.
+// ════════════════════════════════════════════════════════════════════
+function buildDiscordMessage() {
+  const dateStr = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  const tierIcon = { 'HIGH CONFIDENCE': '🟢', 'MEDIUM CONFIDENCE': '🟡', 'LOW CONFIDENCE': '⚪' };
+  const tierShort = { 'HIGH CONFIDENCE': 'HIGH', 'MEDIUM CONFIDENCE': 'MED', 'LOW CONFIDENCE': 'LOW' };
+
+  const lines = gamesData.map(game => {
+    const away = game.awayTeam?.abbrev || '';
+    const home = game.homeTeam?.abbrev || '';
+    const awayInj = getInjuryState(game.id, away);
+    const homeInj = getInjuryState(game.id, home);
+    const cacheKey = game.id + '_' + (awayInj ? '1' : '0') + (homeInj ? '1' : '0');
+    if (!predictionCache[cacheKey]) predictionCache[cacheKey] = buildPrediction(game);
+    const pred = predictionCache[cacheKey];
+    const pick = pred.winPctAway > pred.winPctHome ? away : home;
+    const pct = Math.round(Math.max(pred.winPctAway, pred.winPctHome) * 100);
+    const conf = confidenceLabel(pred.winPctAway).label;
+    const time = game.startTimeUTC
+      ? new Date(game.startTimeUTC).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+      : '';
+    const inj = [awayInj && away, homeInj && home].filter(Boolean);
+    return `${tierIcon[conf] || '⚪'} ${away} @ ${home} → **${pick}** ${pct}% · ${tierShort[conf] || conf}`
+      + (inj.length ? ` · 🏥 ${inj.join(', ')}` : '')
+      + (time ? ` · ${time}` : '');
+  });
+
+  return [`🏒 **NHL Picks — ${dateStr}** (${lines.length} game${lines.length === 1 ? '' : 's'})`, ...lines].join('\n');
+}
+
+async function sendPicksToDiscord() {
+  const btn = document.getElementById('discord-send-btn');
+  const label = '💬 SEND TO DISCORD';
+  const flash = (text, ms = 4000) => { if (!btn) return; btn.textContent = text; setTimeout(() => { btn.textContent = label; btn.disabled = false; }, ms); };
+
+  if (usingMockData) { alert('Demo data is showing (NHL API unreachable) — not sending fake picks.'); return; }
+  if (!gamesData || !gamesData.length) { alert('No games loaded for today — nothing to send.'); return; }
+
+  const sentKey = 'nhl_discord_sent_' + new Date().toLocaleDateString('en-CA');
+  let alreadySent = false;
+  try { alreadySent = !!localStorage.getItem(sentKey); } catch {}
+  if (alreadySent && !confirm("Today's picks were already sent to Discord. Send again?")) return;
+
+  if (btn) { btn.disabled = true; btn.textContent = 'SENDING...'; }
+  try {
+    const res = await fetch(DISCORD_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: buildDiscordMessage() }),
+      signal: AbortSignal.timeout(15000),
+    });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || !out.ok) throw new Error(out.error || `Proxy returned ${res.status}`);
+    try { localStorage.setItem(sentKey, '1'); } catch {}
+    flash('✅ SENT');
+  } catch (e) {
+    const msg = (e && e.name === 'TypeError')
+      ? 'Could not reach the proxy. Is "node proxy.js" running (the new version)?'
+      : (e.message || String(e));
+    flash('❌ FAILED');
+    alert('Discord send failed:\n\n' + msg);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  RENDER: DIAGNOSTICS TAB
+// ════════════════════════════════════════════════════════════════════
+function renderDiag() {
+  const container = document.getElementById('diag-container');
+  if (!container) return;
+  const calls = DIAG.calls;
+  const errors = calls.filter(c => !c.fromCache && c.status !== 200);
+  const successes = calls.filter(c => !c.fromCache && c.status === 200);
+  const cached = calls.filter(c => c.fromCache);
+  const totalMs = calls.filter(c => !c.fromCache).reduce((s,c) => s + c.ms, 0);
+  const shortUrl = u => u.replace('https://api-web.nhle.com/v1','[nhle-web]').replace('https://api.nhle.com/stats/rest/en','[nhle-stats]');
+  const statusCell = c => {
+    if (c.fromCache) return '<span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">CACHED</span>';
+    if (c.status === 200) return '<span style="color:var(--green);font-family:var(--font-mono);font-size:11px;">200 OK</span>';
+    return '<span style="color:var(--red);font-family:var(--font-mono);font-size:11px;">' + (c.status || 'ERR') + '</span>';
+  };
+  const summaryCards = [
+    ['TOTAL CALLS', calls.length, 'var(--ice)'],
+    ['SUCCESS', successes.length, 'var(--green)'],
+    ['ERRORS', errors.length, errors.length > 0 ? 'var(--red)' : 'var(--green)'],
+    ['FROM CACHE', cached.length, 'var(--text2)'],
+  ].map(([l,v,c]) =>
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center;">' +
+    '<div style="font-family:var(--font-display);font-size:40px;color:' + c + ';">' + v + '</div>' +
+    '<div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:2px;margin-top:4px;">' + l + '</div>' +
+    '</div>'
+  ).join('');
+
+  const gameWarnHtml = DIAG.gameWarnings.length > 0
+    ? '<div style="font-family:var(--font-display);font-size:22px;color:var(--gold);letter-spacing:2px;margin-bottom:12px;">GAME DATA WARNINGS</div>' +
+      '<div style="margin-bottom:28px;">' +
+      DIAG.gameWarnings.map(gw =>
+        '<div style="background:var(--surface);border:1px solid rgba(255,213,79,0.3);border-radius:8px;padding:14px 18px;margin-bottom:10px;">' +
+        '<div style="font-family:var(--font-display);font-size:17px;color:var(--gold);margin-bottom:8px;letter-spacing:1px;">' + gw.away + ' @ ' + gw.home + '</div>' +
+        gw.reasons.map(r => '<div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);padding:4px 0 4px 12px;border-left:2px solid var(--gold);margin-bottom:4px;">' + r + '</div>').join('') +
+        '</div>'
+      ).join('') + '</div>'
+    : '<div style="background:rgba(102,187,106,0.08);border:1px solid rgba(102,187,106,0.3);border-radius:8px;padding:14px 18px;margin-bottom:28px;font-family:var(--font-mono);font-size:12px;color:var(--green);">\u2705 No game data warnings \u2014 all team stats loaded successfully.</div>';
+
+  const rows = calls.length === 0
+    ? '<tr><td colspan="4" style="padding:20px;text-align:center;color:var(--text3);font-family:var(--font-mono);">No calls recorded. Refresh the page with the proxy running.</td></tr>'
+    : calls.map(c =>
+        '<tr style="border-bottom:1px solid var(--border);">' +
+        '<td style="padding:8px 14px;">' + statusCell(c) + '</td>' +
+        '<td style="padding:8px 14px;font-family:var(--font-mono);color:var(--text2);font-size:11px;word-break:break-all;">' + shortUrl(c.url) + '</td>' +
+        '<td style="padding:8px 14px;font-family:var(--font-mono);color:var(--text3);white-space:nowrap;">' + (c.fromCache ? '\u2014' : c.ms + 'ms') + '</td>' +
+        '<td style="padding:8px 14px;font-family:var(--font-mono);color:var(--red);font-size:11px;">' + (c.error || '') + '</td>' +
+        '</tr>'
+      ).join('');
+
+  container.innerHTML =
+    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;">' + summaryCards + '</div>' +
+    gameWarnHtml +
+    (DIAG.recentFormSample ? (
+      '<div style="font-family:var(--font-display);font-size:22px;color:var(--ice);letter-spacing:2px;margin-bottom:12px;">RECENT FORM API — RAW SAMPLE ROW</div>' +
+      '<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:28px;font-family:var(--font-mono);font-size:11px;color:var(--text2);word-break:break-all;overflow-x:auto;">' +
+      JSON.stringify(DIAG.recentFormSample, null, 2).replace(/\n/g,'<br>').replace(/ /g,'&nbsp;') +
+      '</div>'
+    ) : '') +
+    '<div style="font-family:var(--font-display);font-size:22px;color:var(--ice);letter-spacing:2px;margin-bottom:12px;">API CALL LOG <span style="font-size:13px;color:var(--text3);font-family:var(--font-mono);">' + totalMs + 'ms total</span></div>' +
+    '<div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;overflow-x:auto;">' +
+    '<table style="width:100%;border-collapse:collapse;font-size:12px;">' +
+    '<thead style="background:var(--surface2);"><tr>' +
+    ['STATUS','ENDPOINT','MS','ERROR'].map(h => '<th style="padding:10px 14px;text-align:left;font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:2px;border-bottom:1px solid var(--border);white-space:nowrap;">' + h + '</th>').join('') +
+    '</tr></thead><tbody>' + rows + '</tbody></table></div>';
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  EXPORT PDF
+//  Populates the hidden print header/footer with live data, then
+//  triggers window.print(). The browser's Save as PDF dialog handles
+//  the rest. Print CSS (defined above) handles layout/colours.
+// ════════════════════════════════════════════════════════════════════
+function exportPDF() {
+  // Populate date line
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  const dateLine = document.getElementById('pdf-date-line');
+  const genLine  = document.getElementById('pdf-generated-line');
+  if (dateLine) dateLine.textContent = dateStr;
+  if (genLine)  genLine.textContent  = `Predictions generated at ${timeStr} ET`;
+
+  // Count injury-adjusted games for a note in the header
+  let injuryCount = 0;
+  (gamesData || []).forEach(g => {
+    if (getInjuryState(g.id, g.awayTeam?.abbrev) || getInjuryState(g.id, g.homeTeam?.abbrev)) {
+      injuryCount++;
+    }
+  });
+  if (genLine && injuryCount > 0) {
+    genLine.textContent += ` · ${injuryCount} game${injuryCount > 1 ? 's' : ''} injury-adjusted`;
+  }
+
+  window.print();
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  MAIN INIT
+//  Orchestrates all data fetching on page load. Runs once via initOnce().
+//  Call sequence:
+//    1. Standings       — team GF/GA/PP/PK for the season
+//    2. Goalies         — starting goalie + save% for each team
+//    3. Schedule        — today's games from the NHL API
+//    4. Recent form     — last-10-game GF averages (one bulk call)
+//    5. Per-game enrich — B2B detection, warning flags, team stat merge
+//  If both standings and schedule fail, loadMockData() is called instead.
+// ════════════════════════════════════════════════════════════════════
+let usingMockData = false;
+
+async function init() {
+  DIAG.clear();
+  recentFormCache = null;
+  DIAG.startTime = Date.now();
+  document.getElementById('games-container').innerHTML = spinner('FETCHING SCHEDULE...');
+
+  // 1. Standings
+  const { teams, warning: standWarn } = await fetchStandings();
+  standingsData = teams;
+  teams.forEach(t => {
+    const live = t.curGP > 0;  // false until the team has played a game THIS season
+    teamStatLookup[t.abbrev] = {
+      gfPG: t.gfPG, gaPG: t.gaPG,
+      // v8: raw totals for shrunkRatings(); zeroed if the feed is still showing last season
+      gf: live ? t.gf : 0, ga: live ? t.ga : 0, gp: t.curGP,
+      ppPct: t.ppPct, pkPct: t.pkPct,
+      pim: W.LEAGUE_AVG_PIM, recentGF: null,
+    };
+  });
+
+  // 2. Goalies
+  const { lookup: goalies, warning: goalWarn } = await fetchGoalies();
+  goalieLookup = goalies;
+
+  // 3. Schedule
+  const { games, warning: schedWarn, scheduleDate } = await fetchSchedule();
+  const todayStr = new Date().toLocaleDateString('en-CA');
+
+  // If ALL primary data failed, fall back to mock
+  if (schedWarn && standWarn) {
+    usingMockData = true;
+    showMockBanner();
+    gamesData = loadMockData();
+    renderGames();
+    autoPopulateTracker();
+    renderWeights();
+    return;
+  }
+
+  // API is live — show a subtle status indicator
+  showLiveStatus(scheduleDate);
+
+  // 4. Load recent form for all teams in one bulk call (replaces per-game boxscore fetches)
+  document.getElementById('games-container').innerHTML = spinner('LOADING TEAM FORM DATA...');
+  const { warning: recentFormWarn } = await loadRecentFormBulk();
+
+  // 5. Enrich games — form lookup is now synchronous, only B2B needs async
+  document.getElementById('games-container').innerHTML = spinner(`ENRICHING ${games.length} GAMES...`);
+
+  const enrichedGames = [];
+  for (const game of games) {
+    const awayAbbrev = game.awayTeam?.abbrev;
+    const homeAbbrev = game.homeTeam?.abbrev;
+
+    const awayForm = fetchRecentForm(awayAbbrev);
+    const homeForm = fetchRecentForm(homeAbbrev);
+    const [awayB2B, homeB2B] = await Promise.all([
+      detectB2B(awayAbbrev),
+      detectB2B(homeAbbrev),
+    ]);
+
+    // v8.1: L10 is weighted by its sample size (recentN) in calcLambda; null falls back to the shrunk season GF
+    if (awayAbbrev && teamStatLookup[awayAbbrev]) {
+      teamStatLookup[awayAbbrev].recentGF = awayForm.gfPG ?? null;
+      teamStatLookup[awayAbbrev].recentN = awayForm.n;
+    }
+    if (homeAbbrev && teamStatLookup[homeAbbrev]) {
+      teamStatLookup[homeAbbrev].recentGF = homeForm.gfPG ?? null;
+      teamStatLookup[homeAbbrev].recentN = homeForm.n;
+    }
+
+    // Build a specific list of what data is missing/degraded
+    const warnReasons = [];
+    if (standWarn) warnReasons.push('Standings API failed — using fallback averages');
+    if (recentFormWarn) warnReasons.push('Recent form bulk fetch failed — using season averages');
+    if (!goalieLookup[awayAbbrev]) warnReasons.push(`${awayAbbrev}: no goalie found in stats API`);
+    if (!goalieLookup[homeAbbrev]) warnReasons.push(`${homeAbbrev}: no goalie found in stats API`);
+    if (awayForm.gfPG === null) warnReasons.push(`${awayAbbrev}: L10 goal average unavailable`);
+    if (homeForm.gfPG === null) warnReasons.push(`${homeAbbrev}: L10 goal average unavailable`);
+
+    DIAG.recordGameWarning(game.id, awayAbbrev, homeAbbrev, warnReasons);
+    enrichedGames.push({
+      ...game, awayB2B, homeB2B,
+      warning: warnReasons.length > 0,
+      warnReasons,
+    });
+  }
+
+  // No games scheduled today — show message, don't load fake games
+  if (!enrichedGames.length) {
+    document.getElementById('games-container').innerHTML = `
+      <div style="text-align:center;padding:80px 20px;">
+        <div style="font-size:64px;opacity:0.3;margin-bottom:16px;">🏒</div>
+        <div style="font-family:var(--font-display);font-size:32px;color:var(--text2);letter-spacing:3px;">NO GAMES TODAY</div>
+        <div style="font-family:var(--font-mono);font-size:12px;color:var(--text3);margin-top:10px;">
+          Live NHL data is connected. No regular season games are scheduled for today.<br>
+          Check back on the next game day.
+        </div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--ice);margin-top:16px;opacity:0.7;">
+          ✅ Proxy connected · 📅 Schedule date: ${scheduleDate || todayStr}
+        </div>
+      </div>`;
+    renderWeights();
+    return;
+  }
+
+  gamesData = enrichedGames;
+  renderGames();
+  autoPopulateTracker();
+  renderWeights();
+}
+
+function showLiveStatus(schedDate) {
+  const existing = document.getElementById('live-status-bar');
+  if (existing) existing.remove();
+  const bar = document.createElement('div');
+  bar.id = 'live-status-bar';
+  bar.style.cssText = `background:rgba(79,195,247,0.07);border:1px solid rgba(79,195,247,0.2);
+    border-radius:8px;padding:8px 18px;margin-bottom:16px;
+    font-family:var(--font-mono);font-size:11px;color:var(--ice);letter-spacing:1px;
+    display:flex;align-items:center;justify-content:space-between;`;
+  const diag = window._schedDiag || {};
+  bar.innerHTML = `
+    <span>✅ &nbsp;<strong>LIVE DATA</strong> — Connected · Schedule date: ${schedDate || 'today'}</span>
+    <button onclick="showDiagnostic()" style="background:var(--ice-dim);border:1px solid var(--ice);
+      color:var(--ice);border-radius:4px;padding:3px 10px;font-family:var(--font-mono);
+      font-size:10px;cursor:pointer;letter-spacing:1px;">🔍 DIAGNOSE</button>`;
+  const sec = document.getElementById('sec-games');
+  sec.insertBefore(bar, sec.firstChild);
+}
+
+function showWarnDetail(reasons) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;
+    display:flex;align-items:center;justify-content:center;padding:20px;`;
+  overlay.onclick = () => overlay.remove();
+  overlay.innerHTML = `
+    <div style="background:var(--surface);border:1px solid var(--gold);border-radius:12px;
+      padding:28px 32px;max-width:480px;width:100%;font-family:var(--font-mono);"
+      onclick="event.stopPropagation()">
+      <div style="font-family:var(--font-display);font-size:22px;color:var(--gold);
+        letter-spacing:2px;margin-bottom:16px;">⚠️ LIMITED DATA DETAIL</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.6;">
+        The following data points could not be fetched. The model falls back to season averages for missing values.
+      </p>
+      ${reasons.map(r => `
+        <div style="background:var(--bg2);border-left:3px solid var(--gold);
+          border-radius:4px;padding:8px 12px;margin-bottom:8px;font-size:12px;color:var(--text);">
+          ${r}
+        </div>`).join('')}
+      <button onclick="this.closest('div[style]').parentElement.remove()"
+        style="margin-top:16px;background:var(--ice-dim);border:1px solid var(--ice);
+        color:var(--ice);border-radius:6px;padding:8px 20px;font-family:var(--font-mono);
+        font-size:11px;letter-spacing:2px;cursor:pointer;width:100%;">CLOSE</button>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+function showDiagnostic() {
+  const d = window._schedDiag || {};
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;
+    display:flex;align-items:center;justify-content:center;padding:20px;`;
+  overlay.innerHTML = `
+    <div style="background:var(--surface);border:1px solid var(--ice);border-radius:12px;
+      padding:28px;max-width:700px;width:100%;max-height:80vh;overflow-y:auto;font-family:var(--font-mono);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <span style="font-family:var(--font-display);font-size:22px;color:var(--ice);letter-spacing:2px;">API DIAGNOSTIC</span>
+        <button onclick="this.closest('div[style]').remove()" style="background:none;border:1px solid var(--border);
+          color:var(--text2);border-radius:4px;padding:4px 10px;cursor:pointer;font-family:var(--font-mono);">✕ CLOSE</button>
+      </div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8;">
+        <div><span style="color:var(--text3);">Local date:</span> <span style="color:var(--ice);">${d.todayStr || '?'}</span></div>
+        <div><span style="color:var(--text3);">API matched date:</span> <span style="color:var(--ice);">${d.matchedDate || '?'}</span></div>
+        <div><span style="color:var(--text3);">All dates in gameWeek:</span> <span style="color:var(--ice);">${(d.allGameWeekDates||[]).join(', ') || 'none'}</span></div>
+        <div style="margin-top:12px;color:var(--text3);">All games returned for matched date (${(d.allGames||[]).length} total):</div>
+        ${(d.allGames||[]).length === 0
+          ? `<div style="color:var(--red);margin-top:6px;">No games found in this date entry.</div>`
+          : (d.allGames||[]).map(g => `
+            <div style="margin-top:6px;background:var(--bg2);padding:6px 10px;border-radius:4px;">
+              <span style="color:var(--gold);">gameType:${g.gameType}</span> &nbsp;
+              <span style="color:var(--text2);">state:${g.state}</span> &nbsp;
+              <span style="color:var(--ice);">${g.away} @ ${g.home}</span> &nbsp;
+              <span style="color:var(--text3);">id:${g.id}</span>
+            </div>`).join('')}
+        <div style="margin-top:12px;color:var(--text3);">After gameType filter: <span style="color:var(--green);">${d.filteredCount || 0} games</span></div>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+function showMockBanner() {
+  const banner = document.createElement('div');
+  banner.style.cssText = `background:rgba(255,213,79,0.1);border:1px solid rgba(255,213,79,0.35);
+    border-radius:8px;padding:12px 18px;margin-bottom:20px;
+    font-family:var(--font-mono);font-size:12px;color:#ffd54f;letter-spacing:1px;
+    display:flex;align-items:center;gap:10px;`;
+  banner.innerHTML = `⚠️ &nbsp;<strong>DEMO MODE</strong> — NHL API unreachable. Displaying realistic mock data for model demonstration. Stats and predictions are based on mid-season 2024–25 estimates.`;
+  const sec = document.getElementById('sec-games');
+  sec.insertBefore(banner, sec.firstChild);
+}
+
+// Guard: prevents init() from running twice if the script somehow loads
+// more than once (e.g. browser back/forward cache). loadPersistedData()
+// runs first so settings and tracker are ready before the first render.
+let initDone = false;
+async function initOnce() {
+  if (initDone) return;
+  initDone = true;
+  await loadPersistedData(); // restore settings + tracker before first render
+  init();
+}
+initOnce();
+</script>
+</body>
+</html>
