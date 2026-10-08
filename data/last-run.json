@@ -1,0 +1,259 @@
+{
+  "date": "2026-10-07",
+  "modelVer": "v8.1",
+  "weights": {
+    "BASE_GOALS": 3.35,
+    "LEAGUE_AVG_GOALS": 3.12,
+    "SHRINK_GAMES": 20,
+    "DEFENSE_WEIGHT": 1,
+    "SEASON_AVG_WEIGHT": 0.55,
+    "RECENT_FORM_WEIGHT": 0.45,
+    "HOME_ICE_BONUS": 0.1,
+    "CONF_HIGH_THRESHOLD": 0.35,
+    "CONF_MED_THRESHOLD": 0.2,
+    "LEAGUE_AVG_SAVE_PCT": 0.901,
+    "GOALIE_SENSITIVITY": 3,
+    "LEAGUE_AVG_PP_PCT": 0.197,
+    "LEAGUE_AVG_PK_PCT": 0.798,
+    "LEAGUE_AVG_PIM": 8.5,
+    "PP_SENSITIVITY": 3.5,
+    "PK_SENSITIVITY": 1.5,
+    "PIM_SENSITIVITY": 0.02,
+    "BACK_TO_BACK_PENALTY": 0.2,
+    "INJURY_PENALTY": 0.3,
+    "PRIOR_GOALIE_FADE_STARTS": 15
+  },
+  "games": [
+    {
+      "gameId": 2026020053,
+      "away": "PIT",
+      "home": "WSH",
+      "pick": "PIT",
+      "winPctAway": 0.5708952316977283,
+      "winPctHome": 0.42910476830227173,
+      "lambdaAway": 3.4195483830191558,
+      "lambdaHome": 2.9592923376588645,
+      "confidence": "LOW CONFIDENCE",
+      "awayB2B": false,
+      "homeB2B": false,
+      "injAway": true,
+      "injHome": true,
+      "awayStats": {
+        "name": "Pittsburgh Penguins",
+        "gfPG": 5,
+        "gaPG": 2.6666666666666665,
+        "gf": 15,
+        "ga": 8,
+        "gp": 3,
+        "ppPct": 0,
+        "pkPct": 0,
+        "pim": 8.5,
+        "recentGF": 5,
+        "recentN": 3
+      },
+      "homeStats": {
+        "name": "Washington Capitals",
+        "gfPG": 3,
+        "gaPG": 2.5,
+        "gf": 6,
+        "ga": 5,
+        "gp": 2,
+        "ppPct": 0,
+        "pkPct": 0,
+        "pim": 8.5,
+        "recentGF": 3,
+        "recentN": 2
+      },
+      "awayGoalie": {
+        "name": "Arturs Silovs",
+        "savePct": 0.8879806666666666,
+        "rawSavePct": 0.88636,
+        "priorWt": 0.8666666666666667,
+        "gs": 2
+      },
+      "homeGoalie": {
+        "name": "Charlie Lindgren",
+        "savePct": 0.8822166666666666,
+        "rawSavePct": 0.93103,
+        "priorWt": 0.9333333333333333,
+        "gs": 1
+      }
+    },
+    {
+      "gameId": 2026020054,
+      "away": "COL",
+      "home": "WPG",
+      "pick": "COL",
+      "winPctAway": 0.6076447125792401,
+      "winPctHome": 0.3923552874207598,
+      "lambdaAway": 3.8327711236566335,
+      "lambdaHome": 3.1007826001976286,
+      "confidence": "MEDIUM CONFIDENCE",
+      "awayB2B": false,
+      "homeB2B": false,
+      "injAway": false,
+      "injHome": false,
+      "awayStats": {
+        "name": "Colorado Avalanche",
+        "gfPG": 7,
+        "gaPG": 2.5,
+        "gf": 14,
+        "ga": 5,
+        "gp": 2,
+        "ppPct": 0,
+        "pkPct": 0,
+        "pim": 8.5,
+        "recentGF": 7,
+        "recentN": 2
+      },
+      "homeStats": {
+        "name": "Winnipeg Jets",
+        "gfPG": 3,
+        "gaPG": 2.6666666666666665,
+        "gf": 9,
+        "ga": 8,
+        "gp": 3,
+        "ppPct": 0,
+        "pkPct": 0,
+        "pim": 8.5,
+        "recentGF": 3,
+        "recentN": 3
+      },
+      "awayGoalie": {
+        "name": "Mackenzie Blackwood",
+        "savePct": 0.9046966666666667,
+        "rawSavePct": 0.91228,
+        "priorWt": 0.8666666666666667,
+        "gs": 2
+      },
+      "homeGoalie": {
+        "name": "Stuart Skinner",
+        "savePct": 0.8907426666666667,
+        "rawSavePct": 0.90909,
+        "priorWt": 0.8666666666666667,
+        "gs": 2
+      }
+    },
+    {
+      "gameId": 2026020055,
+      "away": "EDM",
+      "home": "ANA",
+      "pick": "EDM",
+      "winPctAway": 0.524634203703078,
+      "winPctHome": 0.47536579629692194,
+      "lambdaAway": 3.4798988946103186,
+      "lambdaHome": 3.315725682083715,
+      "confidence": "LOW CONFIDENCE",
+      "awayB2B": false,
+      "homeB2B": false,
+      "injAway": true,
+      "injHome": true,
+      "awayStats": {
+        "name": "Edmonton Oilers",
+        "gfPG": 5.666666666666667,
+        "gaPG": 4.666666666666667,
+        "gf": 17,
+        "ga": 14,
+        "gp": 3,
+        "ppPct": 0,
+        "pkPct": 0,
+        "pim": 8.5,
+        "recentGF": 5.666666666666667,
+        "recentN": 3
+      },
+      "homeStats": {
+        "name": "Anaheim Ducks",
+        "gfPG": 3.5,
+        "gaPG": 2.5,
+        "gf": 7,
+        "ga": 5,
+        "gp": 2,
+        "ppPct": 0,
+        "pkPct": 0,
+        "pim": 8.5,
+        "recentGF": 3.5,
+        "recentN": 2
+      },
+      "awayGoalie": {
+        "name": "Devon Levi",
+        "savePct": 0.8888026666666666,
+        "rawSavePct": 0.80952,
+        "priorWt": 0.8666666666666667,
+        "gs": 2
+      },
+      "homeGoalie": {
+        "name": "Lukas Dostal",
+        "savePct": 0.892264,
+        "rawSavePct": 0.91803,
+        "priorWt": 0.8666666666666667,
+        "gs": 2
+      }
+    }
+  ],
+  "injuries": {
+    "byTeam": {
+      "PIT": {
+        "active": true,
+        "players": [
+          {
+            "name": "Andrei Kuzmenko",
+            "role": "F6",
+            "status": "Injured Reserve"
+          }
+        ],
+        "outCount": 3
+      },
+      "WSH": {
+        "active": true,
+        "players": [
+          {
+            "name": "Matt Roy",
+            "role": "D2",
+            "status": "Out"
+          }
+        ],
+        "outCount": 3
+      },
+      "COL": {
+        "active": false,
+        "players": [],
+        "outCount": 3
+      },
+      "WPG": {
+        "active": false,
+        "players": [],
+        "outCount": 4
+      },
+      "EDM": {
+        "active": true,
+        "players": [
+          {
+            "name": "Zach Hyman",
+            "role": "F3",
+            "status": "Out"
+          },
+          {
+            "name": "Ryan Nugent-Hopkins",
+            "role": "F4",
+            "status": "Injured Reserve"
+          }
+        ],
+        "outCount": 9
+      },
+      "ANA": {
+        "active": true,
+        "players": [
+          {
+            "name": "Troy Terry",
+            "role": "F3",
+            "status": "Injured Reserve"
+          }
+        ],
+        "outCount": 3
+      }
+    },
+    "warning": null,
+    "feedTimestamp": "2026-10-08T02:00:43Z"
+  },
+  "message": "🏒 **NHL Picks — Wed, Oct 7** (3 games)\n⚪ PIT @ WSH → **PIT** 57% · LOW · 🏥 PIT, WSH · 7:30 PM\n🟡 COL @ WPG → **COL** 61% · MED · 7:30 PM\n⚪ EDM @ ANA → **EDM** 52% · LOW · 🏥 EDM, ANA · 10:00 PM\n-# 🏥 PIT: Kuzmenko (F6) · WSH: Roy (D2) · EDM: Hyman (F3), Nugent-Hopkins (F4) · ANA: Terry (F3)"
+}
