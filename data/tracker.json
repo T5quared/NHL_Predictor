@@ -22,12 +22,12 @@
     "homeB2B": false,
     "injPlayersAway": [],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 6,
+    "actualWinner": "BOS",
+    "hit": false,
+    "mae": 2.75,
+    "saved": true
   },
   {
     "gameId": 2026020057,
@@ -64,12 +64,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 0,
+    "actualWinner": "DAL",
+    "hit": false,
+    "mae": 2.05,
+    "saved": true
   },
   {
     "gameId": 2026020058,
@@ -105,12 +105,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "NSH",
+    "hit": true,
+    "mae": 1.5,
+    "saved": true
   },
   {
     "gameId": 2026020059,
@@ -146,12 +146,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 2,
+    "actualWinner": "OTT",
+    "hit": true,
+    "mae": 1.35,
+    "saved": true
   },
   {
     "gameId": 2026020060,
@@ -182,12 +182,12 @@
       }
     ],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 3,
+    "actualWinner": "TBL",
+    "hit": true,
+    "mae": 0.40000000000000013,
+    "saved": true
   },
   {
     "gameId": 2026020061,
@@ -224,12 +224,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 7,
+    "actualWinner": "CAR",
+    "hit": false,
+    "mae": 2.55,
+    "saved": true
   },
   {
     "gameId": 2026020062,
@@ -271,12 +271,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 4,
+    "actualWinner": "NYI",
+    "hit": true,
+    "mae": 1.0999999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020063,
@@ -301,12 +301,12 @@
     "homeB2B": false,
     "injPlayersAway": [],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 2,
+    "actualWinner": "SJS",
+    "hit": false,
+    "mae": 0.6499999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020064,
@@ -337,12 +337,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 7,
+    "actualGoalsHome": 3,
+    "actualWinner": "COL",
+    "hit": true,
+    "mae": 1.85,
+    "saved": true
   },
   {
     "gameId": 2026020065,
@@ -367,6 +367,161 @@
     "homeB2B": false,
     "injPlayersAway": [],
     "injPlayersHome": [],
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 4,
+    "actualWinner": "VGK",
+    "hit": true,
+    "mae": 0.1499999999999999,
+    "saved": true
+  },
+  {
+    "gameId": 2026020066,
+    "date": "2026-10-09",
+    "away": "SEA",
+    "home": "DET",
+    "predWinner": "SEA",
+    "predGoalsAway": 3.2,
+    "predGoalsHome": 2.7,
+    "winPctAway": 59,
+    "winPctHome": 41,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 4,
+    "gpHome": 3,
+    "injAway": false,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [
+      {
+        "name": "J.T. Compher",
+        "role": "F6",
+        "status": "Injured Reserve"
+      },
+      {
+        "name": "Simon Edvinsson",
+        "role": "D2",
+        "status": "Out"
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020067,
+    "date": "2026-10-09",
+    "away": "NYR",
+    "home": "WSH",
+    "predWinner": "NYR",
+    "predGoalsAway": 3,
+    "predGoalsHome": 2.6,
+    "winPctAway": 56,
+    "winPctHome": 44,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 5,
+    "gpHome": 3,
+    "injAway": false,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [
+      {
+        "name": "Matt Roy",
+        "role": "D2",
+        "status": "Out"
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020068,
+    "date": "2026-10-09",
+    "away": "PIT",
+    "home": "CBJ",
+    "predWinner": "CBJ",
+    "predGoalsAway": 3.3,
+    "predGoalsHome": 3.5,
+    "winPctAway": 47,
+    "winPctHome": 53,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 4,
+    "gpHome": 2,
+    "injAway": true,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Andrei Kuzmenko",
+        "role": "F6",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020069,
+    "date": "2026-10-09",
+    "away": "ANA",
+    "home": "WPG",
+    "predWinner": "WPG",
+    "predGoalsAway": 2.7,
+    "predGoalsHome": 3.1,
+    "winPctAway": 45,
+    "winPctHome": 55,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 3,
+    "gpHome": 4,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Troy Terry",
+        "role": "F3",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Josh Morrissey",
+        "role": "D1",
+        "status": "Out"
+      }
+    ],
     "actualGoalsAway": null,
     "actualGoalsHome": null,
     "actualWinner": null,

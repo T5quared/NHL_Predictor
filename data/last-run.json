@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-08",
+  "date": "2026-10-09",
   "modelVer": "v8.1",
   "weights": {
     "BASE_GOALS": 3.35,
@@ -25,551 +25,221 @@
   },
   "games": [
     {
-      "gameId": 2026020056,
-      "away": "UTA",
-      "home": "BOS",
-      "pick": "UTA",
-      "winPctAway": 0.5856209647566732,
-      "winPctHome": 0.41437903524332675,
-      "lambdaAway": 3.3285440305858267,
-      "lambdaHome": 2.7827884731623933,
+      "gameId": 2026020066,
+      "away": "SEA",
+      "home": "DET",
+      "pick": "SEA",
+      "winPctAway": 0.5916523394229074,
+      "winPctHome": 0.4083476605770926,
+      "lambdaAway": 3.249769332173914,
+      "lambdaHome": 2.6736469799210347,
       "confidence": "LOW CONFIDENCE",
       "awayB2B": false,
       "homeB2B": false,
       "injAway": false,
-      "injHome": false,
+      "injHome": true,
       "awayStats": {
-        "name": "Utah Mammoth",
-        "gfPG": 4.25,
-        "gaPG": 2,
-        "gf": 17,
-        "ga": 8,
-        "gp": 4,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 4.25,
-        "recentN": 4
-      },
-      "homeStats": {
-        "name": "Boston Bruins",
-        "gfPG": 2.25,
+        "name": "Seattle Kraken",
+        "gfPG": 3.75,
         "gaPG": 2.75,
-        "gf": 9,
+        "gf": 15,
         "ga": 11,
         "gp": 4,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 2.25,
+        "recentGF": 3.75,
         "recentN": 4
       },
-      "awayGoalie": {
-        "name": "Karel Vejmelka",
-        "savePct": 0.899944,
-        "rawSavePct": 0.91304,
-        "priorWt": 0.8,
-        "gs": 3
-      },
-      "homeGoalie": {
-        "name": "Jeremy Swayman",
-        "savePct": 0.908876,
-        "rawSavePct": 0.91358,
-        "priorWt": 0.8,
-        "gs": 3
-      }
-    },
-    {
-      "gameId": 2026020057,
-      "away": "DAL",
-      "home": "BUF",
-      "pick": "BUF",
-      "winPctAway": 0.48201130900129185,
-      "winPctHome": 0.5179886909987081,
-      "lambdaAway": 2.6781791216169837,
-      "lambdaHome": 2.786182695221754,
-      "confidence": "LOW CONFIDENCE",
-      "awayB2B": false,
-      "homeB2B": false,
-      "injAway": true,
-      "injHome": true,
-      "awayStats": {
-        "name": "Dallas Stars",
-        "gfPG": 2,
-        "gaPG": 2,
-        "gf": 6,
-        "ga": 6,
-        "gp": 3,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 2,
-        "recentN": 3
-      },
       "homeStats": {
-        "name": "Buffalo Sabres",
-        "gfPG": 3.3333333333333335,
-        "gaPG": 3.6666666666666665,
-        "gf": 10,
-        "ga": 11,
-        "gp": 3,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 3.3333333333333335,
-        "recentN": 3
-      },
-      "awayGoalie": {
-        "name": "Jake Oettinger",
-        "savePct": 0.9052020000000001,
-        "rawSavePct": 0.94285,
-        "priorWt": 0.8666666666666667,
-        "gs": 2
-      },
-      "homeGoalie": {
-        "name": "Ukko-Pekka Luukkonen",
-        "savePct": 0.8928846666666668,
-        "rawSavePct": 0.78378,
-        "priorWt": 0.8666666666666667,
-        "gs": 2
-      }
-    },
-    {
-      "gameId": 2026020058,
-      "away": "NSH",
-      "home": "MTL",
-      "pick": "NSH",
-      "winPctAway": 0.5042288736530514,
-      "winPctHome": 0.49577112634694864,
-      "lambdaAway": 3.195886493240271,
-      "lambdaHome": 3.1685900936978344,
-      "confidence": "LOW CONFIDENCE",
-      "awayB2B": false,
-      "homeB2B": false,
-      "injAway": false,
-      "injHome": true,
-      "awayStats": {
-        "name": "Nashville Predators",
+        "name": "Detroit Red Wings",
         "gfPG": 2.3333333333333335,
-        "gaPG": 3,
-        "gf": 7,
-        "ga": 9,
-        "gp": 3,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 2.3333333333333335,
-        "recentN": 3
-      },
-      "homeStats": {
-        "name": "Montréal Canadiens",
-        "gfPG": 4,
-        "gaPG": 4.666666666666667,
-        "gf": 12,
-        "ga": 14,
-        "gp": 3,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 4,
-        "recentN": 3
-      },
-      "awayGoalie": {
-        "name": "Juuse Saros",
-        "savePct": 0.896258,
-        "rawSavePct": 0.90721,
-        "priorWt": 0.8,
-        "gs": 3
-      },
-      "homeGoalie": {
-        "name": "Jakub Dobes",
-        "savePct": 0.892254,
-        "rawSavePct": 0.85555,
-        "priorWt": 0.8,
-        "gs": 3
-      }
-    },
-    {
-      "gameId": 2026020059,
-      "away": "PHI",
-      "home": "OTT",
-      "pick": "OTT",
-      "winPctAway": 0.39071509759749623,
-      "winPctHome": 0.6092849024025038,
-      "lambdaAway": 2.499333576544035,
-      "lambdaHome": 3.1745816630917885,
-      "confidence": "MEDIUM CONFIDENCE",
-      "awayB2B": false,
-      "homeB2B": false,
-      "injAway": false,
-      "injHome": true,
-      "awayStats": {
-        "name": "Philadelphia Flyers",
-        "gfPG": 1.25,
-        "gaPG": 4.25,
-        "gf": 5,
-        "ga": 17,
-        "gp": 4,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 1.25,
-        "recentN": 4
-      },
-      "homeStats": {
-        "name": "Ottawa Senators",
-        "gfPG": 3.3333333333333335,
         "gaPG": 2.6666666666666665,
-        "gf": 10,
+        "gf": 7,
         "ga": 8,
         "gp": 3,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 3.3333333333333335,
-        "recentN": 3
-      },
-      "awayGoalie": {
-        "name": "Dan Vladar",
-        "savePct": 0.8999906666666667,
-        "rawSavePct": 0.86301,
-        "priorWt": 0.8666666666666667,
-        "gs": 2
-      },
-      "homeGoalie": {
-        "name": "Linus Ullmark",
-        "savePct": 0.8983913333333334,
-        "rawSavePct": 0.94871,
-        "priorWt": 0.8666666666666667,
-        "gs": 2
-      }
-    },
-    {
-      "gameId": 2026020060,
-      "away": "MIN",
-      "home": "TBL",
-      "pick": "TBL",
-      "winPctAway": 0.4729228265422276,
-      "winPctHome": 0.5270771734577724,
-      "lambdaAway": 2.609156561942708,
-      "lambdaHome": 2.7705879980902526,
-      "confidence": "LOW CONFIDENCE",
-      "awayB2B": false,
-      "homeB2B": false,
-      "injAway": true,
-      "injHome": false,
-      "awayStats": {
-        "name": "Minnesota Wild",
-        "gfPG": 3,
-        "gaPG": 1.6666666666666667,
-        "gf": 9,
-        "ga": 5,
-        "gp": 3,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 3,
-        "recentN": 3
-      },
-      "homeStats": {
-        "name": "Tampa Bay Lightning",
-        "gfPG": 2.6666666666666665,
-        "gaPG": 2.3333333333333335,
-        "gf": 8,
-        "ga": 7,
-        "gp": 3,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 2.6666666666666665,
-        "recentN": 3
-      },
-      "awayGoalie": {
-        "name": "Jesper Wallstedt",
-        "savePct": 0.9192100000000001,
-        "rawSavePct": 0.93333,
-        "priorWt": 0.8,
-        "gs": 3
-      },
-      "homeGoalie": {
-        "name": "Andrei Vasilevskiy",
-        "savePct": 0.909864,
-        "rawSavePct": 0.9,
-        "priorWt": 0.8,
-        "gs": 3
-      }
-    },
-    {
-      "gameId": 2026020061,
-      "away": "VAN",
-      "home": "CAR",
-      "pick": "VAN",
-      "winPctAway": 0.5156453980566437,
-      "winPctHome": 0.48435460194335633,
-      "lambdaAway": 3.4761735347649583,
-      "lambdaHome": 3.3715580323290597,
-      "confidence": "LOW CONFIDENCE",
-      "awayB2B": false,
-      "homeB2B": false,
-      "injAway": true,
-      "injHome": true,
-      "awayStats": {
-        "name": "Vancouver Canucks",
-        "gfPG": 4.75,
-        "gaPG": 4.5,
-        "gf": 19,
-        "ga": 18,
-        "gp": 4,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 4.75,
-        "recentN": 4
-      },
-      "homeStats": {
-        "name": "Carolina Hurricanes",
-        "gfPG": 2.75,
-        "gaPG": 3,
-        "gf": 11,
-        "ga": 12,
-        "gp": 4,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 2.75,
-        "recentN": 4
-      },
-      "awayGoalie": {
-        "name": "Kevin Lankinen",
-        "savePct": 0.8650880000000001,
-        "rawSavePct": 0.82352,
-        "priorWt": 0.8,
-        "gs": 3
-      },
-      "homeGoalie": {
-        "name": "Brandon Bussi",
-        "savePct": 0.885932,
-        "rawSavePct": 0.85074,
-        "priorWt": 0.8,
-        "gs": 3
-      }
-    },
-    {
-      "gameId": 2026020062,
-      "away": "CHI",
-      "home": "NYI",
-      "pick": "NYI",
-      "winPctAway": 0.37682700443601025,
-      "winPctHome": 0.6231729955639898,
-      "lambdaAway": 2.3420471045094766,
-      "lambdaHome": 3.089735855055741,
-      "confidence": "MEDIUM CONFIDENCE",
-      "awayB2B": false,
-      "homeB2B": false,
-      "injAway": true,
-      "injHome": true,
-      "awayStats": {
-        "name": "Chicago Blackhawks",
-        "gfPG": 2.25,
-        "gaPG": 4.25,
-        "gf": 9,
-        "ga": 17,
-        "gp": 4,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 2.25,
-        "recentN": 4
-      },
-      "homeStats": {
-        "name": "New York Islanders",
-        "gfPG": 3,
-        "gaPG": 2.3333333333333335,
-        "gf": 9,
-        "ga": 7,
-        "gp": 3,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 3,
-        "recentN": 3
-      },
-      "awayGoalie": {
-        "name": "Spencer Knight",
-        "savePct": 0.899684,
-        "rawSavePct": 0.8901,
-        "priorWt": 0.8,
-        "gs": 3
-      },
-      "homeGoalie": {
-        "name": "Ilya Sorokin",
-        "savePct": 0.914196,
-        "rawSavePct": 0.96825,
-        "priorWt": 0.8666666666666667,
-        "gs": 2
-      }
-    },
-    {
-      "gameId": 2026020063,
-      "away": "SJS",
-      "home": "STL",
-      "pick": "STL",
-      "winPctAway": 0.44595559568275,
-      "winPctHome": 0.55404440431725,
-      "lambdaAway": 2.9813359607735936,
-      "lambdaHome": 3.329715615646359,
-      "confidence": "LOW CONFIDENCE",
-      "awayB2B": false,
-      "homeB2B": false,
-      "injAway": false,
-      "injHome": false,
-      "awayStats": {
-        "name": "San Jose Sharks",
-        "gfPG": 3,
-        "gaPG": 4,
-        "gf": 9,
-        "ga": 12,
-        "gp": 3,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 3,
-        "recentN": 3
-      },
-      "homeStats": {
-        "name": "St. Louis Blues",
-        "gfPG": 2.3333333333333335,
-        "gaPG": 3.3333333333333335,
-        "gf": 7,
-        "ga": 10,
-        "gp": 3,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
         "recentGF": 2.3333333333333335,
         "recentN": 3
       },
       "awayGoalie": {
-        "name": "Yaroslav Askarov",
-        "savePct": 0.87934,
-        "rawSavePct": 0.86206,
+        "name": "Joey Daccord",
+        "savePct": 0.900254,
+        "rawSavePct": 0.91139,
         "priorWt": 0.8,
         "gs": 3
       },
       "homeGoalie": {
-        "name": "Joel Hofer",
-        "savePct": 0.915592,
-        "rawSavePct": 0.95454,
-        "priorWt": 0.8666666666666667,
-        "gs": 2
+        "name": "John Gibson",
+        "savePct": 0.901698,
+        "rawSavePct": 0.90277,
+        "priorWt": 0.8,
+        "gs": 3
       }
     },
     {
-      "gameId": 2026020064,
-      "away": "COL",
-      "home": "CGY",
-      "pick": "COL",
-      "winPctAway": 0.7419069924116817,
-      "winPctHome": 0.2580930075883183,
-      "lambdaAway": 3.9938782635994388,
-      "lambdaHome": 2.339555553642577,
-      "confidence": "HIGH CONFIDENCE",
-      "awayB2B": true,
+      "gameId": 2026020067,
+      "away": "NYR",
+      "home": "WSH",
+      "pick": "NYR",
+      "winPctAway": 0.5606674883120383,
+      "winPctHome": 0.4393325116879617,
+      "lambdaAway": 2.9797993425195086,
+      "lambdaHome": 2.610456853433223,
+      "confidence": "LOW CONFIDENCE",
+      "awayB2B": false,
       "homeB2B": false,
       "injAway": false,
       "injHome": true,
       "awayStats": {
-        "name": "Colorado Avalanche",
-        "gfPG": 5.333333333333333,
-        "gaPG": 2.6666666666666665,
+        "name": "New York Rangers",
+        "gfPG": 3.2,
+        "gaPG": 1.6,
         "gf": 16,
         "ga": 8,
-        "gp": 3,
+        "gp": 5,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 5.333333333333333,
-        "recentN": 3
+        "recentGF": 3.2,
+        "recentN": 5
       },
       "homeStats": {
-        "name": "Calgary Flames",
-        "gfPG": 1,
-        "gaPG": 5.333333333333333,
-        "gf": 3,
-        "ga": 16,
+        "name": "Washington Capitals",
+        "gfPG": 3.6666666666666665,
+        "gaPG": 2.6666666666666665,
+        "gf": 11,
+        "ga": 8,
         "gp": 3,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 1,
+        "recentGF": 3.6666666666666665,
         "recentN": 3
       },
       "awayGoalie": {
-        "name": "Mackenzie Blackwood",
-        "savePct": 0.9017700000000001,
-        "rawSavePct": 0.89473,
-        "priorWt": 0.8,
-        "gs": 3
+        "name": "Igor Shesterkin",
+        "savePct": 0.9155006666666666,
+        "rawSavePct": 0.92631,
+        "priorWt": 0.7333333333333334,
+        "gs": 4
       },
       "homeGoalie": {
-        "name": "Dustin Wolf",
-        "savePct": 0.8855386666666667,
-        "rawSavePct": 0.79661,
+        "name": "Logan Thompson",
+        "savePct": 0.9129600000000001,
+        "rawSavePct": 0.92063,
         "priorWt": 0.8666666666666667,
         "gs": 2
       }
     },
     {
-      "gameId": 2026020065,
-      "away": "TOR",
-      "home": "VGK",
-      "pick": "VGK",
-      "winPctAway": 0.3880446750297174,
-      "winPctHome": 0.6119553249702826,
-      "lambdaAway": 2.9915794133778504,
-      "lambdaHome": 3.742971598181981,
-      "confidence": "MEDIUM CONFIDENCE",
+      "gameId": 2026020068,
+      "away": "PIT",
+      "home": "CBJ",
+      "pick": "CBJ",
+      "winPctAway": 0.46707090926346206,
+      "winPctHome": 0.5329290907365379,
+      "lambdaAway": 3.267706466357809,
+      "lambdaHome": 3.4866170556944476,
+      "confidence": "LOW CONFIDENCE",
       "awayB2B": false,
       "homeB2B": false,
-      "injAway": false,
+      "injAway": true,
       "injHome": false,
       "awayStats": {
-        "name": "Toronto Maple Leafs",
-        "gfPG": 2.75,
-        "gaPG": 2.75,
-        "gf": 11,
-        "ga": 11,
+        "name": "Pittsburgh Penguins",
+        "gfPG": 4.5,
+        "gaPG": 3.25,
+        "gf": 18,
+        "ga": 13,
         "gp": 4,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 2.75,
+        "recentGF": 4.5,
         "recentN": 4
       },
       "homeStats": {
-        "name": "Vegas Golden Knights",
-        "gfPG": 4.25,
+        "name": "Columbus Blue Jackets",
+        "gfPG": 3.5,
+        "gaPG": 3.5,
+        "gf": 7,
+        "ga": 7,
+        "gp": 2,
+        "ppPct": 0,
+        "pkPct": 0,
+        "pim": 8.5,
+        "recentGF": 3.5,
+        "recentN": 2
+      },
+      "awayGoalie": {
+        "name": "Arturs Silovs",
+        "savePct": 0.8824139999999999,
+        "rawSavePct": 0.85915,
+        "priorWt": 0.8,
+        "gs": 3
+      },
+      "homeGoalie": {
+        "name": "Jet Greaves",
+        "savePct": 0.9036580000000001,
+        "rawSavePct": 0.87719,
+        "priorWt": 0.8666666666666667,
+        "gs": 2
+      }
+    },
+    {
+      "gameId": 2026020069,
+      "away": "ANA",
+      "home": "WPG",
+      "pick": "WPG",
+      "winPctAway": 0.44975814890906074,
+      "winPctHome": 0.5502418510909393,
+      "lambdaAway": 2.747646832486065,
+      "lambdaHome": 3.0587612210256423,
+      "confidence": "LOW CONFIDENCE",
+      "awayB2B": false,
+      "homeB2B": false,
+      "injAway": true,
+      "injHome": true,
+      "awayStats": {
+        "name": "Anaheim Ducks",
+        "gfPG": 3,
+        "gaPG": 3.3333333333333335,
+        "gf": 9,
+        "ga": 10,
+        "gp": 3,
+        "ppPct": 0,
+        "pkPct": 0,
+        "pim": 8.5,
+        "recentGF": 3,
+        "recentN": 3
+      },
+      "homeStats": {
+        "name": "Winnipeg Jets",
+        "gfPG": 3,
         "gaPG": 2.5,
-        "gf": 17,
+        "gf": 12,
         "ga": 10,
         "gp": 4,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 4.25,
+        "recentGF": 3,
         "recentN": 4
       },
       "awayGoalie": {
-        "name": "Sergei Bobrovsky",
-        "savePct": 0.878132,
-        "rawSavePct": 0.88679,
-        "priorWt": 0.8666666666666667,
-        "gs": 2
+        "name": "Lukas Dostal",
+        "savePct": 0.884998,
+        "rawSavePct": 0.87179,
+        "priorWt": 0.8,
+        "gs": 3
       },
       "homeGoalie": {
-        "name": "Carter Hart",
-        "savePct": 0.8908739999999999,
-        "rawSavePct": 0.89041,
+        "name": "Stuart Skinner",
+        "savePct": 0.894336,
+        "rawSavePct": 0.92,
         "priorWt": 0.8,
         "gs": 3
       }
@@ -577,184 +247,84 @@
   ],
   "injuries": {
     "byTeam": {
-      "UTA": {
+      "SEA": {
         "active": false,
         "players": [],
-        "outCount": 1
+        "outCount": 3
       },
-      "BOS": {
+      "DET": {
+        "active": true,
+        "players": [
+          {
+            "name": "J.T. Compher",
+            "role": "F6",
+            "status": "Injured Reserve"
+          },
+          {
+            "name": "Simon Edvinsson",
+            "role": "D2",
+            "status": "Out"
+          }
+        ],
+        "outCount": 4
+      },
+      "NYR": {
+        "active": false,
+        "players": [],
+        "outCount": 4
+      },
+      "WSH": {
+        "active": true,
+        "players": [
+          {
+            "name": "Matt Roy",
+            "role": "D2",
+            "status": "Out"
+          }
+        ],
+        "outCount": 3
+      },
+      "PIT": {
+        "active": true,
+        "players": [
+          {
+            "name": "Andrei Kuzmenko",
+            "role": "F6",
+            "status": "Injured Reserve"
+          }
+        ],
+        "outCount": 3
+      },
+      "CBJ": {
         "active": false,
         "players": [],
         "outCount": 0
       },
-      "DAL": {
+      "ANA": {
         "active": true,
         "players": [
           {
-            "name": "Matt Duchene",
-            "role": "F5",
+            "name": "Troy Terry",
+            "role": "F3",
             "status": "Injured Reserve"
           }
         ],
-        "outCount": 5
+        "outCount": 3
       },
-      "BUF": {
+      "WPG": {
         "active": true,
         "players": [
           {
-            "name": "Conor Timmins",
-            "role": "D4",
-            "status": "Injured Reserve"
-          }
-        ],
-        "outCount": 5
-      },
-      "NSH": {
-        "active": false,
-        "players": [],
-        "outCount": 1
-      },
-      "MTL": {
-        "active": true,
-        "players": [
-          {
-            "name": "Ivan Demidov",
-            "role": "F5",
-            "status": "Injured Reserve"
-          },
-          {
-            "name": "Kaiden Guhle",
-            "role": "D4",
-            "status": "Injured Reserve"
-          }
-        ],
-        "outCount": 5
-      },
-      "PHI": {
-        "active": false,
-        "players": [],
-        "outCount": 2
-      },
-      "OTT": {
-        "active": true,
-        "players": [
-          {
-            "name": "Jake Sanderson",
+            "name": "Josh Morrissey",
             "role": "D1",
             "status": "Out"
-          },
-          {
-            "name": "Artem Zub",
-            "role": "D4",
-            "status": "Injured Reserve"
-          }
-        ],
-        "outCount": 4
-      },
-      "MIN": {
-        "active": true,
-        "players": [
-          {
-            "name": "Brock Faber",
-            "role": "D2",
-            "status": "Injured Reserve"
-          }
-        ],
-        "outCount": 3
-      },
-      "TBL": {
-        "active": false,
-        "players": [],
-        "outCount": 3
-      },
-      "VAN": {
-        "active": true,
-        "players": [
-          {
-            "name": "Filip Chytil",
-            "role": "F5",
-            "status": "Injured Reserve"
           }
         ],
         "outCount": 5
-      },
-      "CAR": {
-        "active": true,
-        "players": [
-          {
-            "name": "Seth Jarvis",
-            "role": "F2",
-            "status": "Injured Reserve"
-          }
-        ],
-        "outCount": 2
-      },
-      "CHI": {
-        "active": true,
-        "players": [
-          {
-            "name": "Connor Bedard",
-            "role": "F1",
-            "status": "Injured Reserve"
-          }
-        ],
-        "outCount": 3
-      },
-      "NYI": {
-        "active": true,
-        "players": [
-          {
-            "name": "Alexander Romanov",
-            "role": "D4",
-            "status": "Out"
-          },
-          {
-            "name": "Mathew Barzal",
-            "role": "F1",
-            "status": "Injured Reserve"
-          }
-        ],
-        "outCount": 2
-      },
-      "SJS": {
-        "active": false,
-        "players": [],
-        "outCount": 5
-      },
-      "STL": {
-        "active": false,
-        "players": [],
-        "outCount": 4
-      },
-      "COL": {
-        "active": false,
-        "players": [],
-        "outCount": 3
-      },
-      "CGY": {
-        "active": true,
-        "players": [
-          {
-            "name": "Jonathan Huberdeau",
-            "role": "F1",
-            "status": "Injured Reserve"
-          }
-        ],
-        "outCount": 1
-      },
-      "TOR": {
-        "active": false,
-        "players": [],
-        "outCount": 5
-      },
-      "VGK": {
-        "active": false,
-        "players": [],
-        "outCount": 2
       }
     },
     "warning": null,
-    "feedTimestamp": "2026-10-08T20:39:10Z"
+    "feedTimestamp": "2026-10-09T20:03:56Z"
   },
-  "message": "🏒 **NHL Picks — Thu, Oct 8** (10 games)\n⚪ UTA @ BOS → **UTA** 59% · LOW · 7:00 PM\n⚪ DAL @ BUF → **BUF** 52% · LOW · 🏥 DAL, BUF · 7:00 PM\n⚪ NSH @ MTL → **NSH** 50% · LOW · 🏥 MTL · 7:00 PM\n🟡 PHI @ OTT → **OTT** 61% · MED · 🏥 OTT · 7:00 PM\n⚪ MIN @ TBL → **TBL** 53% · LOW · 🏥 MIN · 7:00 PM\n⚪ VAN @ CAR → **VAN** 52% · LOW · 🏥 VAN, CAR · 7:00 PM\n🟡 CHI @ NYI → **NYI** 62% · MED · 🏥 CHI, NYI · 7:30 PM\n⚪ SJS @ STL → **STL** 55% · LOW · 8:00 PM\n🟢 COL @ CGY → **COL** 74% · HIGH · 🏥 CGY · 9:00 PM\n🟡 TOR @ VGK → **VGK** 61% · MED · 10:00 PM\n-# 🏥 DAL: Duchene (F5) · BUF: Timmins (D4) · MTL: Demidov (F5), Guhle (D4) · OTT: Sanderson (D1), Zub (D4) · MIN: Faber (D2) · VAN: Chytil (F5) · CAR: Jarvis (F2) · CHI: Bedard (F1) · NYI: Romanov (D4), Barzal (F1) · CGY: Huberdeau (F1)"
+  "message": "🏒 **NHL Picks — Fri, Oct 9** (4 games)\n⚪ SEA @ DET → **SEA** 59% · LOW · 🏥 DET · 7:00 PM\n⚪ NYR @ WSH → **NYR** 56% · LOW · 🏥 WSH · 7:00 PM\n⚪ PIT @ CBJ → **CBJ** 53% · LOW · 🏥 PIT · 7:00 PM\n⚪ ANA @ WPG → **WPG** 55% · LOW · 🏥 ANA, WPG · 8:00 PM\n-# 🏥 DET: Compher (F6), Edvinsson (D2) · WSH: Roy (D2) · PIT: Kuzmenko (F6) · ANA: Terry (F3) · WPG: Morrissey (D1)\n-# 📊 Last results: 6/10 · Auto-run record: 6/10 (60%)"
 }
