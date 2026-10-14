@@ -1402,12 +1402,12 @@
         "status": "Out"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 4,
+    "actualWinner": "NJD",
+    "hit": false,
+    "mae": 2.05,
+    "saved": true
   },
   {
     "gameId": 2026020091,
@@ -1443,12 +1443,12 @@
       }
     ],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 7,
+    "actualGoalsHome": 3,
+    "actualWinner": "FLA",
+    "hit": false,
+    "mae": 2.55,
+    "saved": true
   },
   {
     "gameId": 2026020092,
@@ -1495,12 +1495,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 4,
+    "actualWinner": "MTL",
+    "hit": true,
+    "mae": 0.6499999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020093,
@@ -1547,12 +1547,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 4,
+    "actualWinner": "CAR",
+    "hit": true,
+    "mae": 0.8999999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020094,
@@ -1593,12 +1593,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 2,
+    "actualWinner": "SEA",
+    "hit": true,
+    "mae": 0.5,
+    "saved": true
   },
   {
     "gameId": 2026020095,
@@ -1629,12 +1629,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 4,
+    "actualWinner": "NYR",
+    "hit": true,
+    "mae": 1.4500000000000002,
+    "saved": true
   },
   {
     "gameId": 2026020096,
@@ -1670,12 +1670,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 7,
+    "actualGoalsHome": 2,
+    "actualWinner": "STL",
+    "hit": true,
+    "mae": 2.45,
+    "saved": true
   },
   {
     "gameId": 2026020097,
@@ -1717,12 +1717,12 @@
         "status": "Out"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 3,
+    "actualWinner": "NYI",
+    "hit": true,
+    "mae": 0.8500000000000001,
+    "saved": true
   },
   {
     "gameId": 2026020098,
@@ -1759,12 +1759,12 @@
         "status": "Suspension"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 5,
+    "actualWinner": "CHI",
+    "hit": false,
+    "mae": 1.45,
+    "saved": true
   },
   {
     "gameId": 2026020099,
@@ -1801,12 +1801,12 @@
         "status": "Out"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 5,
+    "actualWinner": "WPG",
+    "hit": false,
+    "mae": 1.7000000000000002,
+    "saved": true
   },
   {
     "gameId": 2026020100,
@@ -1843,12 +1843,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 2,
+    "actualWinner": "COL",
+    "hit": true,
+    "mae": 0.40000000000000013,
+    "saved": true
   },
   {
     "gameId": 2026020101,
@@ -1873,12 +1873,12 @@
     "homeB2B": false,
     "injPlayersAway": [],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "VGK",
+    "hit": true,
+    "mae": 1.45,
+    "saved": true
   },
   {
     "gameId": 2026020102,
@@ -1903,12 +1903,12 @@
     "homeB2B": false,
     "injPlayersAway": [],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 5,
+    "actualWinner": "UTA",
+    "hit": true,
+    "mae": 1.15,
+    "saved": true
   },
   {
     "gameId": 2026020103,
@@ -1950,12 +1950,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 2,
+    "actualWinner": "CGY",
+    "hit": false,
+    "mae": 1.75,
+    "saved": true
   },
   {
     "gameId": 2026020104,
@@ -2002,12 +2002,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 1,
+    "actualWinner": "EDM",
+    "hit": true,
+    "mae": 0.95,
+    "saved": true
   },
   {
     "gameId": 2026020105,
@@ -2031,6 +2031,94 @@
     "awayB2B": false,
     "homeB2B": false,
     "injPlayersAway": [],
+    "injPlayersHome": [],
+    "actualGoalsAway": 6,
+    "actualGoalsHome": 3,
+    "actualWinner": "BOS",
+    "hit": true,
+    "mae": 1.4,
+    "saved": true
+  },
+  {
+    "gameId": 2026020106,
+    "date": "2026-10-14",
+    "away": "MTL",
+    "home": "WSH",
+    "predWinner": "WSH",
+    "predGoalsAway": 2.5,
+    "predGoalsHome": 2.8,
+    "winPctAway": 46,
+    "winPctHome": 54,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 6,
+    "gpHome": 6,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": true,
+    "homeB2B": true,
+    "injPlayersAway": [
+      {
+        "name": "Mike Matheson",
+        "role": "D2",
+        "status": "Out"
+      },
+      {
+        "name": "Ivan Demidov",
+        "role": "F6",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Matt Roy",
+        "role": "D2",
+        "status": "Injured Reserve"
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020107,
+    "date": "2026-10-14",
+    "away": "DAL",
+    "home": "COL",
+    "predWinner": "COL",
+    "predGoalsAway": 2.3,
+    "predGoalsHome": 3.3,
+    "winPctAway": 34,
+    "winPctHome": 66,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.1",
+    "gpAway": 6,
+    "gpHome": 6,
+    "injAway": true,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": true,
+    "homeB2B": true,
+    "injPlayersAway": [
+      {
+        "name": "Wyatt Johnston",
+        "role": "F2",
+        "status": "Out"
+      },
+      {
+        "name": "Matt Duchene",
+        "role": "F5",
+        "status": "Injured Reserve"
+      }
+    ],
     "injPlayersHome": [],
     "actualGoalsAway": null,
     "actualGoalsHome": null,
