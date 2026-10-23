@@ -4033,12 +4033,12 @@
     "homeB2B": false,
     "injPlayersAway": [],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 0,
+    "actualGoalsHome": 6,
+    "actualWinner": "BOS",
+    "hit": true,
+    "mae": 2.55,
+    "saved": true
   },
   {
     "gameId": 2026020155,
@@ -4069,12 +4069,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 5,
+    "actualWinner": "TOR",
+    "hit": false,
+    "mae": 1.5,
+    "saved": true
   },
   {
     "gameId": 2026020156,
@@ -4121,12 +4121,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 6,
+    "actualGoalsHome": 2,
+    "actualWinner": "SJS",
+    "hit": false,
+    "mae": 2.3499999999999996,
+    "saved": true
   },
   {
     "gameId": 2026020157,
@@ -4157,12 +4157,12 @@
       }
     ],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 4,
+    "actualWinner": "NJD",
+    "hit": true,
+    "mae": 1.15,
+    "saved": true
   },
   {
     "gameId": 2026020158,
@@ -4219,12 +4219,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 0,
+    "actualGoalsHome": 4,
+    "actualWinner": "PIT",
+    "hit": true,
+    "mae": 1.95,
+    "saved": true
   },
   {
     "gameId": 2026020159,
@@ -4266,12 +4266,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 2,
+    "actualWinner": "LAK",
+    "hit": false,
+    "mae": 1.05,
+    "saved": true
   },
   {
     "gameId": 2026020160,
@@ -4296,12 +4296,12 @@
     "homeB2B": false,
     "injPlayersAway": [],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 6,
+    "actualWinner": "STL",
+    "hit": false,
+    "mae": 2.15,
+    "saved": true
   },
   {
     "gameId": 2026020161,
@@ -4343,12 +4343,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 3,
+    "actualWinner": "DAL",
+    "hit": true,
+    "mae": 0.19999999999999996,
+    "saved": true
   },
   {
     "gameId": 2026020162,
@@ -4390,12 +4390,12 @@
         "status": "Injured Reserve"
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 2,
+    "actualWinner": "CGY",
+    "hit": false,
+    "mae": 1.3,
+    "saved": true
   },
   {
     "gameId": 2026020163,
@@ -4420,12 +4420,12 @@
     "homeB2B": false,
     "injPlayersAway": [],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 6,
+    "actualWinner": "EDM",
+    "hit": true,
+    "mae": 1.75,
+    "saved": true
   },
   {
     "gameId": 2026020164,
@@ -4450,12 +4450,12 @@
     "homeB2B": false,
     "injPlayersAway": [],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 5,
+    "actualWinner": "SEA",
+    "hit": true,
+    "mae": 0.9000000000000001,
+    "saved": true
   },
   {
     "gameId": 2026020165,
@@ -4485,6 +4485,77 @@
         "status": "Injured Reserve"
       }
     ],
+    "injPlayersHome": [],
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "DET",
+    "hit": true,
+    "mae": 1.3,
+    "saved": true
+  },
+  {
+    "gameId": 2026020166,
+    "date": "2026-10-23",
+    "away": "MTL",
+    "home": "CHI",
+    "predWinner": "MTL",
+    "predGoalsAway": 3.3,
+    "predGoalsHome": 3.1,
+    "winPctAway": 53,
+    "winPctHome": 47,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 9,
+    "gpHome": 9,
+    "injAway": true,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Nick Suzuki",
+        "role": "F1",
+        "status": "Out"
+      },
+      {
+        "name": "Ivan Demidov",
+        "role": "F6",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020167,
+    "date": "2026-10-23",
+    "away": "TBL",
+    "home": "COL",
+    "predWinner": "COL",
+    "predGoalsAway": 3.3,
+    "predGoalsHome": 3.6,
+    "winPctAway": 46,
+    "winPctHome": 54,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 9,
+    "gpHome": 10,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
     "injPlayersHome": [],
     "actualGoalsAway": null,
     "actualGoalsHome": null,
