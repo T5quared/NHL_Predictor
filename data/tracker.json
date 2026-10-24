@@ -4527,12 +4527,12 @@
       }
     ],
     "injPlayersHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 1,
+    "actualWinner": "MTL",
+    "hit": true,
+    "mae": 1.4000000000000001,
+    "saved": true
   },
   {
     "gameId": 2026020167,
@@ -4557,6 +4557,506 @@
     "homeB2B": false,
     "injPlayersAway": [],
     "injPlayersHome": [],
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 6,
+    "actualWinner": "COL",
+    "hit": true,
+    "mae": 1.3499999999999999,
+    "saved": true
+  },
+  {
+    "gameId": 2026020168,
+    "date": "2026-10-24",
+    "away": "ANA",
+    "home": "PHI",
+    "predWinner": "ANA",
+    "predGoalsAway": 2.5,
+    "predGoalsHome": 2.2,
+    "winPctAway": 56,
+    "winPctHome": 44,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 10,
+    "gpHome": 12,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Pavel Mintyukov",
+        "role": "D3",
+        "status": "Injured Reserve"
+      },
+      {
+        "name": "Troy Terry",
+        "role": "F4",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Cam York",
+        "role": "D2",
+        "status": "Injured Reserve"
+      },
+      {
+        "name": "Owen Tippett",
+        "role": "F6",
+        "status": "Injured Reserve"
+      },
+      {
+        "name": "Travis Konecny",
+        "role": "F1",
+        "status": "Injured Reserve"
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020169,
+    "date": "2026-10-24",
+    "away": "LAK",
+    "home": "NJD",
+    "predWinner": "NJD",
+    "predGoalsAway": 2.5,
+    "predGoalsHome": 3.6,
+    "winPctAway": 34,
+    "winPctHome": 66,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.1",
+    "gpAway": 8,
+    "gpHome": 10,
+    "injAway": true,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Kevin Fiala",
+        "role": "F4",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020170,
+    "date": "2026-10-24",
+    "away": "SJS",
+    "home": "BOS",
+    "predWinner": "BOS",
+    "predGoalsAway": 2.2,
+    "predGoalsHome": 4,
+    "winPctAway": 23,
+    "winPctHome": 77,
+    "confidence": "HIGH CONFIDENCE",
+    "confidenceCls": "conf-high",
+    "modelVer": "v8.1",
+    "gpAway": 11,
+    "gpHome": 11,
+    "injAway": true,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Alexander Wennberg",
+        "role": "F2",
+        "status": "Out"
+      }
+    ],
+    "injPlayersHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020171,
+    "date": "2026-10-24",
+    "away": "NYR",
+    "home": "OTT",
+    "predWinner": "NYR",
+    "predGoalsAway": 2.8,
+    "predGoalsHome": 2.4,
+    "winPctAway": 57,
+    "winPctHome": 43,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 12,
+    "gpHome": 11,
+    "injAway": false,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [
+      {
+        "name": "Linus Ullmark",
+        "role": "starting G",
+        "status": "Injured Reserve"
+      },
+      {
+        "name": "Thomas Chabot",
+        "role": "D2",
+        "status": "Out"
+      },
+      {
+        "name": "William Eklund",
+        "role": "F3",
+        "status": "Injured Reserve"
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020172,
+    "date": "2026-10-24",
+    "away": "NSH",
+    "home": "PIT",
+    "predWinner": "NSH",
+    "predGoalsAway": 3,
+    "predGoalsHome": 3,
+    "winPctAway": 50,
+    "winPctHome": 50,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 9,
+    "gpHome": 11,
+    "injAway": false,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [
+      {
+        "name": "Egor Chinakhov",
+        "role": "F5",
+        "status": "Out"
+      },
+      {
+        "name": "Evgeni Malkin",
+        "role": "F4",
+        "status": "Out"
+      },
+      {
+        "name": "Samuel Girard",
+        "role": "D3",
+        "status": "Injured Reserve"
+      },
+      {
+        "name": "Bryan Rust",
+        "role": "F1",
+        "status": "Injured Reserve"
+      },
+      {
+        "name": "Ben Kindel",
+        "role": "F6",
+        "status": "Injured Reserve"
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020173,
+    "date": "2026-10-24",
+    "away": "BUF",
+    "home": "WSH",
+    "predWinner": "WSH",
+    "predGoalsAway": 2.6,
+    "predGoalsHome": 3.4,
+    "winPctAway": 38,
+    "winPctHome": 62,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.1",
+    "gpAway": 10,
+    "gpHome": 9,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Conor Timmins",
+        "role": "D4",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Logan Thompson",
+        "role": "starting G",
+        "status": "Out"
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020174,
+    "date": "2026-10-24",
+    "away": "VGK",
+    "home": "CBJ",
+    "predWinner": "VGK",
+    "predGoalsAway": 3.5,
+    "predGoalsHome": 2.9,
+    "winPctAway": 58,
+    "winPctHome": 42,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 12,
+    "gpHome": 8,
+    "injAway": true,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Mitch Marner",
+        "role": "F2",
+        "status": "Out"
+      }
+    ],
+    "injPlayersHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020175,
+    "date": "2026-10-24",
+    "away": "CAR",
+    "home": "STL",
+    "predWinner": "CAR",
+    "predGoalsAway": 3.7,
+    "predGoalsHome": 3.5,
+    "winPctAway": 54,
+    "winPctHome": 46,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 12,
+    "gpHome": 10,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020176,
+    "date": "2026-10-24",
+    "away": "TOR",
+    "home": "EDM",
+    "predWinner": "EDM",
+    "predGoalsAway": 3.4,
+    "predGoalsHome": 4.2,
+    "winPctAway": 39,
+    "winPctHome": 61,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.1",
+    "gpAway": 12,
+    "gpHome": 10,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "John Tavares",
+        "role": "F4",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Devon Levi",
+        "role": "starting G",
+        "status": "Injured Reserve"
+      },
+      {
+        "name": "Mattias Ekholm",
+        "role": "D2",
+        "status": "Out"
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020177,
+    "date": "2026-10-24",
+    "away": "TBL",
+    "home": "UTA",
+    "predWinner": "UTA",
+    "predGoalsAway": 3.3,
+    "predGoalsHome": 3.5,
+    "winPctAway": 48,
+    "winPctHome": 52,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 10,
+    "gpHome": 11,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": true,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020178,
+    "date": "2026-10-24",
+    "away": "DET",
+    "home": "CGY",
+    "predWinner": "DET",
+    "predGoalsAway": 3.2,
+    "predGoalsHome": 2.4,
+    "winPctAway": 63,
+    "winPctHome": 37,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.1",
+    "gpAway": 10,
+    "gpHome": 9,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Simon Edvinsson",
+        "role": "D2",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Jonathan Huberdeau",
+        "role": "F1",
+        "status": "Injured Reserve"
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020179,
+    "date": "2026-10-24",
+    "away": "MIN",
+    "home": "SEA",
+    "predWinner": "SEA",
+    "predGoalsAway": 2.7,
+    "predGoalsHome": 3,
+    "winPctAway": 45,
+    "winPctHome": 55,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.1",
+    "gpAway": 11,
+    "gpHome": 11,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Brock Faber",
+        "role": "D2",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Jared McCann",
+        "role": "F4",
+        "status": "Out"
+      }
+    ],
     "actualGoalsAway": null,
     "actualGoalsHome": null,
     "actualWinner": null,
