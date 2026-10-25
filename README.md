@@ -1,6 +1,6 @@
 # NHL Predictor
 
-Runs the v8.1 prediction model every day on GitHub, sets the injury toggle automatically,
+Runs the v8.2 prediction model every day on GitHub, sets the injury toggle automatically,
 posts the picks to Discord and saves picks and results in this repo. Nothing needs to be
 running on your PC.
 
@@ -22,7 +22,7 @@ Until that secret exists, runs fail on purpose and nothing is posted or saved.
 Each run:
 
 1. Fills in final scores for earlier picks.
-2. Predicts today's games with the v8.1 model.
+2. Predicts today's games with the v8.2 model (v8.1 maths + smarter injury toggle).
 3. Posts to Discord, in the same format as the dashboard's Send to Discord button, plus a line
    naming the players behind each 🏥 and a results line.
 4. Saves to `data/tracker.json` (same fields as the dashboard tracker) and `data/last-run.json`

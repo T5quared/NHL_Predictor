@@ -9,6 +9,11 @@
 //  Injury list: ESPN's public NHL injuries feed (unofficial; the NHL has none).
 //  Ice time:    NHL stats API, this season blended with last season so a
 //               player who has been out since camp is still ranked.
+//
+//  v8.2: skaters only count while their absence is recent. A skater who has
+//  missed more than MAX_GAMES_MISSED of his team's games this season is
+//  already missing from the team's GF/GA, so penalising again double-counts.
+//  (Goalies are unchanged: the model keeps using the injured starter's SV%.)
 // ════════════════════════════════════════════════════════════════════
 const { API_WEB, API_STATS, fetchJson } = require('./nhl');
 
@@ -21,6 +26,8 @@ const INJURY_RULES = {
   PRIOR_TOI_GAMES: 20,
   // Feed older than this many hours gets a warning in the Discord post.
   STALE_HOURS: 48,
+  // v8.2: skip a skater once he has missed more than this many team games this season
+  MAX_GAMES_MISSED: 5,
 };
 
 const ESPN_URL = 'https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/injuries';
@@ -100,7 +107,8 @@ function blendedToi(cur, prior) {
 //   roster   — [{id, name, pos}] current roster
 //   curToi / priorToi — Map(playerId -> {name, pos, gp, toi, team})
 //   starterName — the goalie the model is using for this team
-function evaluateTeam(abbrev, injured, roster, curToi, priorToi, starterName) {
+//   teamGp — team's games played this season (null = skip the recency check)
+function evaluateTeam(abbrev, injured, roster, curToi, priorToi, starterName, teamGp = null) {
   const out = (injured || []).filter(i => INJURY_RULES.OUT_STATUSES.includes(norm(i.status)));
   if (!out.length) return { active: false, players: [], outCount: 0 };
 
@@ -117,7 +125,9 @@ function evaluateTeam(abbrev, injured, roster, curToi, priorToi, starterName) {
   const rank = pos => pool.filter(p => p.pos === pos).sort((a, b) => b.toi - a.toi);
   const fwd = rank('F'), def = rank('D');
 
-  const players = [];
+  // Games this skater has missed this season (team GP minus his GP)
+  const gamesMissed = p => teamGp == null ? 0 : Math.max(0, teamGp - (curToi.get(p.id)?.gp || 0));
+  const players = [], skipped = [];
   for (const i of out) {
     if (i.pos === 'G') {
       if (starterName && sameName(i.name, starterName)) players.push({ name: i.name, role: 'starting G', status: i.status });
@@ -125,10 +135,16 @@ function evaluateTeam(abbrev, injured, roster, curToi, priorToi, starterName) {
     }
     const fi = fwd.findIndex(p => sameName(p.name, i.name));
     const di = def.findIndex(p => sameName(p.name, i.name));
-    if (fi >= 0 && fi < INJURY_RULES.TOP_FORWARDS && fwd[fi].toi > 0) players.push({ name: i.name, role: `F${fi + 1}`, status: i.status });
-    else if (di >= 0 && di < INJURY_RULES.TOP_DEFENSE && def[di].toi > 0) players.push({ name: i.name, role: `D${di + 1}`, status: i.status });
+    let hit = null;
+    if (fi >= 0 && fi < INJURY_RULES.TOP_FORWARDS && fwd[fi].toi > 0) hit = { p: fwd[fi], role: `F${fi + 1}` };
+    else if (di >= 0 && di < INJURY_RULES.TOP_DEFENSE && def[di].toi > 0) hit = { p: def[di], role: `D${di + 1}` };
+    if (!hit) continue;
+    const missed = gamesMissed(hit.p);
+    const entry = { name: i.name, role: hit.role, status: i.status, gamesMissed: missed };
+    if (missed > INJURY_RULES.MAX_GAMES_MISSED) skipped.push(entry);
+    else players.push(entry);
   }
-  return { active: players.length > 0, players, outCount: out.length };
+  return { active: players.length > 0, players, skipped, outCount: out.length };
 }
 
 // Everything for today's slate. Never throws: if the feed is down, no toggles are applied.
@@ -146,7 +162,7 @@ async function autoInjuries(teams, { season, prior, teamStats, goalies }) {
     for (const abbrev of teams) {
       try {
         const roster = await fetchRoster(abbrev);
-        result.byTeam[abbrev] = evaluateTeam(abbrev, feed.byTeam[abbrev], roster, curToi, priorToi, goalies[abbrev]?.name);
+        result.byTeam[abbrev] = evaluateTeam(abbrev, feed.byTeam[abbrev], roster, curToi, priorToi, goalies[abbrev]?.name, teamStats[abbrev]?.gp ?? null);
       } catch (e) {
         result.byTeam[abbrev] = { active: false, players: [], outCount: 0, error: e.message };
       }

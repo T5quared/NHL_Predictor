@@ -4,7 +4,8 @@
 //  identical to the dashboard; test/parity.test.js checks that it does.
 //  To tune the model, edit MODEL_WEIGHTS (and the dashboard to match).
 // ════════════════════════════════════════════════════════════════════
-const MODEL_VERSION = 'v8.1';
+// v8.2 = v8.1 model maths + injury toggle ignores long-absent skaters (src/injuries.js)
+const MODEL_VERSION = 'v8.2';
 
 const MODEL_WEIGHTS = {
   BASE_GOALS: 3.35,

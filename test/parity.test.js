@@ -73,6 +73,16 @@ test('injury rule: top-6 F / top-4 D / starting goalie only', () => {
   assert.strictEqual(ev([{ name: 'Jeremy Swayman', pos: 'G', status: 'Out' }]).players[0].role, 'starting G');
   assert.strictEqual(ev([{ name: 'Troy Star', pos: 'RW', status: 'Out' }]).players[0].role, 'F2', 'off-roster star ranked from last season');
   assert.strictEqual(ev([]).active, false);
+
+  // v8.2: skaters who have missed more than 5 team games this season no longer count
+  const evGp = (inj, teamGp) => evaluateTeam('BOS', inj, roster, cur, prior, 'Jeremy Swayman', teamGp);
+  assert.strictEqual(evGp([{ name: 'Fwd Numberc', pos: 'C', status: 'Out' }], 7).active, true, 'missed 2 games: still counts');
+  assert.strictEqual(evGp([{ name: 'Fwd Numberc', pos: 'C', status: 'Out' }], 11).active, false, 'missed 6 games: already in team stats');
+  assert.strictEqual(evGp([{ name: 'Troy Star', pos: 'RW', status: 'Out' }], 4).active, true, 'out since camp, early season: counts');
+  const lt = evGp([{ name: 'Troy Star', pos: 'RW', status: 'Out' }], 12);
+  assert.strictEqual(lt.active, false, 'out since camp, 12 games in: skipped');
+  assert.strictEqual(lt.skipped[0].gamesMissed, 12);
+  assert.strictEqual(evGp([{ name: 'Jeremy Swayman', pos: 'G', status: 'Out' }], 30).active, true, 'starting goalie rule unchanged');
 });
 
 test('Discord message format', () => {

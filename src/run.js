@@ -167,6 +167,7 @@ async function main() {
         gpAway: p.gpAway, gpHome: p.gpHome, injAway: p.injAway, injHome: p.injHome,
         auto: true, injuryMode: 'auto', awayB2B: p.awayB2B, homeB2B: p.homeB2B,
         injPlayersAway: injuries.byTeam[p.away]?.players || [], injPlayersHome: injuries.byTeam[p.home]?.players || [],
+        injSkippedAway: injuries.byTeam[p.away]?.skipped || [], injSkippedHome: injuries.byTeam[p.home]?.skipped || [],
         actualGoalsAway: null, actualGoalsHome: null, actualWinner: null, hit: null, mae: null, saved: false,
       });
     }
