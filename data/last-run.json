@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-25",
+  "date": "2026-10-26",
   "modelVer": "v8.2",
   "weights": {
     "BASE_GOALS": 3.35,
@@ -25,81 +25,136 @@
   },
   "games": [
     {
-      "gameId": 2026020180,
-      "away": "FLA",
-      "home": "CHI",
-      "pick": "FLA",
-      "winPctAway": 0.6042244112254058,
-      "winPctHome": 0.39577558877459423,
-      "lambdaAway": 3.0532692313427092,
-      "lambdaHome": 2.420845200253653,
-      "confidence": "MEDIUM CONFIDENCE",
+      "gameId": 2026020185,
+      "away": "LAK",
+      "home": "NYR",
+      "pick": "NYR",
+      "winPctAway": 0.29032774071029865,
+      "winPctHome": 0.7096722592897013,
+      "lambdaAway": 2.240652768671329,
+      "lambdaHome": 3.5969865412319484,
+      "confidence": "HIGH CONFIDENCE",
       "awayB2B": false,
       "homeB2B": false,
       "injAway": true,
-      "injHome": true,
+      "injHome": false,
       "awayStats": {
-        "name": "Florida Panthers",
-        "gfPG": 2.8181818181818183,
-        "gaPG": 3.090909090909091,
-        "gf": 31,
-        "ga": 34,
-        "gp": 11,
+        "name": "Los Angeles Kings",
+        "gfPG": 2.3333333333333335,
+        "gaPG": 3.5555555555555554,
+        "gf": 21,
+        "ga": 32,
+        "gp": 9,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 3,
-        "recentN": 10
+        "recentGF": 2.3333333333333335,
+        "recentN": 9
       },
       "homeStats": {
-        "name": "Chicago Blackhawks",
-        "gfPG": 2.2,
-        "gaPG": 4,
-        "gf": 22,
-        "ga": 40,
-        "gp": 10,
+        "name": "New York Rangers",
+        "gfPG": 3.1538461538461537,
+        "gaPG": 2.769230769230769,
+        "gf": 41,
+        "ga": 36,
+        "gp": 13,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 2.2,
+        "recentGF": 3.4,
         "recentN": 10
       },
       "awayGoalie": {
-        "name": "Jacob Markstrom",
-        "savePct": 0.8888860000000001,
-        "rawSavePct": 0.89743,
+        "name": "Darcy Kuemper",
+        "savePct": 0.8909140000000001,
+        "rawSavePct": 0.89017,
         "priorWt": 0.6,
         "gs": 6
       },
       "homeGoalie": {
-        "name": "Spencer Knight",
-        "savePct": 0.8945706666666666,
-        "rawSavePct": 0.888,
+        "name": "Dylan Garand",
+        "savePct": 0.9007173333333334,
+        "rawSavePct": 0.90047,
         "priorWt": 0.4666666666666667,
         "gs": 8
       }
     },
     {
-      "gameId": 2026020181,
-      "away": "NYI",
-      "home": "DAL",
-      "pick": "NYI",
-      "winPctAway": 0.5310306487859002,
-      "winPctHome": 0.46896935121409977,
-      "lambdaAway": 2.378791053524217,
-      "lambdaHome": 2.207173658814815,
-      "confidence": "LOW CONFIDENCE",
+      "gameId": 2026020186,
+      "away": "TOR",
+      "home": "CGY",
+      "pick": "TOR",
+      "winPctAway": 0.6785988993864724,
+      "winPctHome": 0.32140110061352756,
+      "lambdaAway": 4.058895822222224,
+      "lambdaHome": 2.8237110973219375,
+      "confidence": "HIGH CONFIDENCE",
+      "awayB2B": false,
+      "homeB2B": false,
+      "injAway": false,
+      "injHome": false,
+      "awayStats": {
+        "name": "Toronto Maple Leafs",
+        "gfPG": 3.8461538461538463,
+        "gaPG": 3.1538461538461537,
+        "gf": 50,
+        "ga": 41,
+        "gp": 13,
+        "ppPct": 0,
+        "pkPct": 0,
+        "pim": 8.5,
+        "recentGF": 4.4,
+        "recentN": 10
+      },
+      "homeStats": {
+        "name": "Calgary Flames",
+        "gfPG": 2.3,
+        "gaPG": 3.9,
+        "gf": 23,
+        "ga": 39,
+        "gp": 10,
+        "ppPct": 0,
+        "pkPct": 0,
+        "pim": 8.5,
+        "recentGF": 2.3,
+        "recentN": 10
+      },
+      "awayGoalie": {
+        "name": "Sergei Bobrovsky",
+        "savePct": 0.8867146666666667,
+        "rawSavePct": 0.89539,
+        "priorWt": 0.4666666666666667,
+        "gs": 8
+      },
+      "homeGoalie": {
+        "name": "Devin Cooley",
+        "savePct": 0.9102266666666666,
+        "rawSavePct": 0.9125,
+        "priorWt": 0.6666666666666667,
+        "gs": 5
+      }
+    },
+    {
+      "gameId": 2026020187,
+      "away": "DET",
+      "home": "EDM",
+      "pick": "EDM",
+      "winPctAway": 0.3802247801435259,
+      "winPctHome": 0.6197752198564741,
+      "lambdaAway": 3.1301215399323628,
+      "lambdaHome": 3.955380396475358,
+      "confidence": "MEDIUM CONFIDENCE",
       "awayB2B": false,
       "homeB2B": false,
       "injAway": false,
       "injHome": true,
       "awayStats": {
-        "name": "New York Islanders",
-        "gfPG": 2.9,
-        "gaPG": 2.3,
+        "name": "Detroit Red Wings",
+        "gfPG": 2.6363636363636362,
+        "gaPG": 3.090909090909091,
         "gf": 29,
-        "ga": 23,
-        "gp": 10,
+        "ga": 34,
+        "gp": 11,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
@@ -107,194 +162,29 @@
         "recentN": 10
       },
       "homeStats": {
-        "name": "Dallas Stars",
-        "gfPG": 2.6,
-        "gaPG": 1.7,
-        "gf": 26,
-        "ga": 17,
-        "gp": 10,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 2.6,
-        "recentN": 10
-      },
-      "awayGoalie": {
-        "name": "Ilya Sorokin",
-        "savePct": 0.9191986666666667,
-        "rawSavePct": 0.93442,
-        "priorWt": 0.5333333333333333,
-        "gs": 7
-      },
-      "homeGoalie": {
-        "name": "Jake Oettinger",
-        "savePct": 0.9207326666666666,
-        "rawSavePct": 0.93939,
-        "priorWt": 0.4666666666666667,
-        "gs": 8
-      }
-    },
-    {
-      "gameId": 2026020182,
-      "away": "MTL",
-      "home": "WPG",
-      "pick": "MTL",
-      "winPctAway": 0.5007517019673298,
-      "winPctHome": 0.4992482980326702,
-      "lambdaAway": 2.9393440901994317,
-      "lambdaHome": 2.934674406666668,
-      "confidence": "LOW CONFIDENCE",
-      "awayB2B": false,
-      "homeB2B": false,
-      "injAway": true,
-      "injHome": false,
-      "awayStats": {
-        "name": "Montréal Canadiens",
-        "gfPG": 3.4,
-        "gaPG": 3.5,
-        "gf": 34,
-        "ga": 35,
-        "gp": 10,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 3.4,
-        "recentN": 10
-      },
-      "homeStats": {
-        "name": "Winnipeg Jets",
-        "gfPG": 2.6,
-        "gaPG": 2.9,
-        "gf": 26,
-        "ga": 29,
-        "gp": 10,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 2.6,
-        "recentN": 10
-      },
-      "awayGoalie": {
-        "name": "Jacob Fowler",
-        "savePct": 0.9089533333333333,
-        "rawSavePct": 0.9099,
-        "priorWt": 0.6666666666666667,
-        "gs": 5
-      },
-      "homeGoalie": {
-        "name": "Stuart Skinner",
-        "savePct": 0.89898,
-        "rawSavePct": 0.91162,
-        "priorWt": 0.5333333333333333,
-        "gs": 7
-      }
-    },
-    {
-      "gameId": 2026020183,
-      "away": "COL",
-      "home": "NSH",
-      "pick": "COL",
-      "winPctAway": 0.6680527025331218,
-      "winPctHome": 0.33194729746687823,
-      "lambdaAway": 3.7643016366004964,
-      "lambdaHome": 2.645563673024538,
-      "confidence": "MEDIUM CONFIDENCE",
-      "awayB2B": false,
-      "homeB2B": true,
-      "injAway": false,
-      "injHome": false,
-      "awayStats": {
-        "name": "Colorado Avalanche",
-        "gfPG": 4.2727272727272725,
-        "gaPG": 3.090909090909091,
-        "gf": 47,
-        "ga": 34,
+        "name": "Edmonton Oilers",
+        "gfPG": 4.454545454545454,
+        "gaPG": 3.5454545454545454,
+        "gf": 49,
+        "ga": 39,
         "gp": 11,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 3.9,
-        "recentN": 10
-      },
-      "homeStats": {
-        "name": "Nashville Predators",
-        "gfPG": 2.5,
-        "gaPG": 3.3,
-        "gf": 25,
-        "ga": 33,
-        "gp": 10,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 2.5,
+        "recentGF": 4.4,
         "recentN": 10
       },
       "awayGoalie": {
-        "name": "Mackenzie Blackwood",
-        "savePct": 0.8976580000000001,
-        "rawSavePct": 0.89252,
+        "name": "John Gibson",
+        "savePct": 0.883078,
+        "rawSavePct": 0.86702,
         "priorWt": 0.4666666666666667,
         "gs": 8
       },
       "homeGoalie": {
-        "name": "Juuse Saros",
-        "savePct": 0.9012426666666666,
-        "rawSavePct": 0.908,
-        "priorWt": 0.4666666666666667,
-        "gs": 8
-      }
-    },
-    {
-      "gameId": 2026020184,
-      "away": "MIN",
-      "home": "VAN",
-      "pick": "MIN",
-      "winPctAway": 0.738024454338838,
-      "winPctHome": 0.261975545661162,
-      "lambdaAway": 4.026099924078525,
-      "lambdaHome": 2.3913462809244797,
-      "confidence": "HIGH CONFIDENCE",
-      "awayB2B": true,
-      "homeB2B": false,
-      "injAway": false,
-      "injHome": false,
-      "awayStats": {
-        "name": "Minnesota Wild",
-        "gfPG": 3.0833333333333335,
-        "gaPG": 2.3333333333333335,
-        "gf": 37,
-        "ga": 28,
-        "gp": 12,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 3,
-        "recentN": 10
-      },
-      "homeStats": {
-        "name": "Vancouver Canucks",
-        "gfPG": 2.9166666666666665,
-        "gaPG": 4.666666666666667,
-        "gf": 35,
-        "ga": 56,
-        "gp": 12,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 2.2,
-        "recentN": 10
-      },
-      "awayGoalie": {
-        "name": "Jesper Wallstedt",
-        "savePct": 0.9176966666666666,
-        "rawSavePct": 0.91843,
-        "priorWt": 0.2666666666666667,
-        "gs": 11
-      },
-      "homeGoalie": {
-        "name": "Kevin Lankinen",
-        "savePct": 0.84594,
-        "rawSavePct": 0.81218,
+        "name": "Devon Levi",
+        "savePct": 0.8942753333333333,
+        "rawSavePct": 0.88659,
         "priorWt": 0.5333333333333333,
         "gs": 7
       }
@@ -302,143 +192,92 @@
   ],
   "injuries": {
     "byTeam": {
-      "FLA": {
+      "LAK": {
         "active": true,
         "players": [
           {
-            "name": "Jacob Markstrom",
-            "role": "starting G",
-            "status": "Injured Reserve"
+            "name": "Mats Zuccarello",
+            "role": "F6",
+            "status": "Out",
+            "gamesMissed": 3
           }
         ],
         "skipped": [
           {
-            "name": "Brad Marchand",
-            "role": "F6",
+            "name": "Kevin Fiala",
+            "role": "F4",
             "status": "Injured Reserve",
             "gamesMissed": 9
           }
         ],
-        "outCount": 4
+        "outCount": 5
       },
-      "CHI": {
-        "active": true,
-        "players": [
-          {
-            "name": "Bowen Byram",
-            "role": "D1",
-            "status": "Out",
-            "gamesMissed": 4
-          }
-        ],
+      "NYR": {
+        "active": false,
+        "players": [],
         "skipped": [],
-        "outCount": 1
+        "outCount": 5
       },
-      "NYI": {
+      "TOR": {
         "active": false,
         "players": [],
         "skipped": [
           {
-            "name": "Alexander Romanov",
-            "role": "D4",
-            "status": "Injured Reserve",
-            "gamesMissed": 7
-          },
-          {
-            "name": "Mathew Barzal",
-            "role": "F2",
-            "status": "Injured Reserve",
-            "gamesMissed": 10
-          }
-        ],
-        "outCount": 4
-      },
-      "DAL": {
-        "active": true,
-        "players": [
-          {
-            "name": "Esa Lindell",
-            "role": "D3",
-            "status": "Injured Reserve",
-            "gamesMissed": 2
-          }
-        ],
-        "skipped": [
-          {
-            "name": "Matt Duchene",
-            "role": "F5",
-            "status": "Injured Reserve",
-            "gamesMissed": 10
-          }
-        ],
-        "outCount": 6
-      },
-      "MTL": {
-        "active": true,
-        "players": [
-          {
-            "name": "Nick Suzuki",
-            "role": "F1",
-            "status": "Out",
-            "gamesMissed": 1
-          }
-        ],
-        "skipped": [
-          {
-            "name": "Ivan Demidov",
-            "role": "F6",
-            "status": "Injured Reserve",
-            "gamesMissed": 8
-          }
-        ],
-        "outCount": 6
-      },
-      "WPG": {
-        "active": false,
-        "players": [],
-        "skipped": [
-          {
-            "name": "Josh Morrissey",
-            "role": "D1",
+            "name": "John Tavares",
+            "role": "F4",
             "status": "Injured Reserve",
             "gamesMissed": 6
           }
         ],
-        "outCount": 4
+        "outCount": 10
       },
-      "COL": {
-        "active": false,
-        "players": [],
-        "skipped": [],
-        "outCount": 2
-      },
-      "NSH": {
-        "active": false,
-        "players": [],
-        "outCount": 0
-      },
-      "MIN": {
+      "CGY": {
         "active": false,
         "players": [],
         "skipped": [
           {
-            "name": "Brock Faber",
-            "role": "D2",
+            "name": "Jonathan Huberdeau",
+            "role": "F1",
             "status": "Injured Reserve",
-            "gamesMissed": 12
+            "gamesMissed": 10
           }
         ],
-        "outCount": 4
+        "outCount": 2
       },
-      "VAN": {
+      "DET": {
         "active": false,
         "players": [],
-        "skipped": [],
+        "skipped": [
+          {
+            "name": "Simon Edvinsson",
+            "role": "D2",
+            "status": "Injured Reserve",
+            "gamesMissed": 11
+          }
+        ],
         "outCount": 3
+      },
+      "EDM": {
+        "active": true,
+        "players": [
+          {
+            "name": "Devon Levi",
+            "role": "starting G",
+            "status": "Injured Reserve"
+          },
+          {
+            "name": "Mattias Ekholm",
+            "role": "D2",
+            "status": "Out",
+            "gamesMissed": 1
+          }
+        ],
+        "skipped": [],
+        "outCount": 8
       }
     },
     "warning": null,
-    "feedTimestamp": "2026-10-25T18:20:32Z"
+    "feedTimestamp": "2026-10-26T20:24:31Z"
   },
-  "message": "🏒 **NHL Picks — Sun, Oct 25** (5 games)\n🟡 FLA @ CHI → **FLA** 60% · MED · 🏥 FLA, CHI · 3:00 PM\n⚪ NYI @ DAL → **NYI** 53% · LOW · 🏥 DAL · 6:00 PM\n⚪ MTL @ WPG → **MTL** 50% · LOW · 🏥 MTL · 7:00 PM\n🟡 COL @ NSH → **COL** 67% · MED · 8:00 PM\n🟢 MIN @ VAN → **MIN** 74% · HIGH · 10:00 PM\n-# 🏥 FLA: Markstrom (starting G) · CHI: Byram (D1) · DAL: Lindell (D3) · MTL: Suzuki (F1)\n-# 📊 Last results: 6/12 · Auto-run record: 72/124 (58%)"
+  "message": "🏒 **NHL Picks — Mon, Oct 26** (3 games)\n🟢 LAK @ NYR → **NYR** 71% · HIGH · 🏥 LAK · 7:00 PM\n🟢 TOR @ CGY → **TOR** 68% · HIGH · 8:30 PM\n🟡 DET @ EDM → **EDM** 62% · MED · 🏥 EDM · 9:30 PM\n-# 🏥 LAK: Zuccarello (F6) · EDM: Levi (starting G), Ekholm (D2)\n-# 📊 Last results: 3/5 · Auto-run record: 75/129 (58%)"
 }
