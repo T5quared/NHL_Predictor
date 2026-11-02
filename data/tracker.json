@@ -7328,12 +7328,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 0,
+    "actualGoalsHome": 7,
+    "actualWinner": "CAR",
+    "hit": true,
+    "mae": 2.6500000000000004,
+    "saved": true
   },
   {
     "gameId": 2026020228,
@@ -7381,12 +7381,12 @@
         "gamesMissed": 12
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 1,
+    "actualWinner": "MIN",
+    "hit": false,
+    "mae": 2.1500000000000004,
+    "saved": true
   },
   {
     "gameId": 2026020229,
@@ -7427,12 +7427,12 @@
         "gamesMissed": 11
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 6,
+    "actualWinner": "PHI",
+    "hit": false,
+    "mae": 1.75,
+    "saved": true
   },
   {
     "gameId": 2026020230,
@@ -7466,12 +7466,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 1,
+    "actualWinner": "EDM",
+    "hit": true,
+    "mae": 1.5,
+    "saved": true
   },
   {
     "gameId": 2026020231,
@@ -7523,6 +7523,182 @@
         "role": "F4",
         "status": "Injured Reserve",
         "gamesMissed": 13
+      }
+    ],
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 6,
+    "actualWinner": "ANA",
+    "hit": false,
+    "mae": 1.7,
+    "saved": true
+  },
+  {
+    "gameId": 2026020232,
+    "date": "2026-11-02",
+    "away": "VGK",
+    "home": "BOS",
+    "predWinner": "BOS",
+    "predGoalsAway": 2.8,
+    "predGoalsHome": 3.8,
+    "winPctAway": 36,
+    "winPctHome": 64,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.2",
+    "gpAway": 15,
+    "gpHome": 15,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [],
+    "injSkippedHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020233,
+    "date": "2026-11-02",
+    "away": "DET",
+    "home": "FLA",
+    "predWinner": "FLA",
+    "predGoalsAway": 2.7,
+    "predGoalsHome": 3.7,
+    "winPctAway": 35,
+    "winPctHome": 65,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.2",
+    "gpAway": 14,
+    "gpHome": 14,
+    "injAway": true,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Dylan Larkin",
+        "role": "F1",
+        "status": "Injured Reserve",
+        "gamesMissed": 4
+      }
+    ],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Simon Edvinsson",
+        "role": "D2",
+        "status": "Injured Reserve",
+        "gamesMissed": 14
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Brad Marchand",
+        "role": "F6",
+        "status": "Injured Reserve",
+        "gamesMissed": 12
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020234,
+    "date": "2026-11-02",
+    "away": "COL",
+    "home": "CHI",
+    "predWinner": "COL",
+    "predGoalsAway": 3.9,
+    "predGoalsHome": 2.6,
+    "winPctAway": 69,
+    "winPctHome": 31,
+    "confidence": "HIGH CONFIDENCE",
+    "confidenceCls": "conf-high",
+    "modelVer": "v8.2",
+    "gpAway": 14,
+    "gpHome": 14,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [],
+    "injSkippedHome": [
+      {
+        "name": "Bowen Byram",
+        "role": "D1",
+        "status": "Out",
+        "gamesMissed": 8
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020235,
+    "date": "2026-11-02",
+    "away": "CGY",
+    "home": "SJS",
+    "predWinner": "SJS",
+    "predGoalsAway": 2.8,
+    "predGoalsHome": 3.1,
+    "winPctAway": 46,
+    "winPctHome": 54,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 14,
+    "gpHome": 15,
+    "injAway": true,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Devin Cooley",
+        "role": "starting G",
+        "status": "Injured Reserve"
+      }
+    ],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Jonathan Huberdeau",
+        "role": "F1",
+        "status": "Injured Reserve",
+        "gamesMissed": 14
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Alexander Wennberg",
+        "role": "F2",
+        "status": "Injured Reserve",
+        "gamesMissed": 6
       }
     ],
     "actualGoalsAway": null,
