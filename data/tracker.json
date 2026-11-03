@@ -7557,12 +7557,12 @@
     "injPlayersHome": [],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 3,
+    "actualWinner": "BOS",
+    "hit": true,
+    "mae": 0.7999999999999998,
+    "saved": true
   },
   {
     "gameId": 2026020233,
@@ -7610,12 +7610,12 @@
         "gamesMissed": 12
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 3,
+    "actualWinner": "DET",
+    "hit": false,
+    "mae": 1.5,
+    "saved": true
   },
   {
     "gameId": 2026020234,
@@ -7649,12 +7649,12 @@
         "gamesMissed": 8
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "COL",
+    "hit": true,
+    "mae": 0.8500000000000001,
+    "saved": true
   },
   {
     "gameId": 2026020235,
@@ -7699,6 +7699,510 @@
         "role": "F2",
         "status": "Injured Reserve",
         "gamesMissed": 6
+      }
+    ],
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 1,
+    "actualWinner": "CGY",
+    "hit": false,
+    "mae": 1.45,
+    "saved": true
+  },
+  {
+    "gameId": 2026020236,
+    "date": "2026-11-03",
+    "away": "UTA",
+    "home": "TOR",
+    "predWinner": "TOR",
+    "predGoalsAway": 3.7,
+    "predGoalsHome": 3.9,
+    "winPctAway": 48,
+    "winPctHome": 52,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 15,
+    "gpHome": 16,
+    "injAway": false,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [
+      {
+        "name": "Kirill Marchenko",
+        "role": "F3",
+        "status": "Injured Reserve",
+        "gamesMissed": 2
+      }
+    ],
+    "injSkippedAway": [
+      {
+        "name": "John Marino",
+        "role": "D3",
+        "status": "Injured Reserve",
+        "gamesMissed": 6
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "John Tavares",
+        "role": "F4",
+        "status": "Out",
+        "gamesMissed": 9
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020237,
+    "date": "2026-11-03",
+    "away": "WPG",
+    "home": "MTL",
+    "predWinner": "MTL",
+    "predGoalsAway": 2.3,
+    "predGoalsHome": 3.5,
+    "winPctAway": 31,
+    "winPctHome": 69,
+    "confidence": "HIGH CONFIDENCE",
+    "confidenceCls": "conf-high",
+    "modelVer": "v8.2",
+    "gpAway": 15,
+    "gpHome": 14,
+    "injAway": false,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [
+      {
+        "name": "Nick Suzuki",
+        "role": "F1",
+        "status": "Out",
+        "gamesMissed": 5
+      }
+    ],
+    "injSkippedAway": [
+      {
+        "name": "Josh Morrissey",
+        "role": "D1",
+        "status": "Injured Reserve",
+        "gamesMissed": 11
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Mike Matheson",
+        "role": "D2",
+        "status": "Out",
+        "gamesMissed": 6
+      },
+      {
+        "name": "Ivan Demidov",
+        "role": "F6",
+        "status": "Injured Reserve",
+        "gamesMissed": 12
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020238,
+    "date": "2026-11-03",
+    "away": "DET",
+    "home": "TBL",
+    "predWinner": "TBL",
+    "predGoalsAway": 3,
+    "predGoalsHome": 4,
+    "winPctAway": 36,
+    "winPctHome": 64,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.2",
+    "gpAway": 15,
+    "gpHome": 13,
+    "injAway": true,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": true,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Dylan Larkin",
+        "role": "F1",
+        "status": "Injured Reserve",
+        "gamesMissed": 5
+      }
+    ],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Simon Edvinsson",
+        "role": "D2",
+        "status": "Injured Reserve",
+        "gamesMissed": 15
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Yanni Gourde",
+        "role": "F6",
+        "status": "Injured Reserve",
+        "gamesMissed": 13
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020240,
+    "date": "2026-11-03",
+    "away": "STL",
+    "home": "NYR",
+    "predWinner": "STL",
+    "predGoalsAway": 3,
+    "predGoalsHome": 2.6,
+    "winPctAway": 56,
+    "winPctHome": 44,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 14,
+    "gpHome": 15,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Colton Parayko",
+        "role": "D2",
+        "status": "Out",
+        "gamesMissed": 1
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Sean Durzi",
+        "role": "D4",
+        "status": "Out",
+        "gamesMissed": 1
+      }
+    ],
+    "injSkippedAway": [],
+    "injSkippedHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020241,
+    "date": "2026-11-03",
+    "away": "MIN",
+    "home": "PHI",
+    "predWinner": "MIN",
+    "predGoalsAway": 3.4,
+    "predGoalsHome": 2.4,
+    "winPctAway": 66,
+    "winPctHome": 34,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.2",
+    "gpAway": 16,
+    "gpHome": 16,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Jared Spurgeon",
+        "role": "D4",
+        "status": "Injured Reserve",
+        "gamesMissed": 6
+      },
+      {
+        "name": "Brock Faber",
+        "role": "D2",
+        "status": "Injured Reserve",
+        "gamesMissed": 16
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Rasmus Ristolainen",
+        "role": "D4",
+        "status": "Injured Reserve",
+        "gamesMissed": 12
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020242,
+    "date": "2026-11-03",
+    "away": "VGK",
+    "home": "PIT",
+    "predWinner": "VGK",
+    "predGoalsAway": 3.3,
+    "predGoalsHome": 2.9,
+    "winPctAway": 57,
+    "winPctHome": 43,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 16,
+    "gpHome": 14,
+    "injAway": false,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": true,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [
+      {
+        "name": "Evgeni Malkin",
+        "role": "F4",
+        "status": "Out",
+        "gamesMissed": 1
+      }
+    ],
+    "injSkippedAway": [],
+    "injSkippedHome": [
+      {
+        "name": "Bryan Rust",
+        "role": "F2",
+        "status": "Injured Reserve",
+        "gamesMissed": 7
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020243,
+    "date": "2026-11-03",
+    "away": "DAL",
+    "home": "WSH",
+    "predWinner": "DAL",
+    "predGoalsAway": 2.9,
+    "predGoalsHome": 2.8,
+    "winPctAway": 51,
+    "winPctHome": 49,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 14,
+    "gpHome": 13,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Matt Duchene",
+        "role": "F5",
+        "status": "Injured Reserve",
+        "gamesMissed": 14
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Rasmus Sandin",
+        "role": "D4",
+        "status": "Injured Reserve",
+        "gamesMissed": 13
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020244,
+    "date": "2026-11-03",
+    "away": "COL",
+    "home": "CBJ",
+    "predWinner": "COL",
+    "predGoalsAway": 3.6,
+    "predGoalsHome": 2.7,
+    "winPctAway": 65,
+    "winPctHome": 35,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.2",
+    "gpAway": 15,
+    "gpHome": 12,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": true,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [],
+    "injSkippedHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020239,
+    "date": "2026-11-03",
+    "away": "EDM",
+    "home": "NJD",
+    "predWinner": "EDM",
+    "predGoalsAway": 3.7,
+    "predGoalsHome": 3.6,
+    "winPctAway": 51,
+    "winPctHome": 49,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 15,
+    "gpHome": 14,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Zach Hyman",
+        "role": "F3",
+        "status": "Injured Reserve",
+        "gamesMissed": 9
+      }
+    ],
+    "injSkippedHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020245,
+    "date": "2026-11-03",
+    "away": "CAR",
+    "home": "NSH",
+    "predWinner": "CAR",
+    "predGoalsAway": 3.9,
+    "predGoalsHome": 2.6,
+    "winPctAway": 68,
+    "winPctHome": 32,
+    "confidence": "HIGH CONFIDENCE",
+    "confidenceCls": "conf-high",
+    "modelVer": "v8.2",
+    "gpAway": 16,
+    "gpHome": 14,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [],
+    "injSkippedHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020246,
+    "date": "2026-11-03",
+    "away": "ANA",
+    "home": "VAN",
+    "predWinner": "ANA",
+    "predGoalsAway": 4.3,
+    "predGoalsHome": 3.3,
+    "winPctAway": 63,
+    "winPctHome": 37,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.2",
+    "gpAway": 14,
+    "gpHome": 16,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Troy Terry",
+        "role": "F4",
+        "status": "Injured Reserve",
+        "gamesMissed": 14
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Filip Chytil",
+        "role": "F3",
+        "status": "Injured Reserve",
+        "gamesMissed": 9
       }
     ],
     "actualGoalsAway": null,
