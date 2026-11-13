@@ -10602,12 +10602,12 @@
         "gamesMissed": 6
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 1,
+    "actualWinner": "CAR",
+    "hit": true,
+    "mae": 1,
+    "saved": true
   },
   {
     "gameId": 2026020299,
@@ -10641,12 +10641,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "MTL",
+    "hit": false,
+    "mae": 1.85,
+    "saved": true
   },
   {
     "gameId": 2026020300,
@@ -10687,12 +10687,12 @@
         "gamesMissed": 6
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "MIN",
+    "hit": true,
+    "mae": 1.0499999999999998,
+    "saved": true
   },
   {
     "gameId": 2026020301,
@@ -10726,12 +10726,12 @@
         "gamesMissed": 15
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 4,
+    "actualWinner": "OTT",
+    "hit": false,
+    "mae": 0.55,
+    "saved": true
   },
   {
     "gameId": 2026020303,
@@ -10772,12 +10772,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 5,
+    "actualWinner": "NJD",
+    "hit": true,
+    "mae": 1.45,
+    "saved": true
   },
   {
     "gameId": 2026020304,
@@ -10811,12 +10811,12 @@
     "injPlayersHome": [],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 1,
+    "actualWinner": "TBL",
+    "hit": true,
+    "mae": 1.25,
+    "saved": true
   },
   {
     "gameId": 2026020302,
@@ -10863,12 +10863,12 @@
         "gamesMissed": 17
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 5,
+    "actualWinner": "FLA",
+    "hit": true,
+    "mae": 1.4000000000000001,
+    "saved": true
   },
   {
     "gameId": 2026020305,
@@ -10902,12 +10902,12 @@
         "gamesMissed": 12
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 3,
+    "actualWinner": "CHI",
+    "hit": false,
+    "mae": 0.8999999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020306,
@@ -10948,12 +10948,12 @@
         "gamesMissed": 17
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 8,
+    "actualGoalsHome": 3,
+    "actualWinner": "WPG",
+    "hit": false,
+    "mae": 2.85,
+    "saved": true
   },
   {
     "gameId": 2026020307,
@@ -11006,12 +11006,12 @@
         "gamesMissed": 10
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 0,
+    "actualWinner": "STL",
+    "hit": true,
+    "mae": 2.5,
+    "saved": true
   },
   {
     "gameId": 2026020308,
@@ -11057,6 +11057,98 @@
         "gamesMissed": 14
       }
     ],
+    "injSkippedHome": [],
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "NYI",
+    "hit": true,
+    "mae": 1.25,
+    "saved": true
+  },
+  {
+    "gameId": 2026020310,
+    "date": "2026-11-13",
+    "away": "NYR",
+    "home": "VAN",
+    "predWinner": "NYR",
+    "predGoalsAway": 3.9,
+    "predGoalsHome": 2.7,
+    "winPctAway": 68,
+    "winPctHome": 32,
+    "confidence": "HIGH CONFIDENCE",
+    "confidenceCls": "conf-high",
+    "modelVer": "v8.2",
+    "gpAway": 20,
+    "gpHome": 20,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Sean Durzi",
+        "role": "D4",
+        "status": "Injured Reserve",
+        "gamesMissed": 6
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Filip Chytil",
+        "role": "F4",
+        "status": "Injured Reserve",
+        "gamesMissed": 13
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020311,
+    "date": "2026-11-13",
+    "away": "NSH",
+    "home": "VGK",
+    "predWinner": "NSH",
+    "predGoalsAway": 2.9,
+    "predGoalsHome": 2.5,
+    "winPctAway": 55,
+    "winPctHome": 45,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 19,
+    "gpHome": 20,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Jonathan Marchessault",
+        "role": "F4",
+        "status": "Out",
+        "gamesMissed": 5
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Noah Hanifin",
+        "role": "D2",
+        "status": "Out",
+        "gamesMissed": 1
+      }
+    ],
+    "injSkippedAway": [],
     "injSkippedHome": [],
     "actualGoalsAway": null,
     "actualGoalsHome": null,
