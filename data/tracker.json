@@ -11807,12 +11807,12 @@
     "injPlayersHome": [],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "EDM",
+    "hit": true,
+    "mae": 1.1500000000000001,
+    "saved": true
   },
   {
     "gameId": 2026020327,
@@ -11860,12 +11860,12 @@
         "gamesMissed": 19
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 2,
+    "actualWinner": "DAL",
+    "hit": false,
+    "mae": 1.25,
+    "saved": true
   },
   {
     "gameId": 2026020328,
@@ -11906,12 +11906,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 6,
+    "actualWinner": "ANA",
+    "hit": true,
+    "mae": 1.8499999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020329,
@@ -11945,12 +11945,12 @@
     ],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 6,
+    "actualGoalsHome": 3,
+    "actualWinner": "VAN",
+    "hit": false,
+    "mae": 2.05,
+    "saved": true
   },
   {
     "gameId": 2026020330,
@@ -11977,6 +11977,116 @@
     "injPlayersHome": [],
     "injSkippedAway": [],
     "injSkippedHome": [],
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 4,
+    "actualWinner": "SJS",
+    "hit": false,
+    "mae": 1.7999999999999998,
+    "saved": true
+  },
+  {
+    "gameId": 2026020331,
+    "date": "2026-11-16",
+    "away": "MTL",
+    "home": "NYR",
+    "predWinner": "MTL",
+    "predGoalsAway": 3,
+    "predGoalsHome": 3,
+    "winPctAway": 51,
+    "winPctHome": 49,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 20,
+    "gpHome": 21,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Mike Matheson",
+        "role": "D2",
+        "status": "Out",
+        "gamesMissed": 11
+      },
+      {
+        "name": "Ivan Demidov",
+        "role": "F5",
+        "status": "Injured Reserve",
+        "gamesMissed": 18
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Sean Durzi",
+        "role": "D4",
+        "status": "Injured Reserve",
+        "gamesMissed": 7
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020332,
+    "date": "2026-11-16",
+    "away": "VAN",
+    "home": "UTA",
+    "predWinner": "UTA",
+    "predGoalsAway": 3.2,
+    "predGoalsHome": 3.8,
+    "winPctAway": 40,
+    "winPctHome": 60,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 22,
+    "gpHome": 21,
+    "injAway": false,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": true,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [
+      {
+        "name": "Nick Schmaltz",
+        "role": "F3",
+        "status": "Out",
+        "gamesMissed": 2
+      },
+      {
+        "name": "Nate Schmidt",
+        "role": "D4",
+        "status": "Injured Reserve",
+        "gamesMissed": 4
+      },
+      {
+        "name": "Dylan Guenther",
+        "role": "F5",
+        "status": "Injured Reserve",
+        "gamesMissed": 3
+      }
+    ],
+    "injSkippedAway": [],
+    "injSkippedHome": [
+      {
+        "name": "John Marino",
+        "role": "D3",
+        "status": "Injured Reserve",
+        "gamesMissed": 12
+      }
+    ],
     "actualGoalsAway": null,
     "actualGoalsHome": null,
     "actualWinner": null,
