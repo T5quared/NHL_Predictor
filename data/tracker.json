@@ -12126,12 +12126,12 @@
     "injPlayersHome": [],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 0,
+    "actualWinner": "LAK",
+    "hit": false,
+    "mae": 2.35,
+    "saved": true
   },
   {
     "gameId": 2026020335,
@@ -12172,12 +12172,12 @@
         "gamesMissed": 20
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "EDM",
+    "hit": true,
+    "mae": 1.4000000000000001,
+    "saved": true
   },
   {
     "gameId": 2026020336,
@@ -12218,12 +12218,12 @@
         "gamesMissed": 16
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 5,
+    "actualWinner": "NYI",
+    "hit": true,
+    "mae": 1.35,
+    "saved": true
   },
   {
     "gameId": 2026020337,
@@ -12250,12 +12250,12 @@
     "injPlayersHome": [],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 4,
+    "actualWinner": "PHI",
+    "hit": true,
+    "mae": 0.44999999999999996,
+    "saved": true
   },
   {
     "gameId": 2026020341,
@@ -12296,12 +12296,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 1,
+    "actualWinner": "OTT",
+    "hit": true,
+    "mae": 1.8499999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020334,
@@ -12335,12 +12335,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 5,
+    "actualWinner": "TBL",
+    "hit": true,
+    "mae": 1.0999999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020338,
@@ -12381,12 +12381,12 @@
         "gamesMissed": 14
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 6,
+    "actualWinner": "CHI",
+    "hit": false,
+    "mae": 1.8,
+    "saved": true
   },
   {
     "gameId": 2026020339,
@@ -12413,12 +12413,12 @@
     "injPlayersHome": [],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 6,
+    "actualGoalsHome": 8,
+    "actualWinner": "STL",
+    "hit": false,
+    "mae": 3.6,
+    "saved": true
   },
   {
     "gameId": 2026020340,
@@ -12445,12 +12445,12 @@
     "injPlayersHome": [],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 7,
+    "actualWinner": "MIN",
+    "hit": true,
+    "mae": 2.1,
+    "saved": true
   },
   {
     "gameId": 2026020342,
@@ -12491,12 +12491,12 @@
     ],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 3,
+    "actualWinner": "DAL",
+    "hit": true,
+    "mae": 0.8999999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020343,
@@ -12544,6 +12544,167 @@
       }
     ],
     "injSkippedHome": [],
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "CGY",
+    "hit": false,
+    "mae": 1.6,
+    "saved": true
+  },
+  {
+    "gameId": 2026020344,
+    "date": "2026-11-18",
+    "away": "BOS",
+    "home": "DET",
+    "predWinner": "BOS",
+    "predGoalsAway": 3.2,
+    "predGoalsHome": 2.7,
+    "winPctAway": 59,
+    "winPctHome": 41,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 21,
+    "gpHome": 21,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": true,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [],
+    "injSkippedHome": [
+      {
+        "name": "Dylan Larkin",
+        "role": "F1",
+        "status": "Injured Reserve",
+        "gamesMissed": 11
+      },
+      {
+        "name": "Simon Edvinsson",
+        "role": "D2",
+        "status": "Injured Reserve",
+        "gamesMissed": 21
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020345,
+    "date": "2026-11-18",
+    "away": "MTL",
+    "home": "NJD",
+    "predWinner": "NJD",
+    "predGoalsAway": 3.3,
+    "predGoalsHome": 3.7,
+    "winPctAway": 43,
+    "winPctHome": 57,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 21,
+    "gpHome": 21,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Mike Matheson",
+        "role": "D2",
+        "status": "Out",
+        "gamesMissed": 12
+      },
+      {
+        "name": "Ivan Demidov",
+        "role": "F5",
+        "status": "Injured Reserve",
+        "gamesMissed": 19
+      }
+    ],
+    "injSkippedHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020346,
+    "date": "2026-11-18",
+    "away": "COL",
+    "home": "UTA",
+    "predWinner": "COL",
+    "predGoalsAway": 4,
+    "predGoalsHome": 2.7,
+    "winPctAway": 69,
+    "winPctHome": 31,
+    "confidence": "HIGH CONFIDENCE",
+    "confidenceCls": "conf-high",
+    "modelVer": "v8.2",
+    "gpAway": 21,
+    "gpHome": 22,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Cale Makar",
+        "role": "D1",
+        "status": "Out",
+        "gamesMissed": 2
+      },
+      {
+        "name": "Nathan MacKinnon",
+        "role": "F1",
+        "status": "Out",
+        "gamesMissed": 1
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Dylan Guenther",
+        "role": "F5",
+        "status": "Injured Reserve",
+        "gamesMissed": 4
+      },
+      {
+        "name": "Nick Schmaltz",
+        "role": "F3",
+        "status": "Injured Reserve",
+        "gamesMissed": 3
+      },
+      {
+        "name": "Nate Schmidt",
+        "role": "D4",
+        "status": "Injured Reserve",
+        "gamesMissed": 5
+      }
+    ],
+    "injSkippedAway": [],
+    "injSkippedHome": [
+      {
+        "name": "John Marino",
+        "role": "D3",
+        "status": "Injured Reserve",
+        "gamesMissed": 13
+      }
+    ],
     "actualGoalsAway": null,
     "actualGoalsHome": null,
     "actualWinner": null,
