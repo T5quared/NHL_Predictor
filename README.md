@@ -51,6 +51,31 @@ separate from picks made with manual toggles.
 - Everything else is the same maths. `node --test` compares this script against
   `dashboard/nhl-dashboard-v8.1.html` on 2,000 random games and runs before every daily run.
 
+## Player props
+
+A second daily run (**Actions → Daily NHL props**, about **1:07 PM Eastern**) scans tonight's prop board,
+scores every prop and builds `dashboard/props.html`. It also posts the top 5 to Discord.
+
+**One-time setup:** sign up for the free SportsGameOdds Amateur plan (sportsgameodds.com), then add the key as a
+repository secret named `SPORTSGAMEODDS_API_KEY`. Without it the run still works, using standard lines
+(0.5 points/assists/goals and shots on goal), but there's no Edge or Odds. Each night uses about one
+object per game, roughly 300 a month out of the free 2,500.
+
+How a prop is scored (settings are in `src/props/config.js`):
+
+1. **Model %:** Poisson on the player's per-game rate. That's this season shrunk toward last season, plus 30% L10,
+   adjusted for tonight's team goal projection (from the 11 AM run) or the opponent's shots against.
+2. **Hit rate:** L5 15% · L10 30% · L25 30% · season 25%, pulled toward the market price on small samples.
+3. **Final %** = 60% model + 40% hit rate. **Edge** = Final % minus the no-vig consensus price.
+4. **Top picks** need 8+ games, a Final % of 55% or more, an edge of +3% or more, and odds between −250 and +150.
+   ✓ consistent = L10, L25 and season all beat the price.
+
+Top picks are logged to `data/props-tracker.json` and graded the next day. The dashboard's
+"Which half of the blend is predicting better?" box compares model and hit rate (Brier score) for the
+blend review after about 2 weeks.
+
+NFL is set up in `src/props/config.js` and `src/props/nfl.js` but not built yet.
+
 ## Changing the model
 
 Edit `MODEL_WEIGHTS` in `src/model.js`, and make the same change in the dashboard HTML in

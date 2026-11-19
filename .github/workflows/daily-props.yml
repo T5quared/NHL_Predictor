@@ -1,0 +1,48 @@
+name: Daily NHL props
+
+on:
+  schedule:
+    # 18:07 UTC = 1:07 PM Eastern in winter (2:07 PM in daylight time). Runs after the 11 AM picks,
+    # so it can use today's team goal projections. GitHub can start scheduled runs 5-30 minutes late.
+    - cron: '7 18 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (build the dashboard but do not post to Discord or log picks)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-commits
+  cancel-in-progress: false
+
+jobs:
+  props:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Tests
+        run: node --test
+      - name: Run props scan
+        env:
+          SPORTSGAMEODDS_API_KEY: ${{ secrets.SPORTSGAMEODDS_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DASHBOARD_URL: ${{ vars.DASHBOARD_URL }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+        run: node src/props/run-props.js
+      - name: Save props and dashboard to the repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data dashboard/props.html
+          git diff --cached --quiet || git commit -m "Props $(TZ=America/New_York date +%F)"
+          git pull --rebase --quiet
+          git push

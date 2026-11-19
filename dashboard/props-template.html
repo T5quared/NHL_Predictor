@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prop Hit Rates</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #fff; --line: #e6e8ec; --ink: #1d2433; --muted: #6b7385; --head: #8a91a0;
+    --g-bg: #e9f8ef; --g-ink: #157a43; --g-pill: #1f9d55;
+    --o-bg: #fff6e5; --o-ink: #a5620a; --o-pill: #f2a31b;
+    --r-ink: #c2410c; --accent: #2563eb;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--ink); }
+  .wrap { max-width: 1320px; margin: 0 auto; padding: 18px 16px 40px; }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 18px; margin-bottom: 14px; }
+  h1 { font-size: 20px; margin: 0; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .tabs { display: flex; gap: 6px; margin-left: auto; }
+  .tab { border: 1px solid var(--line); background: var(--card); padding: 6px 14px; border-radius: 999px; cursor: pointer; font-weight: 600; color: var(--muted); }
+  .tab.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .warn { background: var(--o-bg); color: var(--o-ink); border: 1px solid #f6d79b; padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; }
+
+  .filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 12px; margin-bottom: 14px; }
+  .f label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; color: var(--head); text-transform: uppercase; margin-bottom: 5px; }
+  .f select, .f input, .ms > button { width: 100%; height: 38px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); padding: 0 10px; font: inherit; color: var(--ink); }
+  .odds-range { display: flex; gap: 6px; } .odds-range input { min-width: 0; }
+  .ms { position: relative; } .ms > button { text-align: left; cursor: pointer; }
+  .ms .menu { display: none; position: absolute; z-index: 5; top: 42px; left: 0; right: 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px; box-shadow: 0 6px 20px rgba(0,0,0,.08); }
+  .ms.open .menu { display: block; } .ms .menu label { display: flex; gap: 8px; align-items: center; padding: 6px; font-size: 14px; text-transform: none; letter-spacing: 0; color: var(--ink); font-weight: 500; margin: 0; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 1100px; }
+  th { background: #f1f3f6; text-align: left; font-size: 11px; letter-spacing: .06em; color: var(--head); font-weight: 700; padding: 12px; white-space: nowrap; cursor: pointer; user-select: none; }
+  th.on { color: var(--ink); } th .arr { opacity: .5; margin-left: 3px; }
+  td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: middle; white-space: nowrap; }
+  th:first-child, td:first-child { position: sticky; left: 0; z-index: 1; background: var(--card); box-shadow: 1px 0 0 var(--line); }
+  th:first-child { background: #f1f3f6; }
+  .player { display: flex; align-items: center; gap: 10px; }
+  .player img { width: 26px; height: 26px; }
+  .pname { font-weight: 650; font-size: 15px; }
+  .match { color: var(--muted); font-size: 12px; }
+  .prop { font-weight: 500; } .up { color: var(--g-pill); font-weight: 800; } .down { color: var(--r-ink); font-weight: 800; }
+  td.hit { padding: 0; } .hitcell { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; height: 100%; min-height: 52px; font-size: 13px; }
+  .hitcell.g { background: var(--g-bg); color: var(--g-ink); } .hitcell.o { background: var(--o-bg); color: var(--o-ink); } .hitcell.n { color: var(--muted); }
+  .pill { color: #fff; font-weight: 700; font-size: 12px; padding: 3px 7px; border-radius: 6px; min-width: 44px; text-align: center; }
+  .g .pill { background: var(--g-pill); } .o .pill { background: var(--o-pill); } .n .pill { background: #b7bcc7; }
+  .num { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .edge-pos { color: var(--g-ink); } .edge-neg { color: var(--r-ink); }
+  .odds { font-weight: 700; } .books { color: var(--muted); font-size: 12px; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 5px; background: #e0ecff; color: var(--accent); margin-left: 6px; vertical-align: 2px; }
+  .top { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 5px; background: var(--ink); color: #fff; margin-right: 6px; }
+  .empty { padding: 40px; text-align: center; color: var(--muted); }
+
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 18px; }
+  .panel { padding: 14px 16px; } .panel h2 { font-size: 14px; margin: 0 0 10px; }
+  .kv { display: flex; justify-content: space-between; padding: 5px 0; border-top: 1px solid var(--line); font-size: 13px; } .kv:first-of-type { border-top: 0; }
+  .small { font-size: 12px; color: var(--muted); }
+  .res-hit { color: var(--g-ink); font-weight: 700; } .res-miss { color: var(--r-ink); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Prop Hit Rates</h1>
+    <span class="meta" id="meta"></span>
+    <div class="tabs"><button class="tab on" data-sport="NHL">NHL</button><button class="tab" data-sport="NFL">NFL</button></div>
+  </header>
+  <div id="warn"></div>
+
+  <section id="nhl">
+    <div class="filters">
+      <div class="f"><label>Player</label><input id="q" placeholder="Search player..."></div>
+      <div class="f"><label>Sort by</label>
+        <select id="sortBy">
+          <option value="edge">Edge</option><option value="finalProb">Final %</option>
+          <option value="l5">Last 5 Games</option><option value="l10">Last 10 Games</option>
+          <option value="l25">Last 25 Games</option><option value="season">This Season</option>
+        </select></div>
+      <div class="f ms" id="mkts"><label>Prop markets</label><button type="button" id="mktBtn">All</button><div class="menu" id="mktMenu"></div></div>
+      <div class="f"><label>Teams / games</label><select id="team"><option value="">All Teams</option></select></div>
+      <div class="f"><label>Side</label><select id="side"><option value="">All Sides</option><option value="over">Over</option><option value="under">Under</option></select></div>
+      <div class="f"><label>Odds</label><div class="odds-range"><input id="omin" type="number" value="-250" step="5"><input id="omax" type="number" value="150" step="5"></div></div>
+      <div class="f"><label>Show</label><select id="view"><option value="top">Top picks</option><option value="all">All props</option></select></div>
+    </div>
+
+    <div class="card"><div class="scroll"><table>
+      <thead><tr>
+        <th data-k="player">PLAYER</th><th data-k="prop">PROP</th>
+        <th data-k="l5">LAST 5 GAMES<span class="arr">⇅</span></th><th data-k="l10">LAST 10 GAMES<span class="arr">⇅</span></th>
+        <th data-k="l25">LAST 25 GAMES<span class="arr">⇅</span></th><th data-k="season">THIS SEASON<span class="arr">⇅</span></th>
+        <th data-k="modelProb">MODEL %<span class="arr">⇅</span></th><th data-k="finalProb">FINAL %<span class="arr">⇅</span></th>
+        <th data-k="edge">EDGE<span class="arr">⇅</span></th><th data-k="odds">ODDS<span class="arr">⇅</span></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div></div>
+    <p class="small">Final % = 60% model + 40% hit rate (windows weighted L5 15% · L10 30% · L25 30% · season 25%, small samples pulled toward the market). Edge = Final % minus the no-vig consensus price. ✓ = L10, L25 and season all beat the price. Top picks: 8+ games, Final 55%+, edge +3%+, odds −250 to +150.</p>
+
+    <div class="grid2">
+      <div class="card panel"><h2>Prop record</h2><div id="record"></div></div>
+      <div class="card panel"><h2>Which half of the blend is predicting better?</h2><div id="brier"></div>
+        <p class="small">Lower is better (Brier score). Shift the 60/40 blend toward whichever side wins once there are ~100 graded picks.</p></div>
+      <div class="card panel"><h2>Recent results</h2><div id="recent"></div></div>
+    </div>
+  </section>
+
+  <section id="nflsec" hidden><div class="card empty" id="nflmsg"></div></section>
+</div>
+
+<script>
+const DATA = /*__PROPS_DATA__*/null;
+const $ = id => document.getElementById(id);
+const pct = x => x == null ? '–' : Math.round(x * 100) + '%';
+const fmtOdds = o => o == null ? '–' : (o > 0 ? '+' + o : '' + o);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const SHORT = { points: 'Points', assists: 'Assists', goals: 'Goals', shots: 'Shots on Goal' };
+let sortKey = null;
+
+if (!DATA) {
+  $('rows').innerHTML = '<tr><td colspan="10" class="empty">No data yet — this page fills in after the daily props run.</td></tr>';
+} else init();
+
+function init() {
+  const when = new Date(DATA.generatedAt);
+  $('meta').textContent = `${DATA.date} · ${DATA.counts.games} games · ${DATA.counts.scanned} props scanned · ${DATA.counts.topPicks} top picks · updated ${when.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
+  const warns = [];
+  if (DATA.mode === 'standard-lines') warns.push('No odds feed today — standard lines only, so Edge and Odds are blank and picks are ranked by Final %.');
+  if (DATA.warning) warns.push(esc(DATA.warning));
+  $('warn').innerHTML = warns.map(w => `<div class="warn">⚠️ ${w}</div>`).join('');
+  if (DATA.mode === 'standard-lines') $('sortBy').value = 'finalProb';
+
+  const markets = [...new Set(DATA.props.map(p => p.market))];
+  $('mktMenu').innerHTML = markets.map(m => `<label><input type="checkbox" value="${m}" checked> ${SHORT[m] || m}</label>`).join('');
+  $('mktBtn').onclick = () => $('mkts').classList.toggle('open');
+  document.addEventListener('click', e => { if (!$('mkts').contains(e.target)) $('mkts').classList.remove('open'); });
+  const games = [...new Set(DATA.props.map(p => p.home ? `${p.opp} @ ${p.team}` : `${p.team} @ ${p.opp}`))].sort();
+  $('team').innerHTML += games.map(g => `<option>${g}</option>`).join('');
+
+  for (const id of ['q', 'sortBy', 'team', 'side', 'omin', 'omax', 'view']) $(id).addEventListener('input', render);
+  $('mktMenu').addEventListener('change', render);
+  document.querySelectorAll('th[data-k]').forEach(th => th.onclick = () => {
+    const k = th.dataset.k; if (['player', 'prop'].includes(k)) return;
+    $('sortBy').value = [...$('sortBy').options].some(o => o.value === k) ? k : $('sortBy').value;
+    sortKey = k; render();
+  });
+  document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
+    const nfl = t.dataset.sport === 'NFL';
+    $('nhl').hidden = nfl; $('nflsec').hidden = !nfl;
+    $('nflmsg').textContent = DATA.nfl?.message || 'NFL props are coming next.';
+  });
+  renderSide(); render();
+}
+
+function sortVal(p, k) {
+  if (['l5', 'l10', 'l25', 'season'].includes(k)) return p.rates[k].pct ?? -1;
+  if (k === 'odds') return p.bookOdds ?? -9999;
+  if (k === 'edge') return p.edge ?? (p.finalProb - 0.5);
+  return p[k] ?? -1;
+}
+
+function render() {
+  const q = $('q').value.trim().toLowerCase();
+  const mk = new Set([...$('mktMenu').querySelectorAll('input:checked')].map(i => i.value));
+  $('mktBtn').textContent = mk.size === $('mktMenu').querySelectorAll('input').length ? 'All' : `${mk.size} selected`;
+  const team = $('team').value, side = $('side').value, view = $('view').value;
+  const omin = Number($('omin').value), omax = Number($('omax').value);
+  const k = sortKey || $('sortBy').value; sortKey = null;
+  let rows = DATA.props.filter(p =>
+    (view === 'all' || p.topPick) && mk.has(p.market) && (!side || p.side === side)
+    && (!q || p.playerName.toLowerCase().includes(q))
+    && (!team || team === (p.home ? `${p.opp} @ ${p.team}` : `${p.team} @ ${p.opp}`))
+    && (p.bookOdds == null || (p.bookOdds >= omin && p.bookOdds <= omax)));
+  rows.sort((a, b) => sortVal(b, k) - sortVal(a, k));
+  document.querySelectorAll('th[data-k]').forEach(th => th.classList.toggle('on', th.dataset.k === k));
+  if (!rows.length) { $('rows').innerHTML = '<tr><td colspan="10" class="empty">No props match these filters. Try “All props”.</td></tr>'; return; }
+  $('rows').innerHTML = rows.slice(0, 400).map(row).join('');
+}
+
+function hitCell(r, ref) {
+  if (!r || !r.n) return '<td class="hit"><div class="hitcell n">No games</div></td>';
+  const cls = r.pct > ref ? 'g' : 'o';
+  return `<td class="hit"><div class="hitcell ${cls}"><span>Has hit ${r.hits}/${r.n} for</span><span class="pill">${pct(r.pct)}</span></div></td>`;
+}
+
+function row(p) {
+  const ref = p.implied ?? 0.5;
+  const arrow = p.side === 'over' ? '<span class="up">↑</span>' : '<span class="down">↓</span>';
+  const matchup = p.home ? `${p.opp} @ ${p.team}` : `${p.team} @ ${p.opp}`;
+  const edge = p.edge == null ? '–' : `<span class="${p.edge >= 0 ? 'edge-pos' : 'edge-neg'}">${p.edge >= 0 ? '+' : ''}${(p.edge * 100).toFixed(1)}%</span>`;
+  return `<tr>
+    <td><div class="player"><img src="https://assets.nhle.com/logos/nhl/svg/${esc(p.team)}_light.svg" alt="" onerror="this.style.visibility='hidden'">
+      <div><div class="pname">${p.topPick ? '<span class="top">TOP</span>' : ''}${esc(p.playerName)}${p.consistent ? '<span class="badge">✓ consistent</span>' : ''}</div>
+      <div class="match">${esc(matchup)} · ${p.gp} GP</div></div></div></td>
+    <td class="prop">${arrow} ${p.side === 'over' ? 'Over' : 'Under'} ${p.line} ${SHORT[p.market] || p.market}</td>
+    ${hitCell(p.rates.l5, ref)}${hitCell(p.rates.l10, ref)}${hitCell(p.rates.l25, ref)}${hitCell(p.rates.season, ref)}
+    <td class="num">${pct(p.modelProb)}</td><td class="num">${pct(p.finalProb)}</td><td class="num">${edge}</td>
+    <td><div class="odds">${fmtOdds(p.bookOdds ?? null)}</div><div class="books">${p.bookOdds == null ? 'fair ' + fmtOdds(p.fairOdds) : 'consensus · ' + p.books + ' books'}</div></td>
+  </tr>`;
+}
+
+function renderSide() {
+  const r = DATA.record;
+  const lines = [`<div class="kv"><span>All graded picks</span><b>${r.n ? `${r.hits}/${r.n} (${pct(r.hits / r.n)})` : 'none yet'}</b></div>`];
+  for (const [m, v] of Object.entries(r.byMarket || {})) lines.push(`<div class="kv"><span>${SHORT[m] || m}</span><span>${v.hits}/${v.n} (${pct(v.hits / v.n)})</span></div>`);
+  $('record').innerHTML = lines.join('');
+  const b = r.brier || {}, f = x => x == null ? '–' : x.toFixed(3);
+  $('brier').innerHTML = r.n ? [['Model', b.model], ['Hit rate', b.hitRate], ['Final blend', b.final], ['Market price', b.market]]
+    .map(([k, v]) => `<div class="kv"><span>${k}</span><b>${f(v)}</b></div>`).join('') : '<div class="small">Fills in after the first picks are graded.</div>';
+  $('recent').innerHTML = (DATA.recentResults || []).slice(0, 15).map(p =>
+    `<div class="kv"><span>${esc(p.date.slice(5))} ${esc(p.playerName)} ${p.side === 'over' ? 'O' : 'U'} ${p.line} ${SHORT[p.market] || p.market}</span>
+     <span class="${p.result === 'hit' ? 'res-hit' : p.result === 'miss' ? 'res-miss' : 'small'}">${p.result}${p.actual != null ? ' (' + p.actual + ')' : ''}</span></div>`).join('')
+    || '<div class="small">No graded picks yet.</div>';
+}
+</script>
+</body>
+</html>
