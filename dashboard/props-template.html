@@ -64,6 +64,7 @@
   .panel { padding: 14px 16px; border-top: 3px solid var(--red); } .panel h2 { font-size: 14px; margin: 0 0 10px; }
   .kv { display: flex; justify-content: space-between; padding: 5px 0; border-top: 1px solid var(--line); font-size: 13px; } .kv:first-of-type { border-top: 0; }
   .small { font-size: 12px; color: var(--muted); }
+  .flag { color: var(--red); font-size: 11px; font-weight: 700; margin-top: 2px; }
   .when { color: var(--muted); font-size: 12px; } .proj { color: var(--muted); font-size: 12px; margin-top: 2px; }
   .res-hit { color: var(--g-ink); font-weight: 700; } .res-miss { color: var(--r-ink); font-weight: 700; }
 </style>
@@ -161,10 +162,10 @@ function load() {
   const games = [...new Set(S.props.map(gameKey))].sort();
   $('team').innerHTML = '<option value="">All Teams</option>' + games.map(g => `<option>${g}</option>`).join('');
   const w = S.windows, wt = DATA.settings.SPORTS[sport].weights, cons = DATA.settings.SPORTS[sport].consistent, F = DATA.settings.FILTERS;
-  $('explain').innerHTML = `Final % = 60% model + 40% hit rate (windows weighted ${W.map(k => `${k === 'season' ? 'season' : 'L' + k.slice(1)} ${Math.round(wt[k] * 100)}%`).join(' · ')}, small samples pulled toward the market). `
+  $('explain').innerHTML = (DATA.settings.SPORTS[sport].marketWeight ? `Final % = ${Math.round(DATA.settings.SPORTS[sport].marketWeight * 100)}% market price + ${100 - Math.round(DATA.settings.SPORTS[sport].marketWeight * 100)}% of (60% model + 40% hit rate) — anchored to the books until the model proves itself; ` : 'Final % = 60% model + 40% hit rate; ') + `hit rate windows weighted ${W.map(k => `${k === 'season' ? 'season' : 'L' + k.slice(1)} ${Math.round(wt[k] * 100)}%`).join(' · ')}, small samples pulled toward the market). `
     + (sport === 'NFL' ? 'Model: yardage uses the player\'s average and week-to-week spread; receptions and TDs use a count model; both adjusted for the opponent vs that position. ' : '')
     + `Edge = Final % minus the no-vig consensus price. Hit rates: green = 5+ points above the price, yellow = within 5, red = 5+ below. ✓ = ${cons.map(k => k === 'season' ? 'season' : 'L' + k.slice(1)).join(', ')} all beat the price. `
-    + `Top picks: ${DATA.settings.SPORTS[sport].minGames}+ games, Final ${Math.round(F.MIN_FINAL_PROB * 100)}%+, edge +${Math.round(F.MIN_EDGE * 100)}%+, odds ${F.MIN_ODDS} to +${F.MAX_ODDS}, ${F.MIN_BOOKS}+ books.`;
+    + `Top picks (best ${DATA.settings.MAX_TOP_PICKS || 20}): ${DATA.settings.SPORTS[sport].minGames}+ games, Final ${Math.round(F.MIN_FINAL_PROB * 100)}%+, edge +${Math.round(F.MIN_EDGE * 100)}%+, odds ${F.MIN_ODDS} to +${F.MAX_ODDS}, ${F.MIN_BOOKS}+ books. Excluded (shown under All props with a ⚠): edges over ${Math.round(F.MAX_EDGE * 100)}%, and lines far from the player's history — the books usually know about an injury or role change the stats don't.`;
   $('recTitle').textContent = `${sport} prop record`;
   renderSide(); render();
 }
@@ -201,6 +202,13 @@ function hitCell(r, ref) {
   return `<td class="hit"><div class="hitcell ${cls}"><span>Has hit ${r.hits}/${r.n} for</span><span class="pill">${pct(r.pct)}</span></div></td>`;
 }
 
+function flag(p) {
+  const f = p.failed || [];
+  if (f.includes('role')) return '<div class="flag">⚠ Line far from his history — likely role/injury change</div>';
+  if (f.includes('too-good')) return '<div class="flag">⚠ Edge too big — books likely know something</div>';
+  return '';
+}
+
 function propLabel(p) {
   if (p.market === 'anytime_td') return p.side === 'over' ? 'Anytime TD — Yes' : 'Anytime TD — No';
   return `${p.side === 'over' ? 'Over' : 'Under'} ${p.line} ${LABEL[p.market] || p.market}`;
@@ -211,11 +219,11 @@ function row(p) {
   const arrow = p.side === 'over' ? '<span class="up">↑</span>' : '<span class="down">↓</span>';
   const edge = p.edge == null ? '–' : `<span class="${p.edge >= 0 ? 'edge-pos' : 'edge-neg'}">${p.edge >= 0 ? '+' : ''}${(p.edge * 100).toFixed(1)}%</span>`;
   const sub = sport === 'NFL' ? `${esc(gameKey(p))} · ${esc(whenOf(p))} · ${esc(p.pos || '')} · ${p.gp} GP` : `${esc(gameKey(p))} · ${p.gp} GP`;
-  const proj = p.projection != null && p.market !== 'anytime_td' ? `<div class="proj">Projection ${p.projection}</div>` : '';
+  const proj = p.projection != null && p.market !== 'anytime_td' && sport === 'NFL' ? `<div class="proj">Projection ${p.projection}</div>` : '';
   return `<tr>
     <td><div class="player">${p.logo ? `<img src="${esc(p.logo)}" alt="" onerror="this.style.visibility='hidden'">` : '<span style="width:26px"></span>'}
       <div><div class="pname">${p.topPick ? '<span class="top">TOP</span>' : ''}${esc(p.playerName)}${p.consistent ? '<span class="badge">✓ consistent</span>' : ''}</div>
-      <div class="match">${sub}</div></div></div></td>
+      <div class="match">${sub}</div>${flag(p)}</div></div></td>
     <td class="prop">${arrow} ${propLabel(p)}${proj}</td>
     ${wins().map(k => hitCell(p.rates[k], ref)).join('')}
     <td class="num">${pct(p.modelProb)}</td><td class="num">${pct(p.finalProb)}</td><td class="num">${edge}</td>

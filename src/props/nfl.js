@@ -225,7 +225,7 @@ async function run({ today, tracker, sgoKey, now = Date.now() }) {
     const factor = defense(r.opp, pl.pos, r.stat);
     const model = playerModel({ values, priorValues, stat: r.stat, pos: pl.pos, factor, dist: market.dist, line: r.line, side: r.side });
     const rates = hitRates(values, r.line, r.side, 'NFL');
-    const s = scoreProp({ modelProb: model.prob, rates, implied: r.implied, bookOdds: r.bookOdds, gamesPlayed: values.length, books: r.books, sport: 'NFL' });
+    const s = scoreProp({ modelProb: model.prob, rates, implied: r.implied, bookOdds: r.bookOdds, gamesPlayed: values.length, books: r.books, sport: 'NFL', projection: model.mean, line: r.line });
     scored.push({ ...r, playerId: m.id, pos: pl.pos, gp: values.length, logo: logoOf[r.team] || null,
       season, week: weekOf[r.eventId] ?? null, gameDate: r.startsAt ? etDate(r.startsAt) : null,
       projection: +model.mean.toFixed(1), modelProb: model.prob, rates, ...s });

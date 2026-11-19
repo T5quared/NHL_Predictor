@@ -1,5 +1,5 @@
 // Pure maths for props — no network. Tested in test/props.test.js.
-const { BLEND, SPORTS, FILTERS } = require('./config');
+const { BLEND, SPORTS, FILTERS, MAX_TOP_PICKS } = require('./config');
 
 const americanToProb = a => {
   const n = Number(a);
@@ -74,11 +74,14 @@ function blendedHitRate(rates, prior, sport = 'NHL') {
 }
 
 // Combine model + hit rate, compare to the market, apply the Top-pick filters
-function scoreProp({ modelProb, rates, implied, bookOdds, gamesPlayed, books = null, sport = 'NHL' }) {
+function scoreProp({ modelProb, rates, implied, bookOdds, gamesPlayed, books = null, sport = 'NHL', projection = null, line = null }) {
   const cfg = SPORTS[sport];
   const hit = blendedHitRate(rates, implied ?? modelProb, sport);
-  const finalProb = BLEND.MODEL_WEIGHT * modelProb + BLEND.HIT_WEIGHT * (hit.shrunk ?? modelProb);
+  const blend = BLEND.MODEL_WEIGHT * modelProb + BLEND.HIT_WEIGHT * (hit.shrunk ?? modelProb);
+  const mw = implied == null ? 0 : (cfg.marketWeight || 0);
+  const finalProb = mw * implied + (1 - mw) * blend;
   const edge = implied == null ? null : finalProb - implied;
+  const rawEdge = implied == null ? null : blend - implied;
   const ref = implied ?? 0.5;
   const consistent = cfg.consistent.every(k => rates[k]?.pct != null && rates[k].pct > ref);
   // No market price: check the price range against the model's own fair odds instead
@@ -88,6 +91,8 @@ function scoreProp({ modelProb, rates, implied, bookOdds, gamesPlayed, books = n
   if (bookOdds != null && books != null && books < FILTERS.MIN_BOOKS) reasons.push('books');
   if (finalProb < FILTERS.MIN_FINAL_PROB) reasons.push('prob');
   if (edge != null && edge < FILTERS.MIN_EDGE) reasons.push('edge');
+  if (rawEdge != null && rawEdge > FILTERS.MAX_EDGE) reasons.push('too-good');
+  if (projection != null && line > 1.5 && (projection < FILTERS.ROLE_RATIO_MIN * line || projection > FILTERS.ROLE_RATIO_MAX * line)) reasons.push('role');
   if (Number.isFinite(odds) && (odds < FILTERS.MIN_ODDS || odds > FILTERS.MAX_ODDS)) reasons.push('odds');
   return {
     hitRaw: hit.raw, hitShrunk: hit.shrunk ?? modelProb, finalProb, edge, consistent,
@@ -95,13 +100,16 @@ function scoreProp({ modelProb, rates, implied, bookOdds, gamesPlayed, books = n
   };
 }
 
-// Rank: edge when there is a market price, otherwise final probability
+// Rank: edge when there is a market price, otherwise final probability. Only the best MAX_TOP_PICKS stay Top picks.
 function rankProps(props) {
-  return [...props].sort((a, b) => {
+  const ranked = [...props].sort((a, b) => {
     if (a.topPick !== b.topPick) return a.topPick ? -1 : 1;
     const ka = a.edge ?? a.finalProb - 0.5, kb = b.edge ?? b.finalProb - 0.5;
     return kb - ka;
   });
+  let n = 0;
+  for (const p of ranked) if (p.topPick && ++n > MAX_TOP_PICKS) { p.topPick = false; p.failed = [...(p.failed || []), 'rank']; }
+  return ranked;
 }
 
 module.exports = {

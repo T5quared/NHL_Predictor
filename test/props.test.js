@@ -148,3 +148,11 @@ test('NFL: grading finds the week row, voids inactive players', () => {
   nfl.grade(t, stats, Date.parse('2026-11-25T12:00:00Z'));
   assert.equal(t[0].result, 'hit'); assert.equal(t[0].actual, 71); assert.equal(t[1].result, 'void');
 });
+
+test('guards: huge edges and lines far from history are never top picks', () => {
+  const rates = sc.hitRates([0, 0, 1, 0, 0, 0, 1, 0], 1.5, 'under', 'NFL');
+  const s = sc.scoreProp({ modelProb: 0.97, rates, implied: 0.55, bookOdds: -130, gamesPlayed: 8, books: 5, sport: 'NFL', projection: 0.3, line: 1.5 });
+  assert.ok(!s.topPick); assert.ok(s.failed.includes('too-good'));
+  const r = sc.scoreProp({ modelProb: 0.62, rates: sc.hitRates([30, 20, 25, 35, 40], 23.5, 'under', 'NFL'), implied: 0.55, bookOdds: -120, gamesPlayed: 5, books: 4, sport: 'NFL', projection: 9, line: 23.5 });
+  assert.ok(r.failed.includes('role'));
+});

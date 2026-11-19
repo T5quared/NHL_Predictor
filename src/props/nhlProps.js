@@ -125,8 +125,8 @@ async function run({ today, tracker, sgoKey }) {
     const rate = playerRate({ log, stat: r.stat, pos: sk?.pos, prior: priorById[r.playerId], factor });
     const modelProb = poissonSideProb(rate, r.line, r.side);
     const rates = hitRates(log.map(g => g[r.stat]), r.line, r.side, 'NHL');
-    const s = scoreProp({ modelProb, rates, implied: r.implied, bookOdds: r.bookOdds, gamesPlayed: log.length, books: r.books, sport: 'NHL' });
-    scored.push({ ...r, pos: sk?.pos || null, gp: log.length, logo: logo(r.team), gameDate: today, modelProb, rates, ...s });
+    const s = scoreProp({ modelProb, rates, implied: r.implied, bookOdds: r.bookOdds, gamesPlayed: log.length, books: r.books, sport: 'NHL', projection: rate, line: r.line });
+    scored.push({ ...r, pos: sk?.pos || null, gp: log.length, logo: logo(r.team), gameDate: today, projection: +rate.toFixed(2), modelProb, rates, ...s });
   }
   return { sport: 'NHL', mode, warning, objects, games: games.length, props: rankProps(scored) };
 }

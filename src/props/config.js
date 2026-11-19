@@ -17,6 +17,7 @@ const SPORTS = {
     consistent: ['l10', 'l25', 'season'],   // all must beat the price for the ✓ badge
     shrinkGames: 8,
     minGames: 8,
+    marketWeight: 0,          // share of Final % taken straight from the no-vig market price
   },
   NFL: {
     windows: [3, 5, 10],
@@ -24,6 +25,9 @@ const SPORTS = {
     consistent: ['l5', 'l10', 'season'],
     shrinkGames: 4,
     minGames: 4,
+    // New model, no track record yet and it disagrees with the books too often → anchor halfway to the market.
+    // Lower toward 0 if the graded results show the model beating the market price.
+    marketWeight: 0.5,
   },
 };
 
@@ -34,9 +38,15 @@ const FILTERS = {
   MIN_ODDS: -250,            // consensus price range
   MAX_ODDS: 150,
   MIN_BOOKS: 2,              // books currently offering the line (odds-feed mode only)
+  // "Too good to be true" guards — when we disagree this much with the books, they usually know
+  // something the stats don't (injury, depth-chart or role change). Shown in All props, never a Top pick.
+  MAX_EDGE: 0.15,            // measured before the market anchor
+  ROLE_RATIO_MIN: 0.60,      // our projection below 60% of the line, or
+  ROLE_RATIO_MAX: 1.60,      // above 160% of it (lines over 1.5 only)
 };
 
 const TOP_N_DISCORD = 5;     // picks listed per sport in the Discord post
+const MAX_TOP_PICKS = 20;    // per sport per run — the best N by edge that pass every filter
 
 // NHL player rate model (per-game Poisson)
 const RATE = {
@@ -92,4 +102,4 @@ const FALLBACK = {
   LINES: { points: [0.5], assists: [0.5], goals: [0.5], shots: [1.5, 2.5, 3.5] },
 };
 
-module.exports = { BLEND, SPORTS, FILTERS, TOP_N_DISCORD, RATE, NFL_RATE, MARKETS, FALLBACK };
+module.exports = { BLEND, SPORTS, FILTERS, TOP_N_DISCORD, MAX_TOP_PICKS, RATE, NFL_RATE, MARKETS, FALLBACK };

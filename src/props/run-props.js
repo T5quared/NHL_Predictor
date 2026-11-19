@@ -13,7 +13,7 @@ const nhl = require('../nhl');
 const nhlProps = require('./nhlProps');
 const nflProps = require('./nfl');
 const { probToAmerican } = require('./scoring');
-const { MARKETS, SPORTS, TOP_N_DISCORD, BLEND, FILTERS, NFL_RATE } = require('./config');
+const { MARKETS, SPORTS, TOP_N_DISCORD, BLEND, FILTERS, NFL_RATE, MAX_TOP_PICKS } = require('./config');
 
 const ROOT = path.join(__dirname, '..', '..');
 const PROPS_FILE = path.join(ROOT, 'data', 'props.json');
@@ -153,7 +153,7 @@ async function main() {
     }
   }
 
-  const out = { date: today, generatedAt: new Date().toISOString(), settings: { BLEND, FILTERS, SPORTS }, sports };
+  const out = { date: today, generatedAt: new Date().toISOString(), settings: { BLEND, FILTERS, SPORTS, MAX_TOP_PICKS }, sports };
   writeJson(PROPS_FILE, out);
   const tpl = fs.readFileSync(TEMPLATE, 'utf8');
   fs.writeFileSync(DASHBOARD, tpl.replace('/*__PROPS_DATA__*/null', JSON.stringify(out).replace(/</g, '\\u003c')));
