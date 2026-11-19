@@ -1,5 +1,5 @@
 // Pure maths for props — no network. Tested in test/props.test.js.
-const { BLEND, FILTERS } = require('./config');
+const { BLEND, SPORTS, FILTERS } = require('./config');
 
 const americanToProb = a => {
   const n = Number(a);
@@ -29,6 +29,16 @@ function poissonSideProb(lambda, line, side) {
   if (side === 'over') return 1 - poissonCdf(Math.floor(line), lambda);
   return poissonCdf(Math.ceil(line) - 1, lambda);
 }
+// Standard normal CDF (Abramowitz–Stegun 7.1.26, error < 1.5e-7)
+function normCdf(z) {
+  const t = 1 / (1 + 0.3275911 * Math.abs(z) / Math.SQRT2);
+  const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-z * z / 2);
+  return z >= 0 ? (1 + y) / 2 : (1 - y) / 2;
+}
+function normalSideProb(mean, sd, line, side) {
+  const pOver = 1 - normCdf((line - mean) / Math.max(sd, 1e-6));
+  return side === 'over' ? pOver : 1 - pOver;
+}
 
 // Hit counts for one window. values = stat per game, newest first. Pushes are left out.
 function hitWindow(values, line, side, n) {
@@ -41,46 +51,46 @@ function hitWindow(values, line, side, n) {
   }
   return { hits, n: count, pct: count ? hits / count : null };
 }
-function hitRates(values, line, side) {
-  return {
-    l5: hitWindow(values, line, side, 5),
-    l10: hitWindow(values, line, side, 10),
-    l25: hitWindow(values, line, side, 25),
-    season: hitWindow(values, line, side, null),
-  };
+function hitRates(values, line, side, sport = 'NHL') {
+  const out = {};
+  for (const n of SPORTS[sport].windows) out[`l${n}`] = hitWindow(values, line, side, n);
+  out.season = hitWindow(values, line, side, null);
+  return out;
 }
 
 // Weighted window blend, then pulled toward `prior` (the market price) on small samples
-function blendedHitRate(rates, prior) {
+function blendedHitRate(rates, prior, sport = 'NHL') {
+  const cfg = SPORTS[sport];
   let sum = 0, wsum = 0;
-  for (const [k, w] of Object.entries(BLEND.WINDOW_WEIGHTS)) {
+  for (const [k, w] of Object.entries(cfg.weights)) {
     if (rates[k]?.pct == null) continue;
     sum += w * rates[k].pct; wsum += w;
   }
   if (!wsum) return { raw: null, shrunk: prior ?? null };
   const raw = sum / wsum;
-  const n = rates.season.n, K = BLEND.HIT_SHRINK_GAMES;
+  const n = rates.season.n, K = cfg.shrinkGames;
   const shrunk = prior == null ? raw : (raw * n + prior * K) / (n + K);
   return { raw, shrunk };
 }
 
 // Combine model + hit rate, compare to the market, apply the Top-pick filters
-function scoreProp({ modelProb, rates, implied, bookOdds, gamesPlayed, books = null }) {
-  const hit = blendedHitRate(rates, implied ?? modelProb);
-  const finalProb = BLEND.MODEL_WEIGHT * modelProb + BLEND.HIT_WEIGHT * hit.shrunk;
+function scoreProp({ modelProb, rates, implied, bookOdds, gamesPlayed, books = null, sport = 'NHL' }) {
+  const cfg = SPORTS[sport];
+  const hit = blendedHitRate(rates, implied ?? modelProb, sport);
+  const finalProb = BLEND.MODEL_WEIGHT * modelProb + BLEND.HIT_WEIGHT * (hit.shrunk ?? modelProb);
   const edge = implied == null ? null : finalProb - implied;
   const ref = implied ?? 0.5;
-  const consistent = ['l10', 'l25', 'season'].every(k => rates[k].pct != null && rates[k].pct > ref);
+  const consistent = cfg.consistent.every(k => rates[k]?.pct != null && rates[k].pct > ref);
   // No market price: check the price range against the model's own fair odds instead
   const odds = bookOdds == null ? probToAmerican(finalProb) : Number(bookOdds);
   const reasons = [];
-  if (gamesPlayed < FILTERS.MIN_GAMES) reasons.push('games');
+  if (gamesPlayed < cfg.minGames) reasons.push('games');
   if (bookOdds != null && books != null && books < FILTERS.MIN_BOOKS) reasons.push('books');
   if (finalProb < FILTERS.MIN_FINAL_PROB) reasons.push('prob');
   if (edge != null && edge < FILTERS.MIN_EDGE) reasons.push('edge');
   if (Number.isFinite(odds) && (odds < FILTERS.MIN_ODDS || odds > FILTERS.MAX_ODDS)) reasons.push('odds');
   return {
-    hitRaw: hit.raw, hitShrunk: hit.shrunk, finalProb, edge, consistent,
+    hitRaw: hit.raw, hitShrunk: hit.shrunk ?? modelProb, finalProb, edge, consistent,
     fairOddsModel: probToAmerican(finalProb), topPick: reasons.length === 0, failed: reasons,
   };
 }
@@ -95,6 +105,6 @@ function rankProps(props) {
 }
 
 module.exports = {
-  americanToProb, probToAmerican, devig, poissonCdf, poissonSideProb,
+  americanToProb, probToAmerican, devig, poissonCdf, poissonSideProb, normCdf, normalSideProb,
   hitWindow, hitRates, blendedHitRate, scoreProp, rankProps,
 };

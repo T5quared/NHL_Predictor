@@ -51,30 +51,34 @@ separate from picks made with manual toggles.
 - Everything else is the same maths. `node --test` compares this script against
   `dashboard/nhl-dashboard-v8.1.html` on 2,000 random games and runs before every daily run.
 
-## Player props
+## Player props (NHL + NFL)
 
-A second daily run (**Actions → Daily NHL props**, about **1:07 PM Eastern**) scans tonight's prop board,
-scores every prop and builds `dashboard/props.html`. It also posts the top 5 to Discord.
+**Actions → Daily props (NHL + NFL)** runs at about **1:07 PM Eastern** every day, plus **11:37 AM on Sundays**
+(NFL only, before the 1 PM kickoffs). It scans the prop boards, scores every prop, builds `dashboard/props.html`
+(NHL and NFL tabs) and posts the top 5 per sport to Discord. NFL picks in Discord are only for games in the next 30 hours.
 
 **One-time setup:** sign up for the free SportsGameOdds Amateur plan (sportsgameodds.com), then add the key as a
-repository secret named `SPORTSGAMEODDS_API_KEY`. Without it the run still works, using standard lines
-(0.5 points/assists/goals and shots on goal), but there's no Edge or Odds. Each night uses about one
-object per game, roughly 300 a month out of the free 2,500.
+repository secret named `SPORTSGAMEODDS_API_KEY`. Without it NHL runs on standard lines (no Edge/Odds) and NFL is
+skipped, since NFL lines are player-specific. Usage: one object per game, roughly 300/month NHL + 500/month NFL
+out of the free 2,500.
 
 How a prop is scored (settings are in `src/props/config.js`):
 
-1. **Model %:** Poisson on the player's per-game rate. That's this season shrunk toward last season, plus 30% L10,
-   adjusted for tonight's team goal projection (from the 11 AM run) or the opponent's shots against.
-2. **Hit rate:** L5 15% · L10 30% · L25 30% · season 25%, pulled toward the market price on small samples.
+1. **Model %**
+   - NHL: Poisson on the player's per-game rate (this season shrunk toward last season, plus 30% L10), adjusted
+     for tonight's team goal projection or the opponent's shots against.
+   - NFL: yardage uses a normal distribution (shrunk average plus 25% L3, and the player's week-to-week spread);
+     receptions and anytime TD use Poisson. All are adjusted for what the opponent allows to that position.
+2. **Hit rate:** NHL L5/L10/L25/season, NFL L3/L5/L10/season. Small samples are pulled toward the market price.
 3. **Final %** = 60% model + 40% hit rate. **Edge** = Final % minus the no-vig consensus price.
-4. **Top picks** need 8+ games, a Final % of 55% or more, an edge of +3% or more, and odds between −250 and +150.
-   ✓ consistent = L10, L25 and season all beat the price.
+4. **Top picks** need the minimum games (NHL 8, NFL 4), a Final % of 55% or more, an edge of +3% or more,
+   odds between −250 and +150, and at least 2 books.
 
-Top picks are logged to `data/props-tracker.json` and graded the next day. The dashboard's
-"Which half of the blend is predicting better?" box compares model and hit rate (Brier score) for the
-blend review after about 2 weeks.
+Top picks are logged to `data/props-tracker.json` and graded automatically (NHL from game logs the next day,
+NFL from nflverse weekly stats). NFL lines move all week, so the last run before kickoff is the one that counts.
+The dashboard's "Which half of the blend is predicting better?" box is for the blend review after about 2 weeks.
 
-NFL is set up in `src/props/config.js` and `src/props/nfl.js` but not built yet.
+Stats: NHL API (free, unofficial); NFL from nflverse (free CSVs on GitHub, updated after each game day).
 
 ## Changing the model
 

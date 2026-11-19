@@ -1,16 +1,23 @@
-name: Daily NHL props
+name: Daily props (NHL + NFL)
 
 on:
   schedule:
     # 18:07 UTC = 1:07 PM Eastern in winter (2:07 PM in daylight time). Runs after the 11 AM picks,
     # so it can use today's team goal projections. GitHub can start scheduled runs 5-30 minutes late.
     - cron: '7 18 * * *'
+    # Sundays 16:37 UTC = 11:37 AM Eastern in winter (12:37 PM in daylight time): NFL only, before the 1 PM kickoffs.
+    - cron: '37 16 * * 0'
   workflow_dispatch:
     inputs:
       dry_run:
         description: 'Dry run (build the dashboard but do not post to Discord or log picks)'
         type: boolean
         default: false
+      sports:
+        description: 'Sports to run'
+        type: choice
+        options: ['NHL,NFL', 'NHL', 'NFL']
+        default: 'NHL,NFL'
 
 permissions:
   contents: write
@@ -36,6 +43,7 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DASHBOARD_URL: ${{ vars.DASHBOARD_URL }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+          SPORTS: ${{ github.event.schedule == '37 16 * * 0' && 'NFL' || inputs.sports || 'NHL,NFL' }}
         run: node src/props/run-props.js
       - name: Save props and dashboard to the repo
         if: always()
