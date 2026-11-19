@@ -5,11 +5,19 @@ const { buildMatcher } = require('./nhlPlayers');
 const { hitRates, scoreProp, rankProps, poissonSideProb, normalSideProb } = require('./scoring');
 const { MARKETS, NFL_RATE } = require('./config');
 
+// nflverse has moved these files between release tags before, so try each known location in turn
+const REL = 'https://github.com/nflverse/nflverse-data/releases/download';
 const STATS_URLS = season => [
-  `https://github.com/nflverse/nflverse-data/releases/download/player_stats/stats_player_week_${season}.csv`,
-  `https://github.com/nflverse/nflverse-data/releases/download/player_stats/player_stats_${season}.csv`,
+  `${REL}/stats_player/stats_player_week_${season}.csv`,
+  `${REL}/player_stats/stats_player_week_${season}.csv`,
+  `${REL}/player_stats/player_stats_${season}.csv`,
+  `${REL}/stats_player/stats_player_week_${season}.csv.gz`,
+  `${REL}/player_stats/stats_player_week_${season}.csv.gz`,
 ];
-const SCHEDULE_URL = 'https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv';
+const SCHEDULE_URLS = [
+  'https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv',
+  `${REL}/schedules/games.csv`,
+];
 const TEAMS_URL = 'https://github.com/nflverse/nflverse-data/releases/download/teams/teams_colors_logos.csv';
 const NFL_MARKETS = Object.fromEntries(MARKETS.NFL.map(m => [m.key, m]));
 // SportsGameOdds short names that differ from nflverse abbreviations
@@ -38,9 +46,22 @@ function parseCsv(text) {
   return body.map(r => Object.fromEntries(head.map((h, i) => [h, r[i] ?? ''])));
 }
 async function fetchCsv(url) {
-  const res = await fetch(url, { headers: { 'User-Agent': 'nhl-predictor (github actions)' }, signal: AbortSignal.timeout(60000) });
-  if (!res.ok) throw new Error(`${url} -> HTTP ${res.status}`);
-  return parseCsv(await res.text());
+  const res = await fetch(url, { headers: { 'User-Agent': 'nhl-predictor (github actions)' }, redirect: 'follow', signal: AbortSignal.timeout(90000) });
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url.split('/download/')[1] || url}`);
+  let text;
+  if (url.endsWith('.gz')) text = require('zlib').gunzipSync(Buffer.from(await res.arrayBuffer())).toString('utf8');
+  else text = await res.text();
+  const rows = parseCsv(text);
+  if (!rows.length) throw new Error(`empty file: ${url}`);
+  return rows;
+}
+async function fetchFirst(urls) {
+  const errs = [];
+  for (const url of urls) {
+    try { const rows = await fetchCsv(url); console.log(`[NFL] loaded ${url} (${rows.length} rows)`); return rows; }
+    catch (e) { errs.push(e.message); }
+  }
+  throw new Error(errs.join(' · '));
 }
 const num = v => { const n = Number(v); return Number.isFinite(n) ? n : 0; };
 
@@ -48,11 +69,9 @@ const num = v => { const n = Number(v); return Number.isFinite(n) ? n : 0; };
 const nflSeasonFor = date => { const [y, m] = date.split('-').map(Number); return m >= 3 ? y : y - 1; };
 
 async function loadStats(season) {
-  let lastErr;
-  for (const url of STATS_URLS(season)) {
-    try { return normalizeStats(await fetchCsv(url)); } catch (e) { lastErr = e; }
-  }
-  throw lastErr;
+  const rows = normalizeStats(await fetchFirst(STATS_URLS(season)));
+  if (!rows.length) throw new Error(`stats file for ${season} had no usable rows (columns changed?)`);
+  return rows;
 }
 function normalizeStats(rows) {
   return rows.map(r => ({
@@ -159,17 +178,18 @@ function grade(tracker, stats, now) {
 // ── Main ─────────────────────────────────────────────────────────────
 async function run({ today, tracker, sgoKey, now = Date.now() }) {
   const season = nflSeasonFor(today);
+  let statsError = null;
   const [stats, priorStats, schedule, teams] = await Promise.all([
-    loadStats(season).catch(e => { console.error('[NFL] stats:', e.message); return []; }),
-    loadStats(season - 1).catch(() => []),
-    fetchCsv(SCHEDULE_URL).catch(e => { console.error('[NFL] schedule:', e.message); return []; }),
+    loadStats(season).catch(e => { statsError = e.message; console.error('[NFL] stats:', e.message); return []; }),
+    loadStats(season - 1).catch(e => { console.error('[NFL] last season stats:', e.message); return []; }),
+    fetchFirst(SCHEDULE_URLS).catch(e => { console.error('[NFL] schedule:', e.message); return []; }),
     fetchCsv(TEAMS_URL).catch(() => []),
   ]);
   console.log(`[NFL] graded ${grade(tracker, stats, now)} earlier pick(s)`);
 
   const empty = (warning = null, mode = 'none') => ({ sport: 'NFL', mode, warning, objects: 0, games: 0, props: [] });
   if (!sgoKey) return empty('NFL props need the SportsGameOdds key (lines are player-specific)', 'no-key');
-  if (!stats.length) return empty('nflverse player stats unavailable today');
+  if (!stats.length) return empty(`nflverse player stats unavailable: ${statsError || 'no rows'}`);
 
   const curGames = schedule.filter(g => num(g.season) === season);
   const current = new Set(curGames.flatMap(g => [g.away_team, g.home_team]));
