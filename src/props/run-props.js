@@ -204,7 +204,7 @@ async function main() {
     const rate = playerRate({ log, stat: r.stat, pos: sk?.pos, prior: priorById[r.playerId], factor });
     const modelProb = poissonSideProb(rate, r.line, r.side);
     const rates = hitRates(log.map(g => g[r.stat]), r.line, r.side);
-    const s = scoreProp({ modelProb, rates, implied: r.implied, bookOdds: r.bookOdds, gamesPlayed: log.length });
+    const s = scoreProp({ modelProb, rates, implied: r.implied, bookOdds: r.bookOdds, gamesPlayed: log.length, books: r.books });
     scored.push({ ...r, pos: sk?.pos || null, gp: log.length, rate, factor, modelProb, rates, ...s });
   }
   const ranked = rankProps(scored);

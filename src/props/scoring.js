@@ -65,7 +65,7 @@ function blendedHitRate(rates, prior) {
 }
 
 // Combine model + hit rate, compare to the market, apply the Top-pick filters
-function scoreProp({ modelProb, rates, implied, bookOdds, gamesPlayed }) {
+function scoreProp({ modelProb, rates, implied, bookOdds, gamesPlayed, books = null }) {
   const hit = blendedHitRate(rates, implied ?? modelProb);
   const finalProb = BLEND.MODEL_WEIGHT * modelProb + BLEND.HIT_WEIGHT * hit.shrunk;
   const edge = implied == null ? null : finalProb - implied;
@@ -75,6 +75,7 @@ function scoreProp({ modelProb, rates, implied, bookOdds, gamesPlayed }) {
   const odds = bookOdds == null ? probToAmerican(finalProb) : Number(bookOdds);
   const reasons = [];
   if (gamesPlayed < FILTERS.MIN_GAMES) reasons.push('games');
+  if (bookOdds != null && books != null && books < FILTERS.MIN_BOOKS) reasons.push('books');
   if (finalProb < FILTERS.MIN_FINAL_PROB) reasons.push('prob');
   if (edge != null && edge < FILTERS.MIN_EDGE) reasons.push('edge');
   if (Number.isFinite(odds) && (odds < FILTERS.MIN_ODDS || odds > FILTERS.MAX_ODDS)) reasons.push('odds');

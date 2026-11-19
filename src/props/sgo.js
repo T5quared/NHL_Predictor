@@ -71,6 +71,8 @@ function parseProps(events, sport, nhlGames) {
       if (o.fairOddsAvailable !== false && o.fairOdds != null && Number(o.fairOverUnder) === line) implied = devig(o.fairOdds, null);
       else if (opp && Number(opp.bookOverUnder) === line) implied = devig(o.bookOdds, opp.bookOdds);
       else implied = devig(o.bookOdds, null);
+      const books = Object.values(o.byBookmaker || {}).filter(b => b.available !== false).length;
+      if (!books) continue;                    // no book offering it right now = stale price, not a real bet
       const team = sideOfTeam[player.teamID] || null;
       out.push({
         eventId: ev.eventID, startsAt: ev.status?.startsAt || null,
@@ -78,7 +80,7 @@ function parseProps(events, sport, nhlGames) {
         team, opp: team === home ? away : team === away ? home : null, home: team ? team === home : null,
         market: market.key, marketLabel: market.label, stat: market.stat, line, side: o.sideID,
         bookOdds: o.bookOdds != null ? Number(o.bookOdds) : null, implied,
-        books: Object.values(o.byBookmaker || {}).filter(b => b.available !== false).length,
+        books,
       });
     }
   }

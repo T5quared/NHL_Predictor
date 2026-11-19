@@ -18,6 +18,7 @@ const FILTERS = {
   MIN_EDGE: 0.03,            // +3% over the no-vig market price
   MIN_ODDS: -250,            // consensus price range
   MAX_ODDS: 150,
+  MIN_BOOKS: 2,              // books currently offering the line (odds-feed mode only)
 };
 
 const TOP_N_DISCORD = 5;     // picks listed in the Discord post

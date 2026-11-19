@@ -6,56 +6,62 @@
 <title>Prop Hit Rates</title>
 <style>
   :root {
-    --bg: #f6f7f9; --card: #fff; --line: #e6e8ec; --ink: #1d2433; --muted: #6b7385; --head: #8a91a0;
-    --g-bg: #e9f8ef; --g-ink: #157a43; --g-pill: #1f9d55;
-    --o-bg: #fff6e5; --o-ink: #a5620a; --o-pill: #f2a31b;
-    --r-ink: #c2410c; --accent: #2563eb;
+    color-scheme: dark;
+    --bg: #0a0a0b; --card: #141416; --card2: #1b1b1e; --line: #2a2a2f; --ink: #f5f5f5; --muted: #9a9aa3; --head: #b5b5bd;
+    --red: #e11d2e; --red-dim: #3a0d12;
+    /* hit-rate tiers: green = beats the price by 5+ pts, yellow = within 5, red = 5+ below */
+    --g-bg: rgba(34,197,94,.13); --g-ink: #6ee79a; --g-pill: #16a34a;
+    --y-bg: rgba(234,179,8,.13);  --y-ink: #fcd34d; --y-pill: #ca8a04;
+    --r-bg: rgba(239,68,68,.13);  --r-ink: #fca5a5; --r-pill: #dc2626;
   }
   * { box-sizing: border-box; }
   body { margin: 0; font: 14px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--ink); }
   .wrap { max-width: 1320px; margin: 0 auto; padding: 18px 16px 40px; }
-  header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 18px; margin-bottom: 14px; }
-  h1 { font-size: 20px; margin: 0; }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 18px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--red); }
+  h1 { font-size: 20px; margin: 0; letter-spacing: .02em; } h1::before { content: ''; display: inline-block; width: 10px; height: 10px; background: var(--red); border-radius: 2px; margin-right: 8px; vertical-align: 2px; }
   .meta { color: var(--muted); font-size: 13px; }
   .tabs { display: flex; gap: 6px; margin-left: auto; }
-  .tab { border: 1px solid var(--line); background: var(--card); padding: 6px 14px; border-radius: 999px; cursor: pointer; font-weight: 600; color: var(--muted); }
-  .tab.on { background: var(--ink); color: #fff; border-color: var(--ink); }
-  .warn { background: var(--o-bg); color: var(--o-ink); border: 1px solid #f6d79b; padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; }
+  .tab { border: 1px solid var(--line); background: var(--card); padding: 6px 14px; border-radius: 999px; cursor: pointer; font-weight: 700; color: var(--muted); }
+  .tab.on { background: var(--red); color: #fff; border-color: var(--red); }
+  .warn { background: var(--red-dim); color: #fff; border: 1px solid var(--red); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; }
 
   .filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 12px; margin-bottom: 14px; }
   .f label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; color: var(--head); text-transform: uppercase; margin-bottom: 5px; }
   .f select, .f input, .ms > button { width: 100%; height: 38px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); padding: 0 10px; font: inherit; color: var(--ink); }
+  .f select:focus, .f input:focus, .ms > button:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 2px var(--red-dim); }
   .odds-range { display: flex; gap: 6px; } .odds-range input { min-width: 0; }
   .ms { position: relative; } .ms > button { text-align: left; cursor: pointer; }
-  .ms .menu { display: none; position: absolute; z-index: 5; top: 42px; left: 0; right: 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px; box-shadow: 0 6px 20px rgba(0,0,0,.08); }
+  .ms .menu { display: none; position: absolute; z-index: 5; top: 42px; left: 0; right: 0; background: var(--card2); border: 1px solid var(--line); border-radius: 8px; padding: 6px; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
   .ms.open .menu { display: block; } .ms .menu label { display: flex; gap: 8px; align-items: center; padding: 6px; font-size: 14px; text-transform: none; letter-spacing: 0; color: var(--ink); font-weight: 500; margin: 0; }
+  .ms .menu input { accent-color: var(--red); }
 
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
   .scroll { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; min-width: 1100px; }
-  th { background: #f1f3f6; text-align: left; font-size: 11px; letter-spacing: .06em; color: var(--head); font-weight: 700; padding: 12px; white-space: nowrap; cursor: pointer; user-select: none; }
-  th.on { color: var(--ink); } th .arr { opacity: .5; margin-left: 3px; }
+  th { background: #000; text-align: left; font-size: 11px; letter-spacing: .06em; color: var(--head); font-weight: 700; padding: 12px; white-space: nowrap; cursor: pointer; user-select: none; border-bottom: 2px solid var(--red); }
+  th.on { color: #fff; } th.on .arr { color: var(--red); opacity: 1; } th .arr { opacity: .5; margin-left: 3px; }
   td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: middle; white-space: nowrap; }
+  tbody tr:hover td { background-color: var(--card2); }
   th:first-child, td:first-child { position: sticky; left: 0; z-index: 1; background: var(--card); box-shadow: 1px 0 0 var(--line); }
-  th:first-child { background: #f1f3f6; }
+  th:first-child { background: #000; }
   .player { display: flex; align-items: center; gap: 10px; }
   .player img { width: 26px; height: 26px; }
   .pname { font-weight: 650; font-size: 15px; }
   .match { color: var(--muted); font-size: 12px; }
-  .prop { font-weight: 500; } .up { color: var(--g-pill); font-weight: 800; } .down { color: var(--r-ink); font-weight: 800; }
+  .prop { font-weight: 500; } .up { color: #fff; font-weight: 800; } .down { color: var(--red); font-weight: 800; }
   td.hit { padding: 0; } .hitcell { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; height: 100%; min-height: 52px; font-size: 13px; }
-  .hitcell.g { background: var(--g-bg); color: var(--g-ink); } .hitcell.o { background: var(--o-bg); color: var(--o-ink); } .hitcell.n { color: var(--muted); }
+  .hitcell.g { background: var(--g-bg); color: var(--g-ink); } .hitcell.y { background: var(--y-bg); color: var(--y-ink); } .hitcell.r { background: var(--r-bg); color: var(--r-ink); } .hitcell.n { color: var(--muted); }
   .pill { color: #fff; font-weight: 700; font-size: 12px; padding: 3px 7px; border-radius: 6px; min-width: 44px; text-align: center; }
-  .g .pill { background: var(--g-pill); } .o .pill { background: var(--o-pill); } .n .pill { background: #b7bcc7; }
+  .g .pill { background: var(--g-pill); } .y .pill { background: var(--y-pill); } .r .pill { background: var(--r-pill); } .n .pill { background: #3a3a40; }
   .num { font-weight: 700; font-variant-numeric: tabular-nums; }
-  .edge-pos { color: var(--g-ink); } .edge-neg { color: var(--r-ink); }
+  .edge-pos { color: #fff; } .edge-neg { color: var(--red); }
   .odds { font-weight: 700; } .books { color: var(--muted); font-size: 12px; }
-  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 5px; background: #e0ecff; color: var(--accent); margin-left: 6px; vertical-align: 2px; }
-  .top { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 5px; background: var(--ink); color: #fff; margin-right: 6px; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 5px; border: 1px solid #fff; color: #fff; margin-left: 6px; vertical-align: 2px; }
+  .top { display: inline-block; font-size: 11px; font-weight: 800; padding: 2px 6px; border-radius: 5px; background: var(--red); color: #fff; margin-right: 6px; }
   .empty { padding: 40px; text-align: center; color: var(--muted); }
 
   .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 18px; }
-  .panel { padding: 14px 16px; } .panel h2 { font-size: 14px; margin: 0 0 10px; }
+  .panel { padding: 14px 16px; border-top: 3px solid var(--red); } .panel h2 { font-size: 14px; margin: 0 0 10px; }
   .kv { display: flex; justify-content: space-between; padding: 5px 0; border-top: 1px solid var(--line); font-size: 13px; } .kv:first-of-type { border-top: 0; }
   .small { font-size: 12px; color: var(--muted); }
   .res-hit { color: var(--g-ink); font-weight: 700; } .res-miss { color: var(--r-ink); font-weight: 700; }
@@ -96,7 +102,7 @@
       </tr></thead>
       <tbody id="rows"></tbody>
     </table></div></div>
-    <p class="small">Final % = 60% model + 40% hit rate (windows weighted L5 15% · L10 30% · L25 30% · season 25%, small samples pulled toward the market). Edge = Final % minus the no-vig consensus price. ✓ = L10, L25 and season all beat the price. Top picks: 8+ games, Final 55%+, edge +3%+, odds −250 to +150.</p>
+    <p class="small">Final % = 60% model + 40% hit rate (windows weighted L5 15% · L10 30% · L25 30% · season 25%, small samples pulled toward the market). Edge = Final % minus the no-vig consensus price. Hit rates: green = 5+ points above the price, yellow = within 5, red = 5+ below. ✓ = L10, L25 and season all beat the price. Top picks: 8+ games, Final 55%+, edge +3%+, odds −250 to +150, 2+ books.</p>
 
     <div class="grid2">
       <div class="card panel"><h2>Prop record</h2><div id="record"></div></div>
@@ -181,7 +187,7 @@ function render() {
 
 function hitCell(r, ref) {
   if (!r || !r.n) return '<td class="hit"><div class="hitcell n">No games</div></td>';
-  const cls = r.pct > ref ? 'g' : 'o';
+  const d = r.pct - ref, cls = d >= 0.05 ? 'g' : d > -0.05 ? 'y' : 'r';
   return `<td class="hit"><div class="hitcell ${cls}"><span>Has hit ${r.hits}/${r.n} for</span><span class="pill">${pct(r.pct)}</span></div></td>`;
 }
 
@@ -191,7 +197,7 @@ function row(p) {
   const matchup = p.home ? `${p.opp} @ ${p.team}` : `${p.team} @ ${p.opp}`;
   const edge = p.edge == null ? '–' : `<span class="${p.edge >= 0 ? 'edge-pos' : 'edge-neg'}">${p.edge >= 0 ? '+' : ''}${(p.edge * 100).toFixed(1)}%</span>`;
   return `<tr>
-    <td><div class="player"><img src="https://assets.nhle.com/logos/nhl/svg/${esc(p.team)}_light.svg" alt="" onerror="this.style.visibility='hidden'">
+    <td><div class="player"><img src="https://assets.nhle.com/logos/nhl/svg/${esc(p.team)}_dark.svg" alt="" onerror="this.style.visibility='hidden'">
       <div><div class="pname">${p.topPick ? '<span class="top">TOP</span>' : ''}${esc(p.playerName)}${p.consistent ? '<span class="badge">✓ consistent</span>' : ''}</div>
       <div class="match">${esc(matchup)} · ${p.gp} GP</div></div></div></td>
     <td class="prop">${arrow} ${p.side === 'over' ? 'Over' : 'Under'} ${p.line} ${SHORT[p.market] || p.market}</td>

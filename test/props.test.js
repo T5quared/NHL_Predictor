@@ -69,13 +69,14 @@ test('SportsGameOdds events parse into props, with team aliases and devig', () =
     players: { KEVIN_FIALA_1_NHL: { playerID: 'KEVIN_FIALA_1_NHL', teamID: 'LOS_ANGELES_KINGS_NHL', name: 'Kevin Fiala' } },
     odds: {
       'shots_onGoal-KEVIN_FIALA_1_NHL-game-ou-under': { oddID: 'shots_onGoal-KEVIN_FIALA_1_NHL-game-ou-under', statID: 'shots_onGoal', statEntityID: 'KEVIN_FIALA_1_NHL', playerID: 'KEVIN_FIALA_1_NHL', periodID: 'game', betTypeID: 'ou', sideID: 'under', bookOdds: '-125', bookOverUnder: '2.5', fairOddsAvailable: false, byBookmaker: { a: {}, b: {} } },
-      'shots_onGoal-KEVIN_FIALA_1_NHL-game-ou-over':  { oddID: 'shots_onGoal-KEVIN_FIALA_1_NHL-game-ou-over',  statID: 'shots_onGoal', statEntityID: 'KEVIN_FIALA_1_NHL', playerID: 'KEVIN_FIALA_1_NHL', periodID: 'game', betTypeID: 'ou', sideID: 'over',  bookOdds: '-105', bookOverUnder: '2.5', fairOddsAvailable: false },
+      'shots_onGoal-KEVIN_FIALA_1_NHL-game-ou-over':  { oddID: 'shots_onGoal-KEVIN_FIALA_1_NHL-game-ou-over',  statID: 'shots_onGoal', statEntityID: 'KEVIN_FIALA_1_NHL', playerID: 'KEVIN_FIALA_1_NHL', periodID: 'game', betTypeID: 'ou', sideID: 'over',  bookOdds: '-105', bookOverUnder: '2.5', fairOddsAvailable: false, byBookmaker: { a: {}, c: {} } },
+      'points-KEVIN_FIALA_1_NHL-game-ou-over': { oddID: 'points-KEVIN_FIALA_1_NHL-game-ou-over', statID: 'points', statEntityID: 'KEVIN_FIALA_1_NHL', playerID: 'KEVIN_FIALA_1_NHL', periodID: 'game', betTypeID: 'ou', sideID: 'over', bookOdds: '-155', bookOverUnder: '5.5', byBookmaker: { a: { available: false } } },
       'points-home-game-ml-home': { oddID: 'points-home-game-ml-home', statID: 'points', statEntityID: 'home', periodID: 'game', betTypeID: 'ml', sideID: 'home', bookOdds: '-150' },
     },
   };
   assert.equal(teamAbbrev(ev.teams.away, games), 'LAK');
   const rows = parseProps([ev], 'NHL', games);
-  assert.equal(rows.length, 2);
+  assert.equal(rows.length, 2);                              // stale line with no open book is dropped
   const u = rows.find(r => r.side === 'under');
   assert.equal(u.team, 'LAK'); assert.equal(u.opp, 'BOS'); assert.equal(u.market, 'shots'); assert.equal(u.line, 2.5);
   near(u.implied + rows.find(r => r.side === 'over').implied, 1, 1e-9);
