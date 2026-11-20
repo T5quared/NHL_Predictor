@@ -12751,12 +12751,12 @@
         "gamesMissed": 9
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 3,
+    "actualWinner": "LAK",
+    "hit": true,
+    "mae": 0.3999999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020348,
@@ -12790,12 +12790,12 @@
         "gamesMissed": 18
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 6,
+    "actualGoalsHome": 5,
+    "actualWinner": "PHI",
+    "hit": false,
+    "mae": 2.55,
+    "saved": true
   },
   {
     "gameId": 2026020350,
@@ -12829,12 +12829,12 @@
         "gamesMissed": 13
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "STL",
+    "hit": true,
+    "mae": 1.25,
+    "saved": true
   },
   {
     "gameId": 2026020351,
@@ -12868,12 +12868,12 @@
         "gamesMissed": 19
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 6,
+    "actualGoalsHome": 3,
+    "actualWinner": "BUF",
+    "hit": false,
+    "mae": 1.8499999999999999,
+    "saved": true
   },
   {
     "gameId": 2026020352,
@@ -12913,12 +12913,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 1,
+    "actualWinner": "MTL",
+    "hit": false,
+    "mae": 1.65,
+    "saved": true
   },
   {
     "gameId": 2026020354,
@@ -12959,12 +12959,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 3,
+    "actualGoalsHome": 4,
+    "actualWinner": "WPG",
+    "hit": false,
+    "mae": 0.9000000000000001,
+    "saved": true
   },
   {
     "gameId": 2026020349,
@@ -12998,12 +12998,12 @@
     ],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 3,
+    "actualWinner": "TBL",
+    "hit": false,
+    "mae": 1.4000000000000001,
+    "saved": true
   },
   {
     "gameId": 2026020353,
@@ -13050,12 +13050,12 @@
         "gamesMissed": 15
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 2,
+    "actualWinner": "CBJ",
+    "hit": false,
+    "mae": 1.1,
+    "saved": true
   },
   {
     "gameId": 2026020355,
@@ -13095,12 +13095,12 @@
         "gamesMissed": 6
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 1,
+    "actualWinner": "MIN",
+    "hit": true,
+    "mae": 0.75,
+    "saved": true
   },
   {
     "gameId": 2026020356,
@@ -13140,12 +13140,12 @@
     ],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 0,
+    "actualGoalsHome": 4,
+    "actualWinner": "COL",
+    "hit": true,
+    "mae": 2.05,
+    "saved": true
   },
   {
     "gameId": 2026020357,
@@ -13179,12 +13179,12 @@
         "gamesMissed": 7
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 1,
+    "actualGoalsHome": 5,
+    "actualWinner": "SEA",
+    "hit": true,
+    "mae": 1.6500000000000001,
+    "saved": true
   },
   {
     "gameId": 2026020358,
@@ -13232,11 +13232,11 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 3,
+    "actualWinner": "DAL",
+    "hit": false,
+    "mae": 0.8999999999999999,
+    "saved": true
   }
 ]
