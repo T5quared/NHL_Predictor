@@ -44,7 +44,7 @@ function logPicks(tracker, section, today, now) {
     season: p.season ?? null, week: p.week ?? null, playerId: p.playerId, playerName: p.playerName, team: p.team, opp: p.opp,
     market: p.market, stat: p.stat, line: p.line, side: p.side, bookOdds: p.bookOdds, implied: r4(p.implied),
     modelProb: r4(p.modelProb), hitShrunk: r4(p.hitShrunk), finalProb: r4(p.finalProb), edge: r4(p.edge),
-    consistent: p.consistent, actual: null, result: null,
+    consistent: p.consistent, loggedAt: new Date(now).toISOString(), actual: null, result: null,
   });
   // The last run before a game starts wins: replace ungraded picks for games still on the board
   // (the board only holds games that haven't started, so picks for started games are never touched).
@@ -145,7 +145,8 @@ async function main() {
       const section = sport === 'NHL'
         ? await nhlProps.run({ today, tracker, sgoKey: SGO_KEY, now })
         : await nflProps.run({ today, tracker, sgoKey: SGO_KEY, now });
-      if (!DRY_RUN && section.props.length) tracker = logPicks(tracker, section, today, now);
+      // With an odds key, standard-line fallback picks aren't logged — a later attempt will get real odds
+      if (!DRY_RUN && section.props.length && (section.mode === 'odds' || !SGO_KEY)) tracker = logPicks(tracker, section, today, now);
       ran[sport] = sports[sport] = forDashboard(section, tracker);
       // Counts as done only with real odds (NHL props often aren't posted yet in the morning → try again later)
       const good = section.mode === 'odds' && section.props.length > 0 || (sport === 'NHL' && section.mode === 'none');
