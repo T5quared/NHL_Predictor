@@ -49,7 +49,8 @@
   "edge": 0.0888,
   "consistent": true,
   "actual": 0,
-  "result": "hit"
+  "result": "void",
+  "note": "logged after the game started (live odds)"
  },
  {
   "date": "2026-11-19",
@@ -205,7 +206,8 @@
   "edge": 0.0543,
   "consistent": true,
   "actual": 0,
-  "result": "hit"
+  "result": "void",
+  "note": "logged after the game started (live odds)"
  },
  {
   "date": "2026-11-19",
@@ -309,7 +311,8 @@
   "edge": 0.0403,
   "consistent": false,
   "actual": 2,
-  "result": "hit"
+  "result": "void",
+  "note": "logged after the game started (live odds)"
  },
  {
   "date": "2026-11-19",
@@ -543,7 +546,8 @@
   "edge": 0.106,
   "consistent": true,
   "actual": null,
-  "result": null
+  "result": "void",
+  "note": "logged after the game started (live odds)"
  },
  {
   "date": "2026-11-21",
@@ -595,7 +599,8 @@
   "edge": 0.0917,
   "consistent": false,
   "actual": null,
-  "result": null
+  "result": "void",
+  "note": "logged after the game started (live odds)"
  },
  {
   "date": "2026-11-21",
@@ -699,7 +704,8 @@
   "edge": 0.086,
   "consistent": true,
   "actual": null,
-  "result": null
+  "result": "void",
+  "note": "logged after the game started (live odds)"
  },
  {
   "date": "2026-11-21",
@@ -751,7 +757,8 @@
   "edge": 0.063,
   "consistent": true,
   "actual": null,
-  "result": null
+  "result": "void",
+  "note": "logged after the game started (live odds)"
  },
  {
   "date": "2026-11-21",
@@ -855,7 +862,8 @@
   "edge": 0.0497,
   "consistent": true,
   "actual": null,
-  "result": null
+  "result": "void",
+  "note": "logged after the game started (live odds)"
  },
  {
   "date": "2026-11-21",

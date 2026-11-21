@@ -200,7 +200,7 @@ async function run({ today, tracker, sgoKey, now = Date.now() }) {
   try {
     events = await sgo.fetchEvents({ apiKey: sgoKey, leagueID: 'NFL', startsAfter: new Date(now).toISOString(), startsBefore: new Date(now + 7 * 864e5).toISOString() });
   } catch (e) { return empty(`Odds feed failed (${e.message})`); }
-  let rows = sgo.parseProps(events, 'NFL', resolve);
+  let rows = sgo.parseProps(events, 'NFL', resolve, now);
 
   // Week number for each game (for grading)
   const weekOf = {};

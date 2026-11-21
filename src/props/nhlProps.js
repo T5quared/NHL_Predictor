@@ -70,7 +70,7 @@ function teamLambdas(today) {
   return out;
 }
 
-async function run({ today, tracker, sgoKey }) {
+async function run({ today, tracker, sgoKey, now = Date.now() }) {
   const { season, prior } = nhl.seasonFor(today);
   const graded = await grade(tracker, today, season);
   console.log(`[NHL] graded ${graded} earlier pick(s)`);
@@ -91,11 +91,11 @@ async function run({ today, tracker, sgoKey }) {
     try {
       const events = await sgo.fetchEvents({ apiKey: sgoKey, leagueID: 'NHL', startsAfter: `${today}T09:00:00Z`, startsBefore: `${nhl.addDays(today, 1)}T09:00:00Z` });
       objects = events.length;
-      rows = sgo.parseProps(events, 'NHL', t => sgo.teamAbbrev(t, games));
+      rows = sgo.parseProps(events, 'NHL', t => sgo.teamAbbrev(t, games), now);
     } catch (e) { warning = `Odds feed failed (${e.message}) — fell back to standard lines`; console.error(warning); }
     if (!rows.length && !warning) warning = 'Odds feed returned no NHL props yet — fell back to standard lines';
   }
-  if (!rows.length) { mode = 'standard-lines'; rows = boardFromStandardLines(games, skaters); }
+  if (!rows.length) { mode = 'standard-lines'; rows = boardFromStandardLines(games.filter(g => Date.parse(g.startTimeUTC) > now), skaters); }
 
   // Match sportsbook names to NHL players
   const match = players.buildMatcher(skaters);

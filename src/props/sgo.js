@@ -49,10 +49,13 @@ async function fetchWithKey(url, apiKey) {
 
 // Turn SGO events into one row per player / market / side.
 // resolveTeam(sgoTeam) -> the abbreviation our stats source uses (or null to skip the game).
-function parseProps(events, sport, resolveTeam) {
+function parseProps(events, sport, resolveTeam, now = Date.now()) {
   const markets = MARKETS[sport];
   const out = [];
   for (const ev of events) {
+    // The feed keeps returning games after the start with live in-game odds — pregame props only
+    const start = Date.parse(ev.status?.startsAt);
+    if (ev.status?.started || ev.status?.live || ev.status?.ended || !(start > now)) continue;
     const home = resolveTeam(ev.teams?.home), away = resolveTeam(ev.teams?.away);
     if (!home || !away) continue;
     const sideOfTeam = { [ev.teams.home.teamID]: home, [ev.teams.away.teamID]: away };

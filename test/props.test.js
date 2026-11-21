@@ -75,7 +75,7 @@ test('SportsGameOdds events parse into props, with team aliases and devig', () =
     },
   };
   assert.equal(teamAbbrev(ev.teams.away, games), 'LAK');
-  const rows = parseProps([ev], 'NHL', t => teamAbbrev(t, games));
+  const rows = parseProps([ev], 'NHL', t => teamAbbrev(t, games), 0);
   assert.equal(rows.length, 2);                              // stale line with no open book is dropped
   const u = rows.find(r => r.side === 'under');
   assert.equal(u.team, 'LAK'); assert.equal(u.opp, 'BOS'); assert.equal(u.market, 'shots'); assert.equal(u.line, 2.5);
@@ -123,7 +123,7 @@ test('NFL: anytime TD yes/no parses as over/under 0.5 and devigs', () => {
       'touchdowns-P-game-yn-no':  { oddID: 'touchdowns-P-game-yn-no',  statID: 'touchdowns', playerID: 'P', periodID: 'game', betTypeID: 'yn', sideID: 'no',  bookOdds: '-150', byBookmaker: { a: {} } },
     } };
   const resolve = nfl.teamResolver([], new Set(['KC', 'LA']));
-  const rows = parseProps([ev], 'NFL', resolve);
+  const rows = parseProps([ev], 'NFL', resolve, 0);
   const yes = rows.find(r => r.side === 'over');
   assert.equal(rows.length, 2); assert.equal(yes.market, 'anytime_td'); assert.equal(yes.line, 0.5); assert.equal(yes.opp, 'LA');
   near(yes.implied + rows.find(r => r.side === 'under').implied, 1, 1e-9);
@@ -155,4 +155,17 @@ test('guards: huge edges and lines far from history are never top picks', () => 
   assert.ok(!s.topPick); assert.ok(s.failed.includes('too-good'));
   const r = sc.scoreProp({ modelProb: 0.62, rates: sc.hitRates([30, 20, 25, 35, 40], 23.5, 'under', 'NFL'), implied: 0.55, bookOdds: -120, gamesPlayed: 5, books: 4, sport: 'NFL', projection: 9, line: 23.5 });
   assert.ok(r.failed.includes('role'));
+});
+
+test('games that have started are dropped (no live-odds props)', () => {
+  const ev = { eventID: 'L', status: { startsAt: '2026-11-19T00:30:00Z', started: true },
+    teams: { home: { teamID: 'H', names: { short: 'BOS' } }, away: { teamID: 'A', names: { short: 'LAK' } } }, players: {}, odds: {} };
+  const games = [{ awayTeam: { abbrev: 'LAK' }, homeTeam: { abbrev: 'BOS' } }];
+  const resolve = t => teamAbbrev(t, games);
+  // started flag, or start time already passed
+  assert.equal(parseProps([ev], 'NHL', resolve, 0).length, 0);
+  const ev2 = { ...ev, status: { startsAt: '2026-11-19T00:30:00Z' } };
+  const p = { ...ev2, players: { X: { playerID: 'X', teamID: 'H', name: 'X Y' } }, odds: { 'shots_onGoal-X-game-ou-over': { oddID: 'shots_onGoal-X-game-ou-over', statID: 'shots_onGoal', playerID: 'X', periodID: 'game', betTypeID: 'ou', sideID: 'over', bookOdds: '-110', bookOverUnder: '2.5', byBookmaker: { a: {}, b: {} } } } };
+  assert.equal(parseProps([p], 'NHL', resolve, Date.parse('2026-11-19T00:00:00Z')).length, 1);
+  assert.equal(parseProps([p], 'NHL', resolve, Date.parse('2026-11-19T00:34:00Z')).length, 0);
 });
