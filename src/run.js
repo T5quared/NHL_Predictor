@@ -110,6 +110,12 @@ async function main() {
 
   const alreadySent = tracker.some(e => e.date === today && e.auto);
   let games = (await nhl.fetchGamesOn(today)).filter(g => !['PPD', 'CNCL'].includes(g.gameScheduleState));
+  // GitHub runs this late some days — never post a pick for a game that has already started
+  if (!process.env.DATE) {
+    const started = games.filter(g => !['FUT', 'PRE'].includes(g.gameState) || Date.parse(g.startTimeUTC) <= Date.now());
+    if (started.length) console.log(`Skipping ${started.length} game(s) already started: ${started.map(g => `${g.awayTeam.abbrev}@${g.homeTeam.abbrev}`).join(', ')}`);
+    games = games.filter(g => !started.includes(g));
+  }
   if (alreadySent && !FORCE) { console.log('Picks for today were already sent — skipping (set FORCE=1 to resend)'); games = []; }
 
   const picks = [];

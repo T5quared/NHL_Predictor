@@ -2,9 +2,13 @@ name: Daily NHL picks
 
 on:
   schedule:
-    # 15:07 UTC = 11:07 AM Eastern in daylight time, 10:07 AM in winter.
-    # GitHub can start scheduled runs 5-30 minutes late.
+    # GitHub has been starting these 3-6 hours late, so there are several attempts a day.
+    # The first one posts; later ones see today's picks were sent and only grade/post new results.
+    # UTC → Eastern (winter): 15:07 = 10:07 AM, 16:43 = 11:43 AM, 18:19 = 1:19 PM, 20:31 = 3:31 PM.
     - cron: '7 15 * * *'
+    - cron: '43 16 * * *'
+    - cron: '19 18 * * *'
+    - cron: '31 20 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
