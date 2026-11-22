@@ -389,8 +389,8 @@
   "finalProb": 0.6626,
   "edge": 0.1255,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 0,
+  "result": "hit"
  },
  {
   "date": "2026-11-21",
@@ -415,8 +415,8 @@
   "finalProb": 0.7151,
   "edge": 0.1233,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "hit"
  },
  {
   "date": "2026-11-21",
@@ -441,8 +441,8 @@
   "finalProb": 0.6447,
   "edge": 0.1209,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 0,
+  "result": "miss"
  },
  {
   "date": "2026-11-21",
@@ -467,8 +467,8 @@
   "finalProb": 0.5856,
   "edge": 0.1139,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 2,
+  "result": "hit"
  },
  {
   "date": "2026-11-21",
@@ -493,8 +493,8 @@
   "finalProb": 0.7148,
   "edge": 0.1131,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "miss"
  },
  {
   "date": "2026-11-21",
@@ -519,8 +519,8 @@
   "finalProb": 0.6386,
   "edge": 0.1081,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 2,
+  "result": "hit"
  },
  {
   "date": "2026-11-21",
@@ -572,8 +572,8 @@
   "finalProb": 0.6231,
   "edge": 0.1038,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 2,
+  "result": "hit"
  },
  {
   "date": "2026-11-21",
@@ -625,8 +625,8 @@
   "finalProb": 0.7115,
   "edge": 0.0888,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "miss"
  },
  {
   "date": "2026-11-21",
@@ -651,8 +651,8 @@
   "finalProb": 0.6581,
   "edge": 0.0873,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "miss"
  },
  {
   "date": "2026-11-21",
@@ -677,8 +677,8 @@
   "finalProb": 0.6153,
   "edge": 0.087,
   "consistent": false,
-  "actual": null,
-  "result": null
+  "actual": 0,
+  "result": "hit"
  },
  {
   "date": "2026-11-21",
@@ -730,8 +730,8 @@
   "finalProb": 0.647,
   "edge": 0.0636,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "hit"
  },
  {
   "date": "2026-11-21",
@@ -783,8 +783,8 @@
   "finalProb": 0.7222,
   "edge": 0.0577,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 0,
+  "result": "hit"
  },
  {
   "date": "2026-11-21",
@@ -809,8 +809,8 @@
   "finalProb": 0.6064,
   "edge": 0.0508,
   "consistent": false,
-  "actual": null,
-  "result": null
+  "actual": 2,
+  "result": "hit"
  },
  {
   "date": "2026-11-21",
@@ -835,8 +835,8 @@
   "finalProb": 0.6228,
   "edge": 0.0501,
   "consistent": true,
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "miss"
  },
  {
   "date": "2026-11-21",
@@ -888,8 +888,8 @@
   "finalProb": 0.687,
   "edge": 0.0442,
   "consistent": false,
-  "actual": null,
-  "result": null
+  "actual": 0,
+  "result": "hit"
  },
  {
   "date": "2026-11-22",
@@ -1792,6 +1792,168 @@
   "edge": 0.0503,
   "consistent": true,
   "loggedAt": "2026-11-22T19:29:32.928Z",
+  "actual": null,
+  "result": null
+ },
+ {
+  "date": "2026-11-22",
+  "sport": "NHL",
+  "mode": "odds",
+  "eventId": "lI2QU9Qc8vo9jdLizeLG",
+  "startsAt": "2026-11-22T22:00:00.000Z",
+  "season": null,
+  "week": null,
+  "playerId": 8476453,
+  "playerName": "Nikita Kucherov",
+  "team": "TBL",
+  "opp": "BUF",
+  "market": "shots",
+  "stat": "shots",
+  "line": 3.5,
+  "side": "under",
+  "bookOdds": -135,
+  "implied": 0.5349,
+  "modelProb": 0.6638,
+  "hitShrunk": 0.6743,
+  "finalProb": 0.668,
+  "edge": 0.1331,
+  "consistent": true,
+  "loggedAt": "2026-11-22T21:07:38.086Z",
+  "actual": null,
+  "result": null
+ },
+ {
+  "date": "2026-11-22",
+  "sport": "NHL",
+  "mode": "odds",
+  "eventId": "DiEfNNfrTCfYUhJierTU",
+  "startsAt": "2026-11-23T01:00:00.000Z",
+  "season": null,
+  "week": null,
+  "playerId": 8474141,
+  "playerName": "Patrick Kane",
+  "team": "CHI",
+  "opp": "VAN",
+  "market": "assists",
+  "stat": "assists",
+  "line": 0.5,
+  "side": "over",
+  "bookOdds": 105,
+  "implied": 0.4587,
+  "modelProb": 0.5758,
+  "hitShrunk": 0.5828,
+  "finalProb": 0.5786,
+  "edge": 0.1199,
+  "consistent": true,
+  "loggedAt": "2026-11-22T21:07:38.086Z",
+  "actual": null,
+  "result": null
+ },
+ {
+  "date": "2026-11-22",
+  "sport": "NHL",
+  "mode": "odds",
+  "eventId": "2QbwfrE3MSr4FKXUkGAB",
+  "startsAt": "2026-11-23T00:00:00.000Z",
+  "season": null,
+  "week": null,
+  "playerId": 8473994,
+  "playerName": "Jamie Benn",
+  "team": "DAL",
+  "opp": "PIT",
+  "market": "shots",
+  "stat": "shots",
+  "line": 1.5,
+  "side": "under",
+  "bookOdds": -182,
+  "implied": 0.6109,
+  "modelProb": 0.6616,
+  "hitShrunk": 0.6799,
+  "finalProb": 0.6689,
+  "edge": 0.058,
+  "consistent": true,
+  "loggedAt": "2026-11-22T21:07:38.086Z",
+  "actual": null,
+  "result": null
+ },
+ {
+  "date": "2026-11-22",
+  "sport": "NHL",
+  "mode": "odds",
+  "eventId": "2QbwfrE3MSr4FKXUkGAB",
+  "startsAt": "2026-11-23T00:00:00.000Z",
+  "season": null,
+  "week": null,
+  "playerId": 8471675,
+  "playerName": "Sidney Crosby",
+  "team": "PIT",
+  "opp": "DAL",
+  "market": "assists",
+  "stat": "assists",
+  "line": 0.5,
+  "side": "under",
+  "bookOdds": -169,
+  "implied": 0.5902,
+  "modelProb": 0.6748,
+  "hitShrunk": 0.59,
+  "finalProb": 0.6409,
+  "edge": 0.0507,
+  "consistent": true,
+  "loggedAt": "2026-11-22T21:07:38.086Z",
+  "actual": null,
+  "result": null
+ },
+ {
+  "date": "2026-11-22",
+  "sport": "NHL",
+  "mode": "odds",
+  "eventId": "2QbwfrE3MSr4FKXUkGAB",
+  "startsAt": "2026-11-23T00:00:00.000Z",
+  "season": null,
+  "week": null,
+  "playerId": 8475794,
+  "playerName": "Tyler Seguin",
+  "team": "DAL",
+  "opp": "PIT",
+  "market": "shots",
+  "stat": "shots",
+  "line": 1.5,
+  "side": "over",
+  "bookOdds": -139,
+  "implied": 0.5434,
+  "modelProb": 0.5979,
+  "hitShrunk": 0.5776,
+  "finalProb": 0.5898,
+  "edge": 0.0464,
+  "consistent": false,
+  "loggedAt": "2026-11-22T21:07:38.086Z",
+  "actual": null,
+  "result": null
+ },
+ {
+  "date": "2026-11-22",
+  "sport": "NHL",
+  "mode": "odds",
+  "eventId": "2QbwfrE3MSr4FKXUkGAB",
+  "startsAt": "2026-11-23T00:00:00.000Z",
+  "season": null,
+  "week": null,
+  "playerId": 8474578,
+  "playerName": "Erik Karlsson",
+  "team": "PIT",
+  "opp": "DAL",
+  "market": "shots",
+  "stat": "shots",
+  "line": 2.5,
+  "side": "under",
+  "bookOdds": -180,
+  "implied": 0.6007,
+  "modelProb": 0.6703,
+  "hitShrunk": 0.6112,
+  "finalProb": 0.6466,
+  "edge": 0.046,
+  "consistent": false,
+  "loggedAt": "2026-11-22T21:07:38.086Z",
   "actual": null,
   "result": null
  }
