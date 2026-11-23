@@ -23,6 +23,10 @@ on:
         type: choice
         options: ['NHL,NFL', 'NHL', 'NFL']
         default: 'NHL,NFL'
+      force:
+        description: 'Run again even if today already ran'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -49,7 +53,7 @@ jobs:
           DASHBOARD_URL: ${{ vars.DASHBOARD_URL }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           SPORTS: ${{ (github.event.schedule == '7 12 * * 0' || github.event.schedule == '37 13 * * 0') && 'NFL' || inputs.sports || 'NHL,NFL' }}
-          FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
+          FORCE: ${{ inputs.force && '1' || '' }}
         run: node src/props/run-props.js
       - name: Save props and dashboard to the repo
         if: always()

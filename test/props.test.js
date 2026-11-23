@@ -169,3 +169,34 @@ test('games that have started are dropped (no live-odds props)', () => {
   assert.equal(parseProps([p], 'NHL', resolve, Date.parse('2026-11-19T00:00:00Z')).length, 1);
   assert.equal(parseProps([p], 'NHL', resolve, Date.parse('2026-11-19T00:34:00Z')).length, 0);
 });
+
+// ── NHL moneyline ────────────────────────────────────────────────────
+const ml = require('../src/props/moneyline');
+const mlEvent = (homeOdds, awayOdds, extra = {}) => ({
+  eventID: 'G1', status: { startsAt: '2026-11-24T00:00:00Z' },
+  teams: { home: { teamID: 'BOS_T', names: { short: 'BOS' } }, away: { teamID: 'LA_T', names: { short: 'LA' } } },
+  odds: {
+    'points-home-game-ml-home': { oddID: 'points-home-game-ml-home', statID: 'points', statEntityID: 'home', periodID: 'game', betTypeID: 'ml', sideID: 'home', bookOdds: homeOdds, byBookmaker: { a: {}, b: {}, c: {} }, ...extra },
+    'points-away-game-ml-away': { oddID: 'points-away-game-ml-away', statID: 'points', statEntityID: 'away', periodID: 'game', betTypeID: 'ml', sideID: 'away', bookOdds: awayOdds, byBookmaker: { a: {}, b: {}, c: {} }, ...extra },
+  } });
+const mlGames = [{ awayTeam: { abbrev: 'LAK' }, homeTeam: { abbrev: 'BOS' } }];
+
+test('moneyline: no-vig price and value side (can be the underdog)', () => {
+  const lines = ml.parseMoneylines([mlEvent('-150', '+130')], mlGames, 0);
+  assert.equal(lines.length, 1);
+  near(lines[0].pHome, sc.devig(-150, 130));
+  // Model likes BOS to win (53%) but the market has BOS at ~58% → value is on the LAK underdog
+  const lastRun = { date: '2026-11-23', games: [{ gameId: 7, away: 'LAK', home: 'BOS', pick: 'BOS', winPctHome: 0.53, winPctAway: 0.47, confidence: 'LOW CONFIDENCE' }] };
+  const sec = ml.build({ events: [mlEvent('-150', '+130')], games: mlGames, lastRun, today: '2026-11-23', now: 0 });
+  assert.equal(sec.props.length, 2);
+  const lak = sec.props.find(p => p.team === 'LAK'), bos = sec.props.find(p => p.team === 'BOS');
+  assert.ok(lak.topPick && !lak.modelPick, 'LAK underdog value');
+  assert.ok(!bos.topPick && bos.modelPick && bos.confidence === 'LOW CONFIDENCE');
+  near(lak.edge + bos.edge, 0, 1e-9);
+});
+
+test('moneyline: waits for today’s game picks, skips started games', () => {
+  const stale = ml.build({ events: [mlEvent('-150', '+130')], games: mlGames, lastRun: { date: '2026-11-22', games: [] }, today: '2026-11-23', now: 0 });
+  assert.equal(stale.props.length, 0); assert.ok(/Waiting/.test(stale.warning));
+  assert.equal(ml.parseMoneylines([mlEvent('-150', '+130')], mlGames, Date.parse('2026-11-24T00:05:00Z')).length, 0);
+});

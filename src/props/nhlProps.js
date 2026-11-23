@@ -76,7 +76,7 @@ async function run({ today, tracker, sgoKey, now = Date.now() }) {
   console.log(`[NHL] graded ${graded} earlier pick(s)`);
 
   const games = (await nhl.fetchGamesOn(today)).filter(g => !['PPD', 'CNCL'].includes(g.gameScheduleState));
-  if (!games.length) return { sport: 'NHL', mode: 'none', warning: null, objects: 0, games: 0, props: [] };
+  if (!games.length) return { sport: 'NHL', mode: 'none', warning: null, objects: 0, games: 0, props: [], events: [], nhlGames: [] };
 
   const [skaters, priorSkaters, teamStats] = await Promise.all([
     players.fetchSkaters(season), players.fetchSkaters(prior).catch(() => []), nhl.fetchTeamStats(season),
@@ -86,10 +86,10 @@ async function run({ today, tracker, sgoKey, now = Date.now() }) {
   const priorById = Object.fromEntries(priorSkaters.map(s => [s.id, s]));
   const skaterById = Object.fromEntries(skaters.map(s => [s.id, s]));
 
-  let rows = [], mode = 'odds', objects = 0, warning = null;
+  let rows = [], mode = 'odds', objects = 0, warning = null, events = [];
   if (sgoKey) {
     try {
-      const events = await sgo.fetchEvents({ apiKey: sgoKey, leagueID: 'NHL', startsAfter: `${today}T09:00:00Z`, startsBefore: `${nhl.addDays(today, 1)}T09:00:00Z` });
+      events = await sgo.fetchEvents({ apiKey: sgoKey, leagueID: 'NHL', startsAfter: `${today}T09:00:00Z`, startsBefore: `${nhl.addDays(today, 1)}T09:00:00Z` });
       objects = events.length;
       rows = sgo.parseProps(events, 'NHL', t => sgo.teamAbbrev(t, games), now);
     } catch (e) { warning = `Odds feed failed (${e.message}) — fell back to standard lines`; console.error(warning); }
@@ -128,7 +128,7 @@ async function run({ today, tracker, sgoKey, now = Date.now() }) {
     const s = scoreProp({ modelProb, rates, implied: r.implied, bookOdds: r.bookOdds, gamesPlayed: log.length, books: r.books, sport: 'NHL', projection: rate, line: r.line });
     scored.push({ ...r, pos: sk?.pos || null, gp: log.length, logo: logo(r.team), gameDate: today, projection: +rate.toFixed(2), modelProb, rates, ...s });
   }
-  return { sport: 'NHL', mode, warning, objects, games: games.length, props: rankProps(scored) };
+  return { sport: 'NHL', mode, warning, objects, games: games.length, props: rankProps(scored), events, nhlGames: games };
 }
 
 module.exports = { run, grade, boardFromStandardLines };

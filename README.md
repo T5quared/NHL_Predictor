@@ -80,6 +80,16 @@ The dashboard's "Which half of the blend is predicting better?" box is for the b
 
 Stats: NHL API (free, unofficial); NFL from nflverse (free CSVs on GitHub, updated after each game day).
 
+### NHL moneyline
+The props run also compares your game model's win % (from the picks run) with the no-vig consensus moneyline,
+using the same odds download (no extra credits). Value sides (edge +3%, odds −250 to +200, 2+ books) show on the
+**NHL Moneyline** tab, go to Discord under the NHL props, and are logged and graded from final scores.
+
+### Scheduling
+GitHub's own scheduler has been running these jobs 3–8 hours late or not at all, so the times that matter are
+triggered from cron-job.org through the GitHub API (`workflow_dispatch`). The GitHub crons stay as a backup.
+Each sport runs once a day; extra triggers exit in seconds. Tick **Force** on a manual run to run again.
+
 ## Changing the model
 
 Edit `MODEL_WEIGHTS` in `src/model.js`, and make the same change in the dashboard HTML in

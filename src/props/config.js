@@ -19,6 +19,7 @@ const SPORTS = {
     minGames: 8,
     marketWeight: 0,          // share of Final % taken straight from the no-vig market price
   },
+  NHL_ML: { windows: [], weights: {}, consistent: [], shrinkGames: 0, minGames: 0, marketWeight: 0 },
   NFL: {
     windows: [3, 5, 10],
     weights: { l3: 0.15, l5: 0.30, l10: 0.30, season: 0.25 },
@@ -43,6 +44,13 @@ const FILTERS = {
   MAX_EDGE: 0.15,            // measured before the market anchor
   ROLE_RATIO_MIN: 0.60,      // our projection below 60% of the line, or
   ROLE_RATIO_MAX: 1.60,      // above 160% of it (lines over 1.5 only)
+};
+
+// NHL moneyline (value side = your game model's win % beats the no-vig price by MIN_EDGE)
+const ML = {
+  MIN_EDGE: 0.03,
+  MIN_ODDS: -250,
+  MAX_ODDS: 200,             // underdogs up to +200
 };
 
 const TOP_N_DISCORD = 5;     // picks listed per sport in the Discord post
@@ -102,4 +110,4 @@ const FALLBACK = {
   LINES: { points: [0.5], assists: [0.5], goals: [0.5], shots: [1.5, 2.5, 3.5] },
 };
 
-module.exports = { BLEND, SPORTS, FILTERS, TOP_N_DISCORD, MAX_TOP_PICKS, RATE, NFL_RATE, MARKETS, FALLBACK };
+module.exports = { ML, BLEND, SPORTS, FILTERS, TOP_N_DISCORD, MAX_TOP_PICKS, RATE, NFL_RATE, MARKETS, FALLBACK };

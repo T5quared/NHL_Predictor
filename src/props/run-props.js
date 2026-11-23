@@ -12,12 +12,14 @@ const path = require('path');
 const nhl = require('../nhl');
 const nhlProps = require('./nhlProps');
 const nflProps = require('./nfl');
+const moneyline = require('./moneyline');
 const { probToAmerican } = require('./scoring');
-const { MARKETS, SPORTS, TOP_N_DISCORD, BLEND, FILTERS, NFL_RATE, MAX_TOP_PICKS } = require('./config');
+const { MARKETS, SPORTS, TOP_N_DISCORD, BLEND, FILTERS, NFL_RATE, MAX_TOP_PICKS, ML } = require('./config');
 
 const ROOT = path.join(__dirname, '..', '..');
 const PROPS_FILE = path.join(ROOT, 'data', 'props.json');
 const TRACKER_FILE = path.join(ROOT, 'data', 'props-tracker.json');
+const LAST_RUN_FILE = path.join(ROOT, 'data', 'last-run.json');
 const STATE_FILE = path.join(ROOT, 'data', 'props-state.json');
 const TEMPLATE = path.join(ROOT, 'dashboard', 'props-template.html');
 const DASHBOARD = path.join(ROOT, 'dashboard', 'props.html');
@@ -44,6 +46,7 @@ function logPicks(tracker, section, today, now) {
     season: p.season ?? null, week: p.week ?? null, playerId: p.playerId, playerName: p.playerName, team: p.team, opp: p.opp,
     market: p.market, stat: p.stat, line: p.line, side: p.side, bookOdds: p.bookOdds, implied: r4(p.implied),
     modelProb: r4(p.modelProb), hitShrunk: r4(p.hitShrunk), finalProb: r4(p.finalProb), edge: r4(p.edge),
+    gameId: p.gameId ?? undefined, confidence: p.confidence ?? undefined,
     consistent: p.consistent, loggedAt: new Date(now).toISOString(), actual: null, result: null,
   });
   // The last run before a game starts wins: replace ungraded picks for games still on the board
@@ -51,7 +54,7 @@ function logPicks(tracker, section, today, now) {
   const sport = section.sport;
   const live = new Set(section.props.map(p => p.eventId));
   const kept = tracker.filter(p => !((p.sport || 'NHL') === sport && p.result == null && live.has(p.eventId)));
-  const soon = p => sport === 'NHL' || (p.startsAt && Date.parse(p.startsAt) - now < NFL_RATE.LOG_WITHIN_HOURS * 3600e3);
+  const soon = p => sport !== 'NFL' || (p.startsAt && Date.parse(p.startsAt) - now < NFL_RATE.LOG_WITHIN_HOURS * 3600e3);
   for (const p of section.props.filter(x => x.topPick && soon(x))) kept.push(entry(p));
   return kept;
 }
@@ -80,6 +83,7 @@ function forDashboard(section, tracker) {
       implied: r4(p.implied), books: p.books, gp: p.gp, rates: p.rates, projection: p.projection ?? null,
       modelProb: r4(p.modelProb), hitShrunk: r4(p.hitShrunk), finalProb: r4(p.finalProb), edge: r4(p.edge),
       fairOdds: probToAmerican(p.finalProb), consistent: p.consistent, topPick: p.topPick, failed: p.failed,
+      ...(p.market === 'moneyline' ? { gameId: p.gameId, confidence: p.confidence, modelPick: p.modelPick } : {}),
     })),
   };
 }
@@ -109,6 +113,13 @@ function buildMessage(today, ran, now, skip = {}) {
     const top = n.props.filter(p => p.topPick);
     lines.push(...sectionLines(`🏒 **NHL Props — ${dateStr}**`, top.slice(0, TOP_N_DISCORD), top.length, n));
     if (n.mode === 'standard-lines') lines.push('-# ⚠️ No odds feed: standard lines, ranked by probability (no edge)');
+    const ml = (ran.NHL_ML?.props || []).filter(p => p.topPick);
+    if (ml.length) {
+      lines.push('', `💰 **NHL Moneyline value** (${ml.length})`);
+      ml.slice(0, TOP_N_DISCORD).forEach(p => lines.push(`• **${p.team}** ${fmtOdds(p.bookOdds)} vs ${p.opp} · model ${pct(p.modelProb)} vs market ${pct(p.implied)} · edge +${(p.edge * 100).toFixed(1)}%${p.modelPick ? '' : ' · underdog value'}`));
+      const r = ran.NHL_ML.record;
+      if (r.n) lines.push(`-# 📊 Moneyline record: ${r.hits}/${r.n} (${pct(r.hits / r.n)})`);
+    }
   }
   const f = skip.NFL ? null : ran.NFL;
   if (f) {
@@ -148,8 +159,20 @@ async function main() {
       // With an odds key, standard-line fallback picks aren't logged — a later attempt will get real odds
       if (!DRY_RUN && section.props.length && (section.mode === 'odds' || !SGO_KEY)) tracker = logPicks(tracker, section, today, now);
       ran[sport] = sports[sport] = forDashboard(section, tracker);
+      // NHL moneyline rides on the same odds download
+      let mlOk = true;
+      if (sport === 'NHL') {
+        console.log(`[NHL ML] graded ${await moneyline.grade(tracker, today)} earlier pick(s)`);
+        if (section.nhlGames?.length && section.events?.length) {
+          const ml = moneyline.build({ events: section.events, games: section.nhlGames, lastRun: readJson(LAST_RUN_FILE, null), today, now });
+          mlOk = ml.props.length > 0;
+          if (!DRY_RUN && mlOk) tracker = logPicks(tracker, ml, today, now);
+          ran.NHL_ML = sports.NHL_ML = forDashboard(ml, tracker);
+          console.log(`[NHL ML] ${ml.games} games · ${ml.props.filter(p => p.topPick).length} value sides${ml.warning ? ' · ⚠️ ' + ml.warning : ''}`);
+        }
+      }
       // Counts as done only with real odds (NHL props often aren't posted yet in the morning → try again later)
-      const good = section.mode === 'odds' && section.props.length > 0 || (sport === 'NHL' && section.mode === 'none');
+      const good = section.mode === 'odds' && section.props.length > 0 && mlOk || (sport === 'NHL' && section.mode === 'none');
       if (good && !DRY_RUN) (state.done ||= {})[sport] = today;
       console.log(`[${sport}] ${section.props.length} props · ${ran[sport].counts.topPicks} top picks · mode ${section.mode}`
         + (section.objects ? ` · ${section.objects} odds objects` : '') + (section.warning ? ` · ⚠️ ${section.warning}` : ''));
@@ -161,7 +184,7 @@ async function main() {
     }
   }
 
-  const out = { date: today, generatedAt: new Date().toISOString(), settings: { BLEND, FILTERS, SPORTS, MAX_TOP_PICKS }, sports };
+  const out = { date: today, generatedAt: new Date().toISOString(), settings: { BLEND, FILTERS, SPORTS, MAX_TOP_PICKS, ML }, sports };
   writeJson(PROPS_FILE, out);
   const tpl = fs.readFileSync(TEMPLATE, 'utf8');
   fs.writeFileSync(DASHBOARD, tpl.replace('/*__PROPS_DATA__*/null', JSON.stringify(out).replace(/</g, '\\u003c')));

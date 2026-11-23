@@ -15,6 +15,7 @@
     --r-bg: rgba(239,68,68,.13);  --r-ink: #fca5a5; --r-pill: #dc2626;
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   body { margin: 0; font: 14px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--ink); }
   .wrap { max-width: 1320px; margin: 0 auto; padding: 18px 16px 40px; }
   header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 18px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--red); }
@@ -64,6 +65,7 @@
   .panel { padding: 14px 16px; border-top: 3px solid var(--red); } .panel h2 { font-size: 14px; margin: 0 0 10px; }
   .kv { display: flex; justify-content: space-between; padding: 5px 0; border-top: 1px solid var(--line); font-size: 13px; } .kv:first-of-type { border-top: 0; }
   .small { font-size: 12px; color: var(--muted); }
+  .mp { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 5px; background: #fff; color: #000; margin-left: 6px; vertical-align: 2px; }
   .flag { color: var(--red); font-size: 11px; font-weight: 700; margin-top: 2px; }
   .when { color: var(--muted); font-size: 12px; } .proj { color: var(--muted); font-size: 12px; margin-top: 2px; }
   .res-hit { color: var(--g-ink); font-weight: 700; } .res-miss { color: var(--r-ink); font-weight: 700; }
@@ -74,12 +76,12 @@
   <header>
     <h1>Prop Hit Rates</h1>
     <span class="meta" id="meta"></span>
-    <div class="tabs"><button class="tab on" data-sport="NHL">NHL</button><button class="tab" data-sport="NFL">NFL</button></div>
+    <div class="tabs"><button class="tab on" data-sport="NHL">NHL Props</button><button class="tab" data-sport="NHL_ML">NHL Moneyline</button><button class="tab" data-sport="NFL">NFL Props</button></div>
   </header>
   <div id="warn"></div>
 
   <section id="main">
-    <div class="filters">
+    <div class="filters" id="filters">
       <div class="f"><label>Player</label><input id="q" placeholder="Search player..."></div>
       <div class="f"><label>Sort by</label><select id="sortBy"></select></div>
       <div class="f ms" id="mkts"><label>Prop markets</label><button type="button" id="mktBtn">All</button><div class="menu" id="mktMenu"></div></div>
@@ -87,6 +89,9 @@
       <div class="f"><label>Side</label><select id="side"><option value="">All Sides</option><option value="over">Over / Yes</option><option value="under">Under / No</option></select></div>
       <div class="f"><label>Odds</label><div class="odds-range"><input id="omin" type="number" value="-250" step="5"><input id="omax" type="number" value="150" step="5"></div></div>
       <div class="f"><label>Show</label><select id="view"><option value="top">Top picks</option><option value="all">All props</option></select></div>
+    </div>
+    <div class="filters" id="mlFilters" hidden>
+      <div class="f"><label>Show</label><select id="mlView"><option value="top">Value sides</option><option value="all">All games</option></select></div>
     </div>
 
     <div class="card"><div class="scroll"><table>
@@ -97,8 +102,8 @@
 
     <div class="grid2">
       <div class="card panel"><h2 id="recTitle">Prop record</h2><div id="record"></div></div>
-      <div class="card panel"><h2>Which half of the blend is predicting better?</h2><div id="brier"></div>
-        <p class="small">Lower is better (Brier score). Shift the 60/40 blend toward whichever side wins once there are ~100 graded picks.</p></div>
+      <div class="card panel"><h2 id="brierTitle">Which half of the blend is predicting better?</h2><div id="brier"></div>
+        <p class="small" id="brierNote">Lower is better (Brier score). Shift the 60/40 blend toward whichever side wins once there are ~100 graded picks.</p></div>
       <div class="card panel"><h2>Recent results</h2><div id="recent"></div></div>
     </div>
   </section>
@@ -122,6 +127,7 @@ document.querySelectorAll('.tab').forEach(t => {
   t.onclick = () => { sport = t.dataset.sport; document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t)); load(); };
 });
 for (const id of ['q', 'sortBy', 'team', 'side', 'omin', 'omax', 'view']) $(id).addEventListener('input', render);
+$('mlView').addEventListener('input', () => renderML());
 $('mktMenu').addEventListener('change', render);
 $('mktBtn').onclick = () => $('mkts').classList.toggle('open');
 document.addEventListener('click', e => { if (!$('mkts').contains(e.target)) $('mkts').classList.remove('open'); });
@@ -133,6 +139,9 @@ const whenOf = p => p.startsAt ? new Date(p.startsAt).toLocaleString([], { weekd
 
 function load() {
   S = sections[sport];
+  const ml = sport === 'NHL_ML';
+  $('filters').hidden = ml; $('mlFilters').hidden = !ml;
+  if (ml && S) return loadML();
   if (!S || !S.props) {
     $('meta').textContent = ''; $('warn').innerHTML = '';
     $('headRow').innerHTML = ''; $('rows').innerHTML = `<tr><td class="empty">No ${sport} data yet — this fills in after the daily props run.</td></tr>`;
@@ -231,19 +240,49 @@ function row(p) {
   </tr>`;
 }
 
-function renderSide() {
+function renderSide(ml = false) {
+  $('brierTitle').textContent = ml ? 'Model vs market — which is more accurate?' : 'Which half of the blend is predicting better?';
+  $('brierNote').textContent = ml ? 'Lower is better (Brier score). If the market keeps scoring lower, the model’s edges aren’t real yet.' : 'Lower is better (Brier score). Shift the 60/40 blend toward whichever side wins once there are ~100 graded picks.';
   const r = S.record || { n: 0 };
   const lines = [`<div class="kv"><span>All graded picks</span><b>${r.n ? `${r.hits}/${r.n} (${pct(r.hits / r.n)})` : 'none yet'}</b></div>`];
   for (const [m, v] of Object.entries(r.byMarket || {})) lines.push(`<div class="kv"><span>${LABEL[m] || m}</span><span>${v.hits}/${v.n} (${pct(v.hits / v.n)})</span></div>`);
   $('record').innerHTML = lines.join('');
   const b = r.brier || {}, f = x => x == null ? '–' : x.toFixed(3);
-  $('brier').innerHTML = r.n ? [['Model', b.model], ['Hit rate', b.hitRate], ['Final blend', b.final], ['Market price', b.market]]
+  $('brier').innerHTML = r.n ? (ml ? [['Model', b.model], ['Market price', b.market]] : [['Model', b.model], ['Hit rate', b.hitRate], ['Final blend', b.final], ['Market price', b.market]])
     .map(([k, v]) => `<div class="kv"><span>${k}</span><b>${f(v)}</b></div>`).join('') : '<div class="small">Fills in after the first picks are graded.</div>';
   $('recent').innerHTML = (S.recentResults || []).slice(0, 15).map(p =>
-    `<div class="kv"><span>${esc(String(p.date).slice(5))} ${esc(p.playerName)} ${p.market === 'anytime_td' ? 'ATD ' + (p.side === 'over' ? 'Yes' : 'No') : (p.side === 'over' ? 'O' : 'U') + ' ' + p.line + ' ' + (SHORT[p.market] || p.market)}</span>
+    `<div class="kv"><span>${esc(String(p.date).slice(5))} ${esc(p.playerName)} ${p.market === 'moneyline' ? 'ML ' + fmtOdds(p.bookOdds) + ' vs ' + esc(p.opp) : p.market === 'anytime_td' ? 'ATD ' + (p.side === 'over' ? 'Yes' : 'No') : (p.side === 'over' ? 'O' : 'U') + ' ' + p.line + ' ' + (SHORT[p.market] || p.market)}</span>
      <span class="${p.result === 'hit' ? 'res-hit' : p.result === 'miss' ? 'res-miss' : 'small'}">${p.result}${p.actual != null ? ' (' + p.actual + ')' : ''}</span></div>`).join('')
     || '<div class="small">No graded picks yet.</div>';
 }
+// ── NHL moneyline tab ───────────────────────────────────────────────
+function loadML() {
+  const when = new Date(S.generatedAt || DATA.generatedAt);
+  $('meta').textContent = `${S.counts.games} games · ${S.counts.topPicks} value sides · updated ${when.toLocaleString([], { weekday: 'short', hour: 'numeric', minute: '2-digit' })}`;
+  $('warn').innerHTML = S.warning ? `<div class="warn">⚠️ ${esc(S.warning)}</div>` : '';
+  $('headRow').innerHTML = ['GAME', 'TEAM', 'MODEL WIN %', 'MARKET (NO-VIG)', 'EDGE', 'ODDS', 'MODEL FAIR ODDS'].map(h => `<th>${h}</th>`).join('');
+  $('explain').innerHTML = `Model win % comes from your game model (the 11 AM picks run). Market % is the consensus moneyline with the vig removed. A value side is one where the model beats the market by ${Math.round(DATA.settings.ML?.MIN_EDGE * 100 || 3)}%+ at odds between ${DATA.settings.ML?.MIN_ODDS ?? -250} and +${DATA.settings.ML?.MAX_ODDS ?? 200} with 2+ books. It can be the underdog even when the model picks the other team to win. Edges over 15% are flagged, not picked.`;
+  $('recTitle').textContent = 'Moneyline record';
+  renderSide(true); renderML();
+}
+function renderML() {
+  const all = $('mlView').value === 'all';
+  const rows = S.props.filter(p => all || p.topPick);
+  if (!rows.length) { $('rows').innerHTML = `<tr><td colspan="7" class="empty">${all ? 'No moneylines yet today.' : 'No value sides today. Try “All games”.'}</td></tr>`; return; }
+  $('rows').innerHTML = rows.map(p => {
+    const edge = `<span class="${p.edge >= 0 ? 'edge-pos' : 'edge-neg'}">${p.edge >= 0 ? '+' : ''}${(p.edge * 100).toFixed(1)}%</span>`;
+    const tier = p.confidence ? String(p.confidence).split(' ')[0] : '';
+    return `<tr>
+      <td><div class="pname" style="font-size:14px">${esc(p.home ? `${p.opp} @ ${p.team}` : `${p.team} @ ${p.opp}`)}</div><div class="match">${esc(whenOf(p))}</div></td>
+      <td><div class="player"><img src="${esc(p.logo)}" alt="" onerror="this.style.visibility='hidden'"><div>
+        <div class="pname">${p.topPick ? '<span class="top">VALUE</span>' : ''}${esc(p.team)}${p.modelPick ? `<span class="mp">MODEL PICK${tier ? ' · ' + tier : ''}</span>` : ''}</div>
+        <div class="match">${p.home ? 'Home' : 'Away'}</div>${flag(p)}</div></div></td>
+      <td class="num">${pct(p.modelProb)}</td><td class="num">${pct(p.implied)}</td><td class="num">${edge}</td>
+      <td><div class="odds">${fmtOdds(p.bookOdds)}</div><div class="books">consensus · ${p.books} books</div></td>
+      <td class="num">${fmtOdds(p.fairOdds)}</td></tr>`;
+  }).join('');
+}
+
 load();
 </script>
 </body>
