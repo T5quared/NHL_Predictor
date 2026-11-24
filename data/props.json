@@ -1,6 +1,6 @@
 {
  "date": "2026-11-24",
- "generatedAt": "2026-11-24T05:01:53.362Z",
+ "generatedAt": "2026-11-24T23:57:48.380Z",
  "settings": {
   "BLEND": {
    "MODEL_WEIGHT": 0.6,
@@ -81,38 +81,119 @@
    "mode": "odds",
    "warning": null,
    "objectsUsed": 1,
-   "generatedAt": "2026-11-24T05:01:49.378Z",
+   "generatedAt": "2026-11-24T23:57:48.379Z",
    "windows": [
     5,
     10,
     25
    ],
    "counts": {
-    "scanned": 21,
-    "topPicks": 2,
+    "scanned": 28,
+    "topPicks": 4,
     "games": 1
    },
    "record": {
-    "hits": 18,
-    "n": 30,
+    "hits": 20,
+    "n": 33,
     "byMarket": {
      "assists": {
       "hits": 6,
-      "n": 11
+      "n": 12
      },
      "shots": {
-      "hits": 12,
-      "n": 19
+      "hits": 14,
+      "n": 21
      }
     },
     "brier": {
-     "model": 0.2469078583333333,
-     "hitRate": 0.2573016806666667,
-     "final": 0.250449643,
-     "market": 0.24638030566666663
+     "model": 0.2497700681818181,
+     "hitRate": 0.25649583030303036,
+     "final": 0.2518166281818182,
+     "market": 0.2488643321212121
     }
    },
    "recentResults": [
+    {
+     "date": "2026-11-23",
+     "sport": "NHL",
+     "mode": "odds",
+     "eventId": "JFrUP63nqofeJXF6S6Y9",
+     "startsAt": "2026-11-24T02:40:00.000Z",
+     "season": null,
+     "week": null,
+     "playerId": 8473986,
+     "playerName": "Alex Killorn",
+     "team": "ANA",
+     "opp": "SEA",
+     "market": "shots",
+     "stat": "shots",
+     "line": 1.5,
+     "side": "under",
+     "bookOdds": -136,
+     "implied": 0.5349,
+     "modelProb": 0.532,
+     "hitShrunk": 0.639,
+     "finalProb": 0.5748,
+     "edge": 0.04,
+     "consistent": true,
+     "loggedAt": "2026-11-24T02:23:11.441Z",
+     "actual": 1,
+     "result": "hit"
+    },
+    {
+     "date": "2026-11-23",
+     "sport": "NHL",
+     "mode": "odds",
+     "eventId": "JFrUP63nqofeJXF6S6Y9",
+     "startsAt": "2026-11-24T02:40:00.000Z",
+     "season": null,
+     "week": null,
+     "playerId": 8474586,
+     "playerName": "Jordan Eberle",
+     "team": "SEA",
+     "opp": "ANA",
+     "market": "assists",
+     "stat": "assists",
+     "line": 0.5,
+     "side": "under",
+     "bookOdds": -194,
+     "implied": 0.6183,
+     "modelProb": 0.6745,
+     "hitShrunk": 0.6677,
+     "finalProb": 0.6718,
+     "edge": 0.0535,
+     "consistent": true,
+     "loggedAt": "2026-11-24T02:23:11.441Z",
+     "actual": 1,
+     "result": "miss"
+    },
+    {
+     "date": "2026-11-23",
+     "sport": "NHL",
+     "mode": "odds",
+     "eventId": "6AU0DqGf1yxNewZfsSto",
+     "startsAt": "2026-11-24T03:00:00.000Z",
+     "season": null,
+     "week": null,
+     "playerId": 8475726,
+     "playerName": "Tyler Toffoli",
+     "team": "SJS",
+     "opp": "MIN",
+     "market": "shots",
+     "stat": "shots",
+     "line": 1.5,
+     "side": "over",
+     "bookOdds": -130,
+     "implied": 0.5283,
+     "modelProb": 0.5985,
+     "hitShrunk": 0.5887,
+     "finalProb": 0.5946,
+     "edge": 0.0663,
+     "consistent": true,
+     "loggedAt": "2026-11-24T02:23:11.441Z",
+     "actual": 2,
+     "result": "hit"
+    },
     {
      "date": "2026-11-22",
      "sport": "NHL",
@@ -1129,9 +1210,9 @@
      "market": "shots",
      "line": 1.5,
      "side": "over",
-     "bookOdds": -130,
-     "implied": 0.5305,
-     "books": 2,
+     "bookOdds": -140,
+     "implied": 0.5455,
+     "books": 5,
      "gp": 25,
      "rates": {
       "l5": {
@@ -1155,13 +1236,61 @@
        "pct": 0.52
       }
      },
-     "projection": 2.08,
-     "modelProb": 0.6162,
-     "hitShrunk": 0.618,
-     "finalProb": 0.6169,
-     "edge": 0.0864,
-     "fairOdds": -161,
+     "projection": 2.09,
+     "modelProb": 0.6165,
+     "hitShrunk": 0.6216,
+     "finalProb": 0.6186,
+     "edge": 0.0731,
+     "fairOdds": -162,
      "consistent": false,
+     "topPick": true,
+     "failed": []
+    },
+    {
+     "playerName": "Ryan Nugent-Hopkins",
+     "playerId": 8476454,
+     "team": "EDM",
+     "opp": "VGK",
+     "home": true,
+     "pos": "F",
+     "logo": "https://assets.nhle.com/logos/nhl/svg/EDM_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "shots",
+     "line": 1.5,
+     "side": "under",
+     "bookOdds": -124,
+     "implied": 0.5192,
+     "books": 4,
+     "gp": 12,
+     "rates": {
+      "l5": {
+       "hits": 5,
+       "n": 5,
+       "pct": 1
+      },
+      "l10": {
+       "hits": 7,
+       "n": 10,
+       "pct": 0.7
+      },
+      "l25": {
+       "hits": 8,
+       "n": 12,
+       "pct": 0.6666666666666666
+      },
+      "season": {
+       "hits": 8,
+       "n": 12,
+       "pct": 0.6666666666666666
+      }
+     },
+     "projection": 1.61,
+     "modelProb": 0.5207,
+     "hitShrunk": 0.6437,
+     "finalProb": 0.5699,
+     "edge": 0.0507,
+     "fairOdds": -132,
+     "consistent": true,
      "topPick": true,
      "failed": []
     },
@@ -1178,8 +1307,8 @@
      "line": 0.5,
      "side": "under",
      "bookOdds": -150,
-     "implied": 0.5671,
-     "books": 2,
+     "implied": 0.5614,
+     "books": 4,
      "gp": 25,
      "rates": {
       "l5": {
@@ -1203,13 +1332,61 @@
        "pct": 0.6
       }
      },
-     "projection": 0.51,
-     "modelProb": 0.6005,
-     "hitShrunk": 0.592,
-     "finalProb": 0.5971,
-     "edge": 0.03,
-     "fairOdds": -148,
+     "projection": 0.48,
+     "modelProb": 0.6195,
+     "hitShrunk": 0.5906,
+     "finalProb": 0.608,
+     "edge": 0.0466,
+     "fairOdds": -155,
      "consistent": true,
+     "topPick": true,
+     "failed": []
+    },
+    {
+     "playerName": "Mattias Ekholm",
+     "playerId": 8475218,
+     "team": "EDM",
+     "opp": "VGK",
+     "home": true,
+     "pos": "D",
+     "logo": "https://assets.nhle.com/logos/nhl/svg/EDM_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "shots",
+     "line": 1.5,
+     "side": "under",
+     "bookOdds": -195,
+     "implied": 0.6154,
+     "books": 3,
+     "gp": 24,
+     "rates": {
+      "l5": {
+       "hits": 3,
+       "n": 5,
+       "pct": 0.6
+      },
+      "l10": {
+       "hits": 6,
+       "n": 10,
+       "pct": 0.6
+      },
+      "l25": {
+       "hits": 15,
+       "n": 24,
+       "pct": 0.625
+      },
+      "season": {
+       "hits": 15,
+       "n": 24,
+       "pct": 0.625
+      }
+     },
+     "projection": 1.18,
+     "modelProb": 0.6681,
+     "hitShrunk": 0.6142,
+     "finalProb": 0.6465,
+     "edge": 0.0311,
+     "fairOdds": -183,
+     "consistent": false,
      "topPick": true,
      "failed": []
     },
@@ -1225,9 +1402,9 @@
      "market": "points",
      "line": 0.5,
      "side": "over",
-     "bookOdds": 855,
-     "implied": 0.0981,
-     "books": 4,
+     "bookOdds": 900,
+     "implied": 0.0957,
+     "books": 5,
      "gp": 24,
      "rates": {
       "l5": {
@@ -1251,12 +1428,12 @@
        "pct": 0.4583333333333333
       }
      },
-     "projection": 0.48,
-     "modelProb": 0.3809,
-     "hitShrunk": 0.3486,
-     "finalProb": 0.368,
-     "edge": 0.2698,
-     "fairOdds": 172,
+     "projection": 0.45,
+     "modelProb": 0.3633,
+     "hitShrunk": 0.348,
+     "finalProb": 0.3572,
+     "edge": 0.2615,
+     "fairOdds": 180,
      "consistent": true,
      "topPick": false,
      "failed": [
@@ -1277,9 +1454,9 @@
      "market": "points",
      "line": 0.5,
      "side": "over",
-     "bookOdds": 190,
-     "implied": 0.3215,
-     "books": 5,
+     "bookOdds": 187,
+     "implied": 0.3259,
+     "books": 6,
      "gp": 25,
      "rates": {
       "l5": {
@@ -1303,12 +1480,12 @@
        "pct": 0.68
       }
      },
-     "projection": 0.88,
-     "modelProb": 0.5866,
-     "hitShrunk": 0.5658,
-     "finalProb": 0.5783,
-     "edge": 0.2567,
-     "fairOdds": -137,
+     "projection": 0.83,
+     "modelProb": 0.5637,
+     "hitShrunk": 0.5669,
+     "finalProb": 0.565,
+     "edge": 0.2391,
+     "fairOdds": -130,
      "consistent": true,
      "topPick": false,
      "failed": [
@@ -1328,9 +1505,9 @@
      "market": "points",
      "line": 0.5,
      "side": "over",
-     "bookOdds": 310,
-     "implied": 0.2227,
-     "books": 4,
+     "bookOdds": 257,
+     "implied": 0.2635,
+     "books": 6,
      "gp": 12,
      "rates": {
       "l5": {
@@ -1354,64 +1531,12 @@
        "pct": 0.5
       }
      },
-     "projection": 0.78,
-     "modelProb": 0.5412,
-     "hitShrunk": 0.3621,
-     "finalProb": 0.4695,
-     "edge": 0.2468,
-     "fairOdds": 113,
-     "consistent": true,
-     "topPick": false,
-     "failed": [
-      "prob",
-      "too-good",
-      "odds"
-     ]
-    },
-    {
-     "playerName": "William Karlsson",
-     "playerId": 8476448,
-     "team": "VGK",
-     "opp": "EDM",
-     "home": false,
-     "pos": "F",
-     "logo": "https://assets.nhle.com/logos/nhl/svg/VGK_dark.svg",
-     "startsAt": "2026-11-25T01:00:00.000Z",
-     "market": "points",
-     "line": 0.5,
-     "side": "over",
-     "bookOdds": 330,
-     "implied": 0.2155,
-     "books": 5,
-     "gp": 25,
-     "rates": {
-      "l5": {
-       "hits": 3,
-       "n": 5,
-       "pct": 0.6
-      },
-      "l10": {
-       "hits": 4,
-       "n": 10,
-       "pct": 0.4
-      },
-      "l25": {
-       "hits": 10,
-       "n": 25,
-       "pct": 0.4
-      },
-      "season": {
-       "hits": 10,
-       "n": 25,
-       "pct": 0.4
-      }
-     },
-     "projection": 0.47,
-     "modelProb": 0.375,
-     "hitShrunk": 0.378,
-     "finalProb": 0.3762,
-     "edge": 0.1607,
-     "fairOdds": 166,
+     "projection": 0.73,
+     "modelProb": 0.5198,
+     "hitShrunk": 0.3784,
+     "finalProb": 0.4632,
+     "edge": 0.1998,
+     "fairOdds": 116,
      "consistent": true,
      "topPick": false,
      "failed": [
@@ -1432,9 +1557,9 @@
      "market": "points",
      "line": 0.5,
      "side": "over",
-     "bookOdds": 1718,
-     "implied": 0.0533,
-     "books": 4,
+     "bookOdds": 1700,
+     "implied": 0.0544,
+     "books": 5,
      "gp": 25,
      "rates": {
       "l5": {
@@ -1458,17 +1583,67 @@
        "pct": 0.32
       }
      },
-     "projection": 0.25,
-     "modelProb": 0.2197,
-     "hitShrunk": 0.1917,
-     "finalProb": 0.2085,
-     "edge": 0.1552,
-     "fairOdds": 380,
+     "projection": 0.23,
+     "modelProb": 0.2078,
+     "hitShrunk": 0.192,
+     "finalProb": 0.2015,
+     "edge": 0.1471,
+     "fairOdds": 396,
      "consistent": true,
      "topPick": false,
      "failed": [
       "prob",
-      "too-good",
+      "odds"
+     ]
+    },
+    {
+     "playerName": "William Karlsson",
+     "playerId": 8476448,
+     "team": "VGK",
+     "opp": "EDM",
+     "home": false,
+     "pos": "F",
+     "logo": "https://assets.nhle.com/logos/nhl/svg/VGK_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "points",
+     "line": 0.5,
+     "side": "over",
+     "bookOdds": 307,
+     "implied": 0.2292,
+     "books": 6,
+     "gp": 25,
+     "rates": {
+      "l5": {
+       "hits": 3,
+       "n": 5,
+       "pct": 0.6
+      },
+      "l10": {
+       "hits": 4,
+       "n": 10,
+       "pct": 0.4
+      },
+      "l25": {
+       "hits": 10,
+       "n": 25,
+       "pct": 0.4
+      },
+      "season": {
+       "hits": 10,
+       "n": 25,
+       "pct": 0.4
+      }
+     },
+     "projection": 0.44,
+     "modelProb": 0.3568,
+     "hitShrunk": 0.3813,
+     "finalProb": 0.3666,
+     "edge": 0.1374,
+     "fairOdds": 173,
+     "consistent": true,
+     "topPick": false,
+     "failed": [
+      "prob",
       "odds"
      ]
     },
@@ -1484,9 +1659,9 @@
      "market": "assists",
      "line": 0.5,
      "side": "under",
-     "bookOdds": -302,
-     "implied": 0.696,
-     "books": 1,
+     "bookOdds": -330,
+     "implied": 0.729,
+     "books": 4,
      "gp": 25,
      "rates": {
       "l5": {
@@ -1510,16 +1685,15 @@
        "pct": 0.8
       }
      },
-     "projection": 0.22,
-     "modelProb": 0.8025,
-     "hitShrunk": 0.7748,
-     "finalProb": 0.7914,
-     "edge": 0.0954,
-     "fairOdds": -379,
+     "projection": 0.21,
+     "modelProb": 0.8134,
+     "hitShrunk": 0.7828,
+     "finalProb": 0.8011,
+     "edge": 0.0721,
+     "fairOdds": -403,
      "consistent": true,
      "topPick": false,
      "failed": [
-      "books",
       "odds"
      ]
     },
@@ -1535,9 +1709,9 @@
      "market": "shots",
      "line": 1.5,
      "side": "under",
-     "bookOdds": 130,
-     "implied": 0.4082,
-     "books": 4,
+     "bookOdds": 110,
+     "implied": 0.4464,
+     "books": 6,
      "gp": 25,
      "rates": {
       "l5": {
@@ -1562,11 +1736,11 @@
       }
      },
      "projection": 1.65,
-     "modelProb": 0.5099,
-     "hitShrunk": 0.4808,
-     "finalProb": 0.4983,
-     "edge": 0.0901,
-     "fairOdds": 101,
+     "modelProb": 0.5096,
+     "hitShrunk": 0.49,
+     "finalProb": 0.5018,
+     "edge": 0.0554,
+     "fairOdds": -101,
      "consistent": true,
      "topPick": false,
      "failed": [
@@ -1585,9 +1759,9 @@
      "market": "assists",
      "line": 0.5,
      "side": "over",
-     "bookOdds": 262,
-     "implied": 0.2545,
-     "books": 1,
+     "bookOdds": 230,
+     "implied": 0.2841,
+     "books": 6,
      "gp": 24,
      "rates": {
       "l5": {
@@ -1611,17 +1785,17 @@
        "pct": 0.3333333333333333
       }
      },
-     "projection": 0.37,
-     "modelProb": 0.311,
-     "hitShrunk": 0.3136,
-     "finalProb": 0.3121,
-     "edge": 0.0576,
-     "fairOdds": 220,
+     "projection": 0.35,
+     "modelProb": 0.2959,
+     "hitShrunk": 0.321,
+     "finalProb": 0.3059,
+     "edge": 0.0218,
+     "fairOdds": 227,
      "consistent": true,
      "topPick": false,
      "failed": [
-      "books",
       "prob",
+      "edge",
       "odds"
      ]
     },
@@ -1637,9 +1811,9 @@
      "market": "points",
      "line": 0.5,
      "side": "over",
-     "bookOdds": 900,
-     "implied": 0.0936,
-     "books": 4,
+     "bookOdds": 1148,
+     "implied": 0.0773,
+     "books": 5,
      "gp": 25,
      "rates": {
       "l5": {
@@ -1663,18 +1837,119 @@
        "pct": 0.12
       }
      },
-     "projection": 0.12,
-     "modelProb": 0.1095,
-     "hitShrunk": 0.0727,
-     "finalProb": 0.0948,
-     "edge": 0.0012,
-     "fairOdds": 955,
+     "projection": 0.11,
+     "modelProb": 0.1032,
+     "hitShrunk": 0.0687,
+     "finalProb": 0.0894,
+     "edge": 0.0121,
+     "fairOdds": 1018,
      "consistent": false,
      "topPick": false,
      "failed": [
       "prob",
       "edge",
       "odds"
+     ]
+    },
+    {
+     "playerName": "Ryan Nugent-Hopkins",
+     "playerId": 8476454,
+     "team": "EDM",
+     "opp": "VGK",
+     "home": true,
+     "pos": "F",
+     "logo": "https://assets.nhle.com/logos/nhl/svg/EDM_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "assists",
+     "line": 0.5,
+     "side": "under",
+     "bookOdds": -197,
+     "implied": 0.6198,
+     "books": 4,
+     "gp": 12,
+     "rates": {
+      "l5": {
+       "hits": 4,
+       "n": 5,
+       "pct": 0.8
+      },
+      "l10": {
+       "hits": 6,
+       "n": 10,
+       "pct": 0.6
+      },
+      "l25": {
+       "hits": 7,
+       "n": 12,
+       "pct": 0.5833333333333334
+      },
+      "season": {
+       "hits": 7,
+       "n": 12,
+       "pct": 0.5833333333333334
+      }
+     },
+     "projection": 0.47,
+     "modelProb": 0.6256,
+     "hitShrunk": 0.6204,
+     "finalProb": 0.6235,
+     "edge": 0.0037,
+     "fairOdds": -166,
+     "consistent": false,
+     "topPick": false,
+     "failed": [
+      "edge"
+     ]
+    },
+    {
+     "playerName": "Ryan Nugent-Hopkins",
+     "playerId": 8476454,
+     "team": "EDM",
+     "opp": "VGK",
+     "home": true,
+     "pos": "F",
+     "logo": "https://assets.nhle.com/logos/nhl/svg/EDM_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "assists",
+     "line": 0.5,
+     "side": "over",
+     "bookOdds": 145,
+     "implied": 0.3802,
+     "books": 6,
+     "gp": 12,
+     "rates": {
+      "l5": {
+       "hits": 1,
+       "n": 5,
+       "pct": 0.2
+      },
+      "l10": {
+       "hits": 4,
+       "n": 10,
+       "pct": 0.4
+      },
+      "l25": {
+       "hits": 5,
+       "n": 12,
+       "pct": 0.4166666666666667
+      },
+      "season": {
+       "hits": 5,
+       "n": 12,
+       "pct": 0.4166666666666667
+      }
+     },
+     "projection": 0.47,
+     "modelProb": 0.3744,
+     "hitShrunk": 0.3796,
+     "finalProb": 0.3765,
+     "edge": -0.0037,
+     "fairOdds": 166,
+     "consistent": true,
+     "topPick": false,
+     "failed": [
+      "prob",
+      "edge"
      ]
     },
     {
@@ -1689,8 +1964,8 @@
      "market": "points",
      "line": 0.5,
      "side": "under",
-     "bookOdds": -2978,
-     "implied": 0.9064,
+     "bookOdds": -2178,
+     "implied": 0.9227,
      "books": 1,
      "gp": 25,
      "rates": {
@@ -1715,69 +1990,18 @@
        "pct": 0.88
       }
      },
-     "projection": 0.12,
-     "modelProb": 0.8905,
-     "hitShrunk": 0.9273,
-     "finalProb": 0.9052,
-     "edge": -0.0012,
-     "fairOdds": -955,
+     "projection": 0.11,
+     "modelProb": 0.8968,
+     "hitShrunk": 0.9313,
+     "finalProb": 0.9106,
+     "edge": -0.0121,
+     "fairOdds": -1018,
      "consistent": false,
      "topPick": false,
      "failed": [
       "books",
       "edge",
       "odds"
-     ]
-    },
-    {
-     "playerName": "Mark Stone",
-     "playerId": 8475913,
-     "team": "VGK",
-     "opp": "EDM",
-     "home": false,
-     "pos": "F",
-     "logo": "https://assets.nhle.com/logos/nhl/svg/VGK_dark.svg",
-     "startsAt": "2026-11-25T01:00:00.000Z",
-     "market": "assists",
-     "line": 0.5,
-     "side": "over",
-     "bookOdds": 118,
-     "implied": 0.4329,
-     "books": 4,
-     "gp": 25,
-     "rates": {
-      "l5": {
-       "hits": 2,
-       "n": 5,
-       "pct": 0.4
-      },
-      "l10": {
-       "hits": 4,
-       "n": 10,
-       "pct": 0.4
-      },
-      "l25": {
-       "hits": 10,
-       "n": 25,
-       "pct": 0.4
-      },
-      "season": {
-       "hits": 10,
-       "n": 25,
-       "pct": 0.4
-      }
-     },
-     "projection": 0.51,
-     "modelProb": 0.3995,
-     "hitShrunk": 0.408,
-     "finalProb": 0.4029,
-     "edge": -0.03,
-     "fairOdds": 148,
-     "consistent": false,
-     "topPick": false,
-     "failed": [
-      "prob",
-      "edge"
      ]
     },
     {
@@ -1792,9 +2016,9 @@
      "market": "assists",
      "line": 0.5,
      "side": "under",
-     "bookOdds": -427,
-     "implied": 0.7455,
-     "books": 1,
+     "bookOdds": -322,
+     "implied": 0.7159,
+     "books": 4,
      "gp": 24,
      "rates": {
       "l5": {
@@ -1818,36 +2042,137 @@
        "pct": 0.6666666666666666
       }
      },
-     "projection": 0.37,
-     "modelProb": 0.689,
-     "hitShrunk": 0.6864,
-     "finalProb": 0.6879,
-     "edge": -0.0576,
-     "fairOdds": -220,
+     "projection": 0.35,
+     "modelProb": 0.7041,
+     "hitShrunk": 0.679,
+     "finalProb": 0.6941,
+     "edge": -0.0218,
+     "fairOdds": -227,
      "consistent": false,
      "topPick": false,
      "failed": [
-      "books",
       "edge",
       "odds"
      ]
     },
     {
-     "playerName": "William Karlsson",
-     "playerId": 8476448,
+     "playerName": "Mattias Ekholm",
+     "playerId": 8475218,
+     "team": "EDM",
+     "opp": "VGK",
+     "home": true,
+     "pos": "D",
+     "logo": "https://assets.nhle.com/logos/nhl/svg/EDM_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "shots",
+     "line": 1.5,
+     "side": "over",
+     "bookOdds": 142,
+     "implied": 0.3846,
+     "books": 3,
+     "gp": 24,
+     "rates": {
+      "l5": {
+       "hits": 2,
+       "n": 5,
+       "pct": 0.4
+      },
+      "l10": {
+       "hits": 4,
+       "n": 10,
+       "pct": 0.4
+      },
+      "l25": {
+       "hits": 9,
+       "n": 24,
+       "pct": 0.375
+      },
+      "season": {
+       "hits": 9,
+       "n": 24,
+       "pct": 0.375
+      }
+     },
+     "projection": 1.18,
+     "modelProb": 0.3319,
+     "hitShrunk": 0.3858,
+     "finalProb": 0.3535,
+     "edge": -0.0311,
+     "fairOdds": 183,
+     "consistent": false,
+     "topPick": false,
+     "failed": [
+      "prob",
+      "edge"
+     ]
+    },
+    {
+     "playerName": "Mark Stone",
+     "playerId": 8475913,
      "team": "VGK",
      "opp": "EDM",
      "home": false,
      "pos": "F",
      "logo": "https://assets.nhle.com/logos/nhl/svg/VGK_dark.svg",
      "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "assists",
+     "line": 0.5,
+     "side": "over",
+     "bookOdds": 113,
+     "implied": 0.4386,
+     "books": 6,
+     "gp": 25,
+     "rates": {
+      "l5": {
+       "hits": 2,
+       "n": 5,
+       "pct": 0.4
+      },
+      "l10": {
+       "hits": 4,
+       "n": 10,
+       "pct": 0.4
+      },
+      "l25": {
+       "hits": 10,
+       "n": 25,
+       "pct": 0.4
+      },
+      "season": {
+       "hits": 10,
+       "n": 25,
+       "pct": 0.4
+      }
+     },
+     "projection": 0.48,
+     "modelProb": 0.3805,
+     "hitShrunk": 0.4094,
+     "finalProb": 0.392,
+     "edge": -0.0466,
+     "fairOdds": 155,
+     "consistent": false,
+     "topPick": false,
+     "failed": [
+      "prob",
+      "edge"
+     ]
+    },
+    {
+     "playerName": "Ryan Nugent-Hopkins",
+     "playerId": 8476454,
+     "team": "EDM",
+     "opp": "VGK",
+     "home": true,
+     "pos": "F",
+     "logo": "https://assets.nhle.com/logos/nhl/svg/EDM_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
      "market": "shots",
      "line": 1.5,
-     "side": "under",
-     "bookOdds": 100,
-     "implied": 0.4695,
-     "books": 2,
-     "gp": 25,
+     "side": "over",
+     "bookOdds": -106,
+     "implied": 0.4808,
+     "books": 5,
+     "gp": 12,
      "rates": {
       "l5": {
        "hits": 0,
@@ -1860,22 +2185,22 @@
        "pct": 0.3
       },
       "l25": {
-       "hits": 12,
-       "n": 25,
-       "pct": 0.48
+       "hits": 4,
+       "n": 12,
+       "pct": 0.3333333333333333
       },
       "season": {
-       "hits": 12,
-       "n": 25,
-       "pct": 0.48
+       "hits": 4,
+       "n": 12,
+       "pct": 0.3333333333333333
       }
      },
-     "projection": 2.08,
-     "modelProb": 0.3838,
-     "hitShrunk": 0.382,
-     "finalProb": 0.3831,
-     "edge": -0.0864,
-     "fairOdds": 161,
+     "projection": 1.61,
+     "modelProb": 0.4793,
+     "hitShrunk": 0.3563,
+     "finalProb": 0.4301,
+     "edge": -0.0507,
+     "fairOdds": 132,
      "consistent": false,
      "topPick": false,
      "failed": [
@@ -1895,9 +2220,9 @@
      "market": "shots",
      "line": 1.5,
      "side": "over",
-     "bookOdds": -170,
-     "implied": 0.5918,
-     "books": 4,
+     "bookOdds": -145,
+     "implied": 0.5536,
+     "books": 6,
      "gp": 25,
      "rates": {
       "l5": {
@@ -1922,11 +2247,11 @@
       }
      },
      "projection": 1.65,
-     "modelProb": 0.4901,
-     "hitShrunk": 0.5192,
-     "finalProb": 0.5017,
-     "edge": -0.0901,
-     "fairOdds": -101,
+     "modelProb": 0.4904,
+     "hitShrunk": 0.51,
+     "finalProb": 0.4982,
+     "edge": -0.0554,
+     "fairOdds": 101,
      "consistent": false,
      "topPick": false,
      "failed": [
@@ -1946,9 +2271,9 @@
      "market": "assists",
      "line": 0.5,
      "side": "over",
-     "bookOdds": 205,
-     "implied": 0.304,
-     "books": 1,
+     "bookOdds": 250,
+     "implied": 0.271,
+     "books": 4,
      "gp": 25,
      "rates": {
       "l5": {
@@ -1972,17 +2297,119 @@
        "pct": 0.2
       }
      },
-     "projection": 0.22,
-     "modelProb": 0.1975,
-     "hitShrunk": 0.2252,
-     "finalProb": 0.2086,
-     "edge": -0.0954,
-     "fairOdds": 379,
+     "projection": 0.21,
+     "modelProb": 0.1866,
+     "hitShrunk": 0.2172,
+     "finalProb": 0.1989,
+     "edge": -0.0721,
+     "fairOdds": 403,
+     "consistent": false,
+     "topPick": false,
+     "failed": [
+      "prob",
+      "edge",
+      "odds"
+     ]
+    },
+    {
+     "playerName": "William Karlsson",
+     "playerId": 8476448,
+     "team": "VGK",
+     "opp": "EDM",
+     "home": false,
+     "pos": "F",
+     "logo": "https://assets.nhle.com/logos/nhl/svg/VGK_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "shots",
+     "line": 1.5,
+     "side": "under",
+     "bookOdds": 106,
+     "implied": 0.4545,
+     "books": 5,
+     "gp": 25,
+     "rates": {
+      "l5": {
+       "hits": 0,
+       "n": 5,
+       "pct": 0
+      },
+      "l10": {
+       "hits": 3,
+       "n": 10,
+       "pct": 0.3
+      },
+      "l25": {
+       "hits": 12,
+       "n": 25,
+       "pct": 0.48
+      },
+      "season": {
+       "hits": 12,
+       "n": 25,
+       "pct": 0.48
+      }
+     },
+     "projection": 2.09,
+     "modelProb": 0.3835,
+     "hitShrunk": 0.3784,
+     "finalProb": 0.3814,
+     "edge": -0.0731,
+     "fairOdds": 162,
+     "consistent": false,
+     "topPick": false,
+     "failed": [
+      "prob",
+      "edge"
+     ]
+    },
+    {
+     "playerName": "William Karlsson",
+     "playerId": 8476448,
+     "team": "VGK",
+     "opp": "EDM",
+     "home": false,
+     "pos": "F",
+     "logo": "https://assets.nhle.com/logos/nhl/svg/VGK_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "points",
+     "line": 0.5,
+     "side": "under",
+     "bookOdds": -475,
+     "implied": 0.7708,
+     "books": 1,
+     "gp": 25,
+     "rates": {
+      "l5": {
+       "hits": 2,
+       "n": 5,
+       "pct": 0.4
+      },
+      "l10": {
+       "hits": 6,
+       "n": 10,
+       "pct": 0.6
+      },
+      "l25": {
+       "hits": 15,
+       "n": 25,
+       "pct": 0.6
+      },
+      "season": {
+       "hits": 15,
+       "n": 25,
+       "pct": 0.6
+      }
+     },
+     "projection": 0.44,
+     "modelProb": 0.6432,
+     "hitShrunk": 0.6187,
+     "finalProb": 0.6334,
+     "edge": -0.1374,
+     "fairOdds": -173,
      "consistent": false,
      "topPick": false,
      "failed": [
       "books",
-      "prob",
       "edge",
       "odds"
      ]
@@ -1999,8 +2426,8 @@
      "market": "points",
      "line": 0.5,
      "side": "under",
-     "bookOdds": -4158,
-     "implied": 0.9467,
+     "bookOdds": -2864,
+     "implied": 0.9456,
      "books": 1,
      "gp": 25,
      "rates": {
@@ -2025,12 +2452,12 @@
        "pct": 0.68
       }
      },
-     "projection": 0.25,
-     "modelProb": 0.7803,
-     "hitShrunk": 0.8083,
-     "finalProb": 0.7915,
-     "edge": -0.1552,
-     "fairOdds": -380,
+     "projection": 0.23,
+     "modelProb": 0.7922,
+     "hitShrunk": 0.808,
+     "finalProb": 0.7985,
+     "edge": -0.1471,
+     "fairOdds": -396,
      "consistent": false,
      "topPick": false,
      "failed": [
@@ -2040,53 +2467,54 @@
      ]
     },
     {
-     "playerName": "William Karlsson",
-     "playerId": 8476448,
-     "team": "VGK",
-     "opp": "EDM",
-     "home": false,
+     "playerName": "Ryan Nugent-Hopkins",
+     "playerId": 8476454,
+     "team": "EDM",
+     "opp": "VGK",
+     "home": true,
      "pos": "F",
-     "logo": "https://assets.nhle.com/logos/nhl/svg/VGK_dark.svg",
+     "logo": "https://assets.nhle.com/logos/nhl/svg/EDM_dark.svg",
      "startsAt": "2026-11-25T01:00:00.000Z",
      "market": "points",
      "line": 0.5,
      "side": "under",
-     "bookOdds": -550,
-     "implied": 0.7845,
+     "bookOdds": -361,
+     "implied": 0.7365,
      "books": 1,
-     "gp": 25,
+     "gp": 12,
      "rates": {
       "l5": {
-       "hits": 2,
+       "hits": 4,
        "n": 5,
-       "pct": 0.4
+       "pct": 0.8
       },
       "l10": {
-       "hits": 6,
+       "hits": 5,
        "n": 10,
-       "pct": 0.6
+       "pct": 0.5
       },
       "l25": {
-       "hits": 15,
-       "n": 25,
-       "pct": 0.6
+       "hits": 6,
+       "n": 12,
+       "pct": 0.5
       },
       "season": {
-       "hits": 15,
-       "n": 25,
-       "pct": 0.6
+       "hits": 6,
+       "n": 12,
+       "pct": 0.5
       }
      },
-     "projection": 0.47,
-     "modelProb": 0.625,
-     "hitShrunk": 0.622,
-     "finalProb": 0.6238,
-     "edge": -0.1607,
-     "fairOdds": -166,
+     "projection": 0.73,
+     "modelProb": 0.4802,
+     "hitShrunk": 0.6216,
+     "finalProb": 0.5368,
+     "edge": -0.1998,
+     "fairOdds": -116,
      "consistent": false,
      "topPick": false,
      "failed": [
       "books",
+      "prob",
       "edge",
       "odds"
      ]
@@ -2103,8 +2531,8 @@
      "market": "points",
      "line": 0.5,
      "side": "under",
-     "bookOdds": -265,
-     "implied": 0.6785,
+     "bookOdds": -258,
+     "implied": 0.6741,
      "books": 2,
      "gp": 25,
      "rates": {
@@ -2129,12 +2557,12 @@
        "pct": 0.32
       }
      },
-     "projection": 0.88,
-     "modelProb": 0.4134,
-     "hitShrunk": 0.4342,
-     "finalProb": 0.4217,
-     "edge": -0.2567,
-     "fairOdds": 137,
+     "projection": 0.83,
+     "modelProb": 0.4363,
+     "hitShrunk": 0.4331,
+     "finalProb": 0.435,
+     "edge": -0.2391,
+     "fairOdds": 130,
      "consistent": false,
      "topPick": false,
      "failed": [
@@ -2155,8 +2583,8 @@
      "market": "points",
      "line": 0.5,
      "side": "under",
-     "bookOdds": -2526,
-     "implied": 0.9019,
+     "bookOdds": -1710,
+     "implied": 0.9043,
      "books": 1,
      "gp": 24,
      "rates": {
@@ -2181,12 +2609,12 @@
        "pct": 0.5416666666666666
       }
      },
-     "projection": 0.48,
-     "modelProb": 0.6191,
-     "hitShrunk": 0.6514,
-     "finalProb": 0.632,
-     "edge": -0.2698,
-     "fairOdds": -172,
+     "projection": 0.45,
+     "modelProb": 0.6367,
+     "hitShrunk": 0.652,
+     "finalProb": 0.6428,
+     "edge": -0.2615,
+     "fairOdds": -180,
      "consistent": false,
      "topPick": false,
      "failed": [
@@ -29555,14 +29983,14 @@
   "NHL_ML": {
    "sport": "NHL_ML",
    "mode": "odds",
-   "warning": "Waiting for today's game picks (the 11 AM run) — moneylines fill in on the next props run",
+   "warning": null,
    "objectsUsed": 0,
-   "generatedAt": "2026-11-24T05:01:49.379Z",
+   "generatedAt": "2026-11-24T23:57:48.380Z",
    "windows": [],
    "counts": {
-    "scanned": 0,
-    "topPicks": 0,
-    "games": 0
+    "scanned": 2,
+    "topPicks": 1,
+    "games": 1
    },
    "record": {
     "hits": 0,
@@ -29576,7 +30004,68 @@
     }
    },
    "recentResults": [],
-   "props": []
+   "props": [
+    {
+     "playerName": "EDM",
+     "playerId": "EDM",
+     "team": "EDM",
+     "opp": "VGK",
+     "home": true,
+     "logo": "https://assets.nhle.com/logos/nhl/svg/EDM_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "moneyline",
+     "line": null,
+     "side": "win",
+     "bookOdds": 100,
+     "implied": 0.4785,
+     "books": 8,
+     "gp": null,
+     "rates": {},
+     "projection": null,
+     "modelProb": 0.5693,
+     "hitShrunk": null,
+     "finalProb": 0.5693,
+     "edge": 0.0908,
+     "fairOdds": -132,
+     "consistent": false,
+     "topPick": true,
+     "failed": [],
+     "gameId": 2026020385,
+     "confidence": "LOW CONFIDENCE",
+     "modelPick": true
+    },
+    {
+     "playerName": "VGK",
+     "playerId": "VGK",
+     "team": "VGK",
+     "opp": "EDM",
+     "home": false,
+     "logo": "https://assets.nhle.com/logos/nhl/svg/VGK_dark.svg",
+     "startsAt": "2026-11-25T01:00:00.000Z",
+     "market": "moneyline",
+     "line": null,
+     "side": "win",
+     "bookOdds": -120,
+     "implied": 0.5215,
+     "books": 8,
+     "gp": null,
+     "rates": {},
+     "projection": null,
+     "modelProb": 0.4307,
+     "hitShrunk": null,
+     "finalProb": 0.4307,
+     "edge": -0.0908,
+     "fairOdds": 132,
+     "consistent": false,
+     "topPick": false,
+     "failed": [
+      "edge"
+     ],
+     "gameId": 2026020385,
+     "confidence": null,
+     "modelPick": false
+    }
+   ]
   }
  }
 }
