@@ -13910,12 +13910,12 @@
     ],
     "injSkippedAway": [],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 6,
+    "actualGoalsHome": 2,
+    "actualWinner": "BUF",
+    "hit": false,
+    "mae": 2.65,
+    "saved": true
   },
   {
     "gameId": 2026020375,
@@ -13949,12 +13949,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 4,
+    "actualGoalsHome": 5,
+    "actualWinner": "STL",
+    "hit": true,
+    "mae": 1.35,
+    "saved": true
   },
   {
     "gameId": 2026020376,
@@ -13995,12 +13995,12 @@
       }
     ],
     "injSkippedHome": [],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 0,
+    "actualGoalsHome": 1,
+    "actualWinner": "DAL",
+    "hit": true,
+    "mae": 2.4000000000000004,
+    "saved": true
   },
   {
     "gameId": 2026020377,
@@ -14053,6 +14053,104 @@
         "gamesMissed": 17
       }
     ],
+    "injSkippedHome": [],
+    "actualGoalsAway": 6,
+    "actualGoalsHome": 3,
+    "actualWinner": "CHI",
+    "hit": true,
+    "mae": 1.4,
+    "saved": true
+  },
+  {
+    "gameId": 2026020383,
+    "date": "2026-11-23",
+    "away": "ANA",
+    "home": "SEA",
+    "predWinner": "SEA",
+    "predGoalsAway": 3.6,
+    "predGoalsHome": 3.9,
+    "winPctAway": 45,
+    "winPctHome": 55,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 24,
+    "gpHome": 20,
+    "injAway": true,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Beckett Sennecke",
+        "role": "F3",
+        "status": "Injured Reserve",
+        "gamesMissed": 2
+      }
+    ],
+    "injPlayersHome": [],
+    "injSkippedAway": [],
+    "injSkippedHome": [
+      {
+        "name": "Jared McCann",
+        "role": "F5",
+        "status": "Injured Reserve",
+        "gamesMissed": 9
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020384,
+    "date": "2026-11-23",
+    "away": "MIN",
+    "home": "SJS",
+    "predWinner": "MIN",
+    "predGoalsAway": 3.9,
+    "predGoalsHome": 2.1,
+    "winPctAway": 78,
+    "winPctHome": 22,
+    "confidence": "HIGH CONFIDENCE",
+    "confidenceCls": "conf-high",
+    "modelVer": "v8.2",
+    "gpAway": 25,
+    "gpHome": 25,
+    "injAway": true,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [
+      {
+        "name": "Quinn Hughes",
+        "role": "D1",
+        "status": "Injured Reserve",
+        "gamesMissed": 1
+      }
+    ],
+    "injPlayersHome": [
+      {
+        "name": "Jacob Trouba",
+        "role": "D1",
+        "status": "Out",
+        "gamesMissed": 0
+      },
+      {
+        "name": "Kiefer Sherwood",
+        "role": "F6",
+        "status": "Injured Reserve",
+        "gamesMissed": 2
+      }
+    ],
+    "injSkippedAway": [],
     "injSkippedHome": [],
     "actualGoalsAway": null,
     "actualGoalsHome": null,
