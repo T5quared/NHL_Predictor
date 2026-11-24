@@ -14100,12 +14100,12 @@
         "gamesMissed": 9
       }
     ],
-    "actualGoalsAway": null,
-    "actualGoalsHome": null,
-    "actualWinner": null,
-    "hit": null,
-    "mae": null,
-    "saved": false
+    "actualGoalsAway": 2,
+    "actualGoalsHome": 3,
+    "actualWinner": "SEA",
+    "hit": true,
+    "mae": 1.25,
+    "saved": true
   },
   {
     "gameId": 2026020384,
@@ -14152,6 +14152,45 @@
     ],
     "injSkippedAway": [],
     "injSkippedHome": [],
+    "actualGoalsAway": 5,
+    "actualGoalsHome": 2,
+    "actualWinner": "MIN",
+    "hit": true,
+    "mae": 0.6000000000000001,
+    "saved": true
+  },
+  {
+    "gameId": 2026020385,
+    "date": "2026-11-24",
+    "away": "VGK",
+    "home": "EDM",
+    "predWinner": "EDM",
+    "predGoalsAway": 3.2,
+    "predGoalsHome": 3.7,
+    "winPctAway": 43,
+    "winPctHome": 57,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 25,
+    "gpHome": 26,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [],
+    "injSkippedHome": [
+      {
+        "name": "Zach Hyman",
+        "role": "F3",
+        "status": "Out",
+        "gamesMissed": 12
+      }
+    ],
     "actualGoalsAway": null,
     "actualGoalsHome": null,
     "actualWinner": null,

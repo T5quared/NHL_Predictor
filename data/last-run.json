@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-23",
+  "date": "2026-11-24",
   "modelVer": "v8.2",
   "weights": {
     "BASE_GOALS": 3.35,
@@ -25,179 +25,84 @@
   },
   "games": [
     {
-      "gameId": 2026020383,
-      "away": "ANA",
-      "home": "SEA",
-      "pick": "SEA",
-      "winPctAway": 0.45062642117618223,
-      "winPctHome": 0.5493735788238178,
-      "lambdaAway": 3.5593145583173085,
-      "lambdaHome": 3.9041387559498837,
+      "gameId": 2026020385,
+      "away": "VGK",
+      "home": "EDM",
+      "pick": "EDM",
+      "winPctAway": 0.4307158935943639,
+      "winPctHome": 0.5692841064056361,
+      "lambdaAway": 3.1922965141490156,
+      "lambdaHome": 3.6576422434968423,
       "confidence": "LOW CONFIDENCE",
       "awayB2B": false,
       "homeB2B": false,
-      "injAway": true,
+      "injAway": false,
       "injHome": false,
       "awayStats": {
-        "name": "Anaheim Ducks",
-        "gfPG": 3.625,
-        "gaPG": 3.8333333333333335,
-        "gf": 87,
-        "ga": 92,
-        "gp": 24,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 3.8,
-        "recentN": 10
-      },
-      "homeStats": {
-        "name": "Seattle Kraken",
-        "gfPG": 3.35,
-        "gaPG": 3.55,
-        "gf": 67,
-        "ga": 71,
-        "gp": 20,
-        "ppPct": 0,
-        "pkPct": 0,
-        "pim": 8.5,
-        "recentGF": 2.8,
-        "recentN": 10
-      },
-      "awayGoalie": {
-        "name": "Lukas Dostal",
-        "savePct": 0.863372,
-        "rawSavePct": 0.85714,
-        "priorWt": 0.19999999999999996,
-        "gs": 12
-      },
-      "homeGoalie": {
-        "name": "Philipp Grubauer",
-        "savePct": 0.8979239999999999,
-        "rawSavePct": 0.89398,
-        "priorWt": 0.2666666666666667,
-        "gs": 11
-      }
-    },
-    {
-      "gameId": 2026020384,
-      "away": "MIN",
-      "home": "SJS",
-      "pick": "MIN",
-      "winPctAway": 0.7786308883251082,
-      "winPctHome": 0.22136911167489182,
-      "lambdaAway": 3.949757676989556,
-      "lambdaHome": 2.0510873704843315,
-      "confidence": "HIGH CONFIDENCE",
-      "awayB2B": false,
-      "homeB2B": false,
-      "injAway": true,
-      "injHome": true,
-      "awayStats": {
-        "name": "Minnesota Wild",
-        "gfPG": 3.6,
-        "gaPG": 2.24,
-        "gf": 90,
-        "ga": 56,
+        "name": "Vegas Golden Knights",
+        "gfPG": 3.4,
+        "gaPG": 3,
+        "gf": 85,
+        "ga": 75,
         "gp": 25,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 4.3,
+        "recentGF": 3.2,
         "recentN": 10
       },
       "homeStats": {
-        "name": "San Jose Sharks",
-        "gfPG": 2.76,
-        "gaPG": 3.56,
-        "gf": 69,
-        "ga": 89,
-        "gp": 25,
+        "name": "Edmonton Oilers",
+        "gfPG": 3.8846153846153846,
+        "gaPG": 2.9615384615384617,
+        "gf": 101,
+        "ga": 77,
+        "gp": 26,
         "ppPct": 0,
         "pkPct": 0,
         "pim": 8.5,
-        "recentGF": 2.8,
+        "recentGF": 3.4,
         "recentN": 10
       },
       "awayGoalie": {
-        "name": "Jesper Wallstedt",
-        "savePct": 0.92387,
-        "rawSavePct": 0.92387,
-        "priorWt": 0,
-        "gs": 22
+        "name": "Carter Hart",
+        "savePct": 0.886492,
+        "rawSavePct": 0.8858,
+        "priorWt": 0.1333333333333333,
+        "gs": 13
       },
       "homeGoalie": {
-        "name": "Yaroslav Askarov",
-        "savePct": 0.88842,
-        "rawSavePct": 0.88842,
-        "priorWt": 0,
-        "gs": 16
+        "name": "Devon Levi",
+        "savePct": 0.8963633333333333,
+        "rawSavePct": 0.89565,
+        "priorWt": 0.1333333333333333,
+        "gs": 13
       }
     }
   ],
   "injuries": {
     "byTeam": {
-      "ANA": {
-        "active": true,
-        "players": [
-          {
-            "name": "Beckett Sennecke",
-            "role": "F3",
-            "status": "Injured Reserve",
-            "gamesMissed": 2
-          }
-        ],
-        "skipped": [],
-        "outCount": 3
+      "VGK": {
+        "active": false,
+        "players": [],
+        "outCount": 0
       },
-      "SEA": {
+      "EDM": {
         "active": false,
         "players": [],
         "skipped": [
           {
-            "name": "Jared McCann",
-            "role": "F5",
-            "status": "Injured Reserve",
-            "gamesMissed": 9
-          }
-        ],
-        "outCount": 2
-      },
-      "MIN": {
-        "active": true,
-        "players": [
-          {
-            "name": "Quinn Hughes",
-            "role": "D1",
-            "status": "Injured Reserve",
-            "gamesMissed": 1
-          }
-        ],
-        "skipped": [],
-        "outCount": 2
-      },
-      "SJS": {
-        "active": true,
-        "players": [
-          {
-            "name": "Jacob Trouba",
-            "role": "D1",
+            "name": "Zach Hyman",
+            "role": "F3",
             "status": "Out",
-            "gamesMissed": 0
-          },
-          {
-            "name": "Kiefer Sherwood",
-            "role": "F6",
-            "status": "Injured Reserve",
-            "gamesMissed": 2
+            "gamesMissed": 12
           }
         ],
-        "skipped": [],
         "outCount": 5
       }
     },
     "warning": null,
-    "feedTimestamp": "2026-11-24T02:06:42Z"
+    "feedTimestamp": "2026-11-24T23:50:03Z"
   },
-  "message": "🏒 **NHL Picks — Mon, Nov 23** (2 games)\n⚪ ANA @ SEA → **SEA** 55% · LOW · 🏥 ANA · 9:40 PM\n🟢 MIN @ SJS → **MIN** 78% · HIGH · 🏥 MIN, SJS · 10:00 PM\n-# 🏥 ANA: Sennecke (F3) · MIN: Hughes (D1) · SJS: Trouba (D1), Sherwood (F6)\n-# 📊 Last results: 3/4 · Auto-run record: 192/321 (60%)"
+  "message": "🏒 **NHL Picks — Tue, Nov 24** (1 game)\n⚪ VGK @ EDM → **EDM** 57% · LOW · 8:00 PM\n-# 📊 Last results: 2/2 · Auto-run record: 194/323 (60%)"
 }
