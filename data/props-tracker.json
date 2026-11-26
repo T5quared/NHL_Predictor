@@ -2199,8 +2199,8 @@
   "edge": 0.1282,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2226,8 +2226,8 @@
   "edge": 0.11,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2253,8 +2253,8 @@
   "edge": 0.1056,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 3,
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2280,8 +2280,8 @@
   "edge": 0.1034,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 0,
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2307,8 +2307,8 @@
   "edge": 0.0977,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2334,8 +2334,8 @@
   "edge": 0.0962,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2361,8 +2361,8 @@
   "edge": 0.0889,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 2,
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2388,8 +2388,8 @@
   "edge": 0.0819,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2415,8 +2415,8 @@
   "edge": 0.0766,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2442,8 +2442,8 @@
   "edge": 0.0735,
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 4,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2469,8 +2469,8 @@
   "edge": 0.0691,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 2,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2496,8 +2496,8 @@
   "edge": 0.0678,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 0,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2523,8 +2523,8 @@
   "edge": 0.0653,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2550,8 +2550,8 @@
   "edge": 0.0594,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 2,
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2577,8 +2577,8 @@
   "edge": 0.0572,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 0,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2604,8 +2604,8 @@
   "edge": 0.0553,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2631,8 +2631,8 @@
   "edge": 0.055,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 2,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2658,8 +2658,8 @@
   "edge": 0.054,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 1,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2685,8 +2685,8 @@
   "edge": 0.0452,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 0,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2712,8 +2712,8 @@
   "edge": 0.0415,
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 2,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2741,8 +2741,8 @@
   "confidence": "MEDIUM CONFIDENCE",
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": "3-1",
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2770,8 +2770,8 @@
   "confidence": "LOW CONFIDENCE",
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": "3-7",
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2799,8 +2799,8 @@
   "confidence": "LOW CONFIDENCE",
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": "3-5",
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2827,8 +2827,8 @@
   "gameId": 2026020395,
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": "3-1",
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2855,8 +2855,8 @@
   "gameId": 2026020394,
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": "1-5",
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2884,8 +2884,8 @@
   "confidence": "MEDIUM CONFIDENCE",
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": "3-2",
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2913,8 +2913,8 @@
   "confidence": "LOW CONFIDENCE",
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": "1-5",
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2942,8 +2942,8 @@
   "confidence": "LOW CONFIDENCE",
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": "2-3",
+  "result": "miss"
  },
  {
   "date": "2026-11-25",
@@ -2970,8 +2970,8 @@
   "gameId": 2026020391,
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": "6-3",
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -2997,8 +2997,8 @@
   "edge": 0.0743,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 14,
+  "result": "hit"
  },
  {
   "date": "2026-11-25",
@@ -3024,35 +3024,8 @@
   "edge": 0.073,
   "consistent": true,
   "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
- },
- {
-  "date": "2026-11-27",
-  "sport": "NFL",
-  "mode": "odds",
-  "eventId": "AQLsUBdnZNJ6PBBHLUWr",
-  "startsAt": "2026-11-27T20:00:00.000Z",
-  "season": 2026,
-  "week": 12,
-  "playerId": "00-0037228",
-  "playerName": "Jaylen Warren",
-  "team": "PIT",
-  "opp": "DEN",
-  "market": "receiving_yards",
-  "stat": "receiving_yards",
-  "line": 18.5,
-  "side": "over",
-  "bookOdds": -114,
-  "implied": 0.5,
-  "modelProb": 0.6545,
-  "hitShrunk": 0.6214,
-  "finalProb": 0.5706,
-  "edge": 0.0706,
-  "consistent": true,
-  "loggedAt": "2026-11-25T23:41:42.467Z",
-  "actual": null,
-  "result": null
+  "actual": 69,
+  "result": "miss"
  },
  {
   "date": "2026-11-26",
@@ -3105,6 +3078,60 @@
   "edge": 0.0683,
   "consistent": false,
   "loggedAt": "2026-11-25T23:41:42.467Z",
+  "actual": 7,
+  "result": "hit"
+ },
+ {
+  "date": "2026-11-27",
+  "sport": "NFL",
+  "mode": "odds",
+  "eventId": "AQLsUBdnZNJ6PBBHLUWr",
+  "startsAt": "2026-11-27T20:00:00.000Z",
+  "season": 2026,
+  "week": 12,
+  "playerId": "00-0037228",
+  "playerName": "Jaylen Warren",
+  "team": "PIT",
+  "opp": "DEN",
+  "market": "receiving_yards",
+  "stat": "receiving_yards",
+  "line": 18.5,
+  "side": "over",
+  "bookOdds": -112,
+  "implied": 0.5,
+  "modelProb": 0.6545,
+  "hitShrunk": 0.6214,
+  "finalProb": 0.5706,
+  "edge": 0.0706,
+  "consistent": true,
+  "loggedAt": "2026-11-26T23:55:08.340Z",
+  "actual": null,
+  "result": null
+ },
+ {
+  "date": "2026-11-27",
+  "sport": "NFL",
+  "mode": "odds",
+  "eventId": "AQLsUBdnZNJ6PBBHLUWr",
+  "startsAt": "2026-11-27T20:00:00.000Z",
+  "season": 2026,
+  "week": 12,
+  "playerId": "00-0038558",
+  "playerName": "Darnell Washington",
+  "team": "PIT",
+  "opp": "DEN",
+  "market": "receptions",
+  "stat": "receptions",
+  "line": 1.5,
+  "side": "over",
+  "bookOdds": -150,
+  "implied": 0.5633,
+  "modelProb": 0.7468,
+  "hitShrunk": 0.6359,
+  "finalProb": 0.6329,
+  "edge": 0.0696,
+  "consistent": true,
+  "loggedAt": "2026-11-26T23:55:08.340Z",
   "actual": null,
   "result": null
  },
@@ -3124,14 +3151,95 @@
   "stat": "receiving_yards",
   "line": 22.5,
   "side": "over",
-  "bookOdds": -113,
-  "implied": 0.499,
+  "bookOdds": -114,
+  "implied": 0.501,
   "modelProb": 0.6304,
-  "hitShrunk": 0.6428,
-  "finalProb": 0.5671,
-  "edge": 0.0682,
+  "hitShrunk": 0.6434,
+  "finalProb": 0.5683,
+  "edge": 0.0673,
   "consistent": true,
-  "loggedAt": "2026-11-25T23:41:42.467Z",
+  "loggedAt": "2026-11-26T23:55:08.340Z",
+  "actual": null,
+  "result": null
+ },
+ {
+  "date": "2026-11-26",
+  "sport": "NFL",
+  "mode": "odds",
+  "eventId": "4BqA9r4LZNAnWph1F0eO",
+  "startsAt": "2026-11-27T01:20:00.000Z",
+  "season": 2026,
+  "week": 12,
+  "playerId": "00-0037261",
+  "playerName": "Khalil Shakir",
+  "team": "BUF",
+  "opp": "KC",
+  "market": "receiving_yards",
+  "stat": "receiving_yards",
+  "line": 36.5,
+  "side": "over",
+  "bookOdds": -110,
+  "implied": 0.4989,
+  "modelProb": 0.6399,
+  "hitShrunk": 0.6176,
+  "finalProb": 0.5649,
+  "edge": 0.066,
+  "consistent": true,
+  "loggedAt": "2026-11-26T23:55:08.340Z",
+  "actual": null,
+  "result": null
+ },
+ {
+  "date": "2026-11-27",
+  "sport": "NFL",
+  "mode": "odds",
+  "eventId": "AQLsUBdnZNJ6PBBHLUWr",
+  "startsAt": "2026-11-27T20:00:00.000Z",
+  "season": 2026,
+  "week": 12,
+  "playerId": "00-0036139",
+  "playerName": "Rico Dowdle",
+  "team": "PIT",
+  "opp": "DEN",
+  "market": "rushing_yards",
+  "stat": "rushing_yards",
+  "line": 31.5,
+  "side": "over",
+  "bookOdds": -110,
+  "implied": 0.4948,
+  "modelProb": 0.7264,
+  "hitShrunk": 0.4763,
+  "finalProb": 0.5605,
+  "edge": 0.0658,
+  "consistent": false,
+  "loggedAt": "2026-11-26T23:55:08.340Z",
+  "actual": null,
+  "result": null
+ },
+ {
+  "date": "2026-11-27",
+  "sport": "NFL",
+  "mode": "odds",
+  "eventId": "AQLsUBdnZNJ6PBBHLUWr",
+  "startsAt": "2026-11-27T20:00:00.000Z",
+  "season": 2026,
+  "week": 12,
+  "playerId": "00-0041489",
+  "playerName": "Germie Bernard",
+  "team": "PIT",
+  "opp": "DEN",
+  "market": "receptions",
+  "stat": "receptions",
+  "line": 2.5,
+  "side": "over",
+  "bookOdds": -155,
+  "implied": 0.571,
+  "modelProb": 0.7195,
+  "hitShrunk": 0.6649,
+  "finalProb": 0.6343,
+  "edge": 0.0633,
+  "consistent": true,
+  "loggedAt": "2026-11-26T23:55:08.340Z",
   "actual": null,
   "result": null
  }
