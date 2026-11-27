@@ -14859,5 +14859,162 @@
     "hit": true,
     "mae": 3.3,
     "saved": true
+  },
+  {
+    "gameId": 2026020412,
+    "date": "2026-11-27",
+    "away": "WPG",
+    "home": "NYI",
+    "predWinner": "NYI",
+    "predGoalsAway": 3.4,
+    "predGoalsHome": 3.4,
+    "winPctAway": 50,
+    "winPctHome": 50,
+    "confidence": "LOW CONFIDENCE",
+    "confidenceCls": "conf-low",
+    "modelVer": "v8.2",
+    "gpAway": 26,
+    "gpHome": 24,
+    "injAway": false,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [
+      {
+        "name": "Kyle Palmieri",
+        "role": "F4",
+        "status": "Injured Reserve",
+        "gamesMissed": 1
+      }
+    ],
+    "injSkippedAway": [
+      {
+        "name": "Dylan DeMelo",
+        "role": "D4",
+        "status": "Injured Reserve",
+        "gamesMissed": 6
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Ryan Pulock",
+        "role": "D3",
+        "status": "Out",
+        "gamesMissed": 7
+      },
+      {
+        "name": "Alexander Romanov",
+        "role": "D4",
+        "status": "Injured Reserve",
+        "gamesMissed": 21
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020413,
+    "date": "2026-11-27",
+    "away": "PIT",
+    "home": "BUF",
+    "predWinner": "BUF",
+    "predGoalsAway": 2.9,
+    "predGoalsHome": 3.6,
+    "winPctAway": 40,
+    "winPctHome": 60,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.2",
+    "gpAway": 24,
+    "gpHome": 25,
+    "injAway": false,
+    "injHome": true,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [
+      {
+        "name": "Noah Ostlund",
+        "role": "F4",
+        "status": "Injured Reserve",
+        "gamesMissed": 0
+      },
+      {
+        "name": "Zach Benson",
+        "role": "F2",
+        "status": "Out",
+        "gamesMissed": 0
+      }
+    ],
+    "injSkippedAway": [
+      {
+        "name": "Bryan Rust",
+        "role": "F3",
+        "status": "Injured Reserve",
+        "gamesMissed": 17
+      }
+    ],
+    "injSkippedHome": [],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
+  },
+  {
+    "gameId": 2026020414,
+    "date": "2026-11-27",
+    "away": "SEA",
+    "home": "EDM",
+    "predWinner": "EDM",
+    "predGoalsAway": 2.9,
+    "predGoalsHome": 3.8,
+    "winPctAway": 38,
+    "winPctHome": 62,
+    "confidence": "MEDIUM CONFIDENCE",
+    "confidenceCls": "conf-med",
+    "modelVer": "v8.2",
+    "gpAway": 22,
+    "gpHome": 27,
+    "injAway": false,
+    "injHome": false,
+    "auto": true,
+    "injuryMode": "auto",
+    "awayB2B": false,
+    "homeB2B": false,
+    "injPlayersAway": [],
+    "injPlayersHome": [],
+    "injSkippedAway": [
+      {
+        "name": "Jared McCann",
+        "role": "F5",
+        "status": "Injured Reserve",
+        "gamesMissed": 11
+      }
+    ],
+    "injSkippedHome": [
+      {
+        "name": "Zach Hyman",
+        "role": "F3",
+        "status": "Out",
+        "gamesMissed": 13
+      }
+    ],
+    "actualGoalsAway": null,
+    "actualGoalsHome": null,
+    "actualWinner": null,
+    "hit": null,
+    "mae": null,
+    "saved": false
   }
 ]
